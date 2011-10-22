@@ -22,7 +22,7 @@ namespace SceneCrm.Entities
 
         public bool HasValidCrbCheck
         {
-            get { return CrbChecks.Count > 0 && CrbChecks.Max(crb => crb.DateCheckExpires > DateTime.Today); }
+            get { return CrbChecks.Count > 0 && CrbChecks.Any(crb => crb.ApprovalDate.HasValue && crb.ApprovalDate.Value.AddYears(3) > DateTime.Today); }
         }
 
         public bool HasAttendedAPerformance
@@ -31,5 +31,23 @@ namespace SceneCrm.Entities
         }
 
         public bool HasReferrer { get { return _ReferredByVolunteerId.HasValue; } }
+
+        public string CrbExpiry
+        {
+            get
+            {
+                if (CrbChecks == null || CrbChecks.Count == 0) return "None";
+
+                var maxDate = CrbChecks.Max(c => c.ApprovalDate.HasValue ? c.ApprovalDate.Value.AddYears(3) : (DateTime?)null);
+
+                if (maxDate.HasValue)
+                {
+                    return maxDate.Value.ToShortDateString();
+                }
+
+                return "None";
+            }
+        }
+
     }
 }
