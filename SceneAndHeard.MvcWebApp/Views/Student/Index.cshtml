@@ -7,13 +7,13 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Student", "Create")
 </p>
 <table>
     <tr>
         <th></th>
         <th>
-            Reference
+            Membership #
         </th>
         <th>
             First Name
@@ -22,7 +22,10 @@
             Surname
         </th>
         <th>
-            Course Attendances
+            Course Count
+        </th>
+        <th>
+            Play Count
         </th>
     </tr>
 
@@ -30,20 +33,23 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.StudentId }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.StudentId }) |*@
+            @Html.ActionLink("Details", "Details", new { id=item.StudentId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
         </td>
         <td>
-			@item.Reference
+			@item.MembershipNumber 
         </td>
         <td>
-			@item.FirstName
+			@item.Forename
         </td>
         <td>
 			@item.Surname
         </td>
         <td>
 			@(item.CourseAttendances == null ? "None" : item.CourseAttendances.Count.ToString())
+        </td>
+         <td>
+			@(item.Plays == null ? "None" : item.Plays.Count.ToString())
         </td>
     </tr>
 }

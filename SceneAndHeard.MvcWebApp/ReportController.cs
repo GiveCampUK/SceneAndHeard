@@ -4,18 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SceneAndHeard.Controllers
+namespace SceneAndHeard
 {
-    public class HomeController : Controller
+    public class ReportController : Controller
     {
+        //
+        // GET: /Report/
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to the Scene & Heard Database";
-
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult CRBChecks()
         {
             return View();
         }

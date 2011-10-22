@@ -21,3 +21,16 @@
     }), "Choose...")
     @Html.ValidationMessageFor(model => model.StudentId)
 </div>
+
+
+<div class="editor-label">
+    Production
+</div>
+<div class="editor-field">
+    @Html.DropDownListFor(model => model.ProductionId, ((IEnumerable<SceneCrm.Entities.Production>)ViewBag.PossibleProductions).Select(option => new SelectListItem {
+    Text = (option == null ? "None" : (option.Title)), 
+        Value = (option == null)  ? "" : option.ProductionId.ToString(),
+        Selected = (Model != null && option != null) && (option.ProductionId == Model.ProductionId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ProductionId)
+</div>
