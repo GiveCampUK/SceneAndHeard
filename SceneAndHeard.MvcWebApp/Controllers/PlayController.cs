@@ -18,7 +18,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Index()
         {
-            return View(context.Plays.ToList());
+            return View(context.Plays.AsQueryable().OrderByDescending(x => x.PlayId));
         }
 
         //
