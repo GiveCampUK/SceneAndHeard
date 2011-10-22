@@ -21,6 +21,47 @@
           <EntitySet Name="Term" EntityType="Model.Store.Term" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Volunteer" EntityType="Model.Store.Volunteer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="VolunteerCapability" EntityType="Model.Store.VolunteerCapability" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StudentHistory" EntityType="Model.Store.StudentHistory" store:Type="Views" store:Schema="dbo" store:Name="StudentHistory">
+            <DefiningQuery>SELECT 
+      [StudentHistory].[StudentId] AS [StudentId], 
+      [StudentHistory].[MembershipNumber] AS [MembershipNumber], 
+      [StudentHistory].[StudentForename] AS [StudentForename], 
+      [StudentHistory].[StudentSurname] AS [StudentSurname], 
+      [StudentHistory].[CourseTypeName] AS [CourseTypeName], 
+      [StudentHistory].[Year] AS [Year], 
+      [StudentHistory].[Completed] AS [Completed], 
+      [StudentHistory].[PlayTitle] AS [PlayTitle], 
+      [StudentHistory].[ProductionTitle] AS [ProductionTitle]
+      FROM [dbo].[StudentHistory] AS [StudentHistory]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VolunteerCrbChecks" EntityType="Model.Store.VolunteerCrbChecks" store:Type="Views" store:Schema="dbo" store:Name="VolunteerCrbChecks">
+            <DefiningQuery>SELECT 
+      [VolunteerCrbChecks].[VolunteerId] AS [VolunteerId], 
+      [VolunteerCrbChecks].[FirstName] AS [FirstName], 
+      [VolunteerCrbChecks].[Surname] AS [Surname], 
+      [VolunteerCrbChecks].[PerformanceAttended] AS [PerformanceAttended], 
+      [VolunteerCrbChecks].[CheckDate] AS [CheckDate], 
+      [VolunteerCrbChecks].[CrbNumber] AS [CrbNumber], 
+      [VolunteerCrbChecks].[OnlineFormSent] AS [OnlineFormSent], 
+      [VolunteerCrbChecks].[FormFilledOut] AS [FormFilledOut], 
+      [VolunteerCrbChecks].[DateCheckExpires] AS [DateCheckExpires], 
+      [VolunteerCrbChecks].[IdComplete] AS [IdComplete]
+      FROM [dbo].[VolunteerCrbChecks] AS [VolunteerCrbChecks]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VolunteerHistory" EntityType="Model.Store.VolunteerHistory" store:Type="Views" store:Schema="dbo" store:Name="VolunteerHistory">
+            <DefiningQuery>SELECT 
+      [VolunteerHistory].[volunteerid] AS [volunteerid], 
+      [VolunteerHistory].[firstname] AS [firstname], 
+      [VolunteerHistory].[surname] AS [surname], 
+      [VolunteerHistory].[type] AS [type], 
+      [VolunteerHistory].[title] AS [title], 
+      [VolunteerHistory].[description] AS [description], 
+      [VolunteerHistory].[notes] AS [notes], 
+      [VolunteerHistory].[playid] AS [playid], 
+      [VolunteerHistory].[courseid] AS [courseid], 
+      [VolunteerHistory].[productionid] AS [productionid]
+      FROM [dbo].[VolunteerHistory] AS [VolunteerHistory]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Course_CourseType" Association="Model.Store.FK_Course_CourseType">
             <End Role="CourseType" EntitySet="CourseType" />
             <End Role="Course" EntitySet="Course" />
@@ -236,6 +277,9 @@
           <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
           <Property Name="AvailableFrom" Type="datetime" />
           <Property Name="ReferredByVolunteerId" Type="int" />
+          <Property Name="PartnerFirstName" Type="varchar" MaxLength="64" />
+          <Property Name="PartnerSurname" Type="varchar" MaxLength="64" />
+          <Property Name="Notes" Type="varchar" MaxLength="2048" />
         </EntityType>
         <EntityType Name="VolunteerCapability">
           <Key>
@@ -244,6 +288,62 @@
           </Key>
           <Property Name="VolunteerId" Type="int" Nullable="false" />
           <Property Name="JobId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SceneCRM.dbo.StudentHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="StudentHistory">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="MembershipNumber" />
+            <PropertyRef Name="StudentSurname" />
+          </Key>
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="MembershipNumber" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="StudentForename" Type="varchar" MaxLength="64" />
+          <Property Name="StudentSurname" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="CourseTypeName" Type="varchar" MaxLength="64" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="PlayTitle" Type="varchar" MaxLength="128" />
+          <Property Name="ProductionTitle" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SceneCRM.dbo.VolunteerCrbChecks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="VolunteerCrbChecks">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+          </Key>
+          <Property Name="VolunteerId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="64" />
+          <Property Name="Surname" Type="varchar" MaxLength="64" />
+          <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="CrbNumber" Type="varchar" MaxLength="32" />
+          <Property Name="OnlineFormSent" Type="datetime" />
+          <Property Name="FormFilledOut" Type="datetime" />
+          <Property Name="DateCheckExpires" Type="datetime" />
+          <Property Name="IdComplete" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SceneCRM.dbo.VolunteerHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="VolunteerHistory">
+          <Key>
+            <PropertyRef Name="volunteerid" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="volunteerid" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="64" />
+          <Property Name="surname" Type="varchar" MaxLength="64" />
+          <Property Name="type" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="title" Type="varchar" MaxLength="128" />
+          <Property Name="description" Type="varchar" MaxLength="64" />
+          <Property Name="notes" Type="varchar" MaxLength="2048" />
+          <Property Name="playid" Type="int" />
+          <Property Name="courseid" Type="int" />
+          <Property Name="productionid" Type="int" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Role="CourseType" Type="Model.Store.CourseType" Multiplicity="0..1">
@@ -622,6 +722,9 @@
             <End Role="Volunteer" EntitySet="Volunteers" />
             <End Role="Referrals" EntitySet="Volunteers" />
           </AssociationSet>
+          <EntitySet Name="StudentHistories" EntityType="Model.StudentHistory" />
+          <EntitySet Name="VolunteerCrbChecks" EntityType="Model.VolunteerCrbCheck" />
+          <EntitySet Name="VolunteerHistories" EntityType="Model.VolunteerHistory" />
         </EntityContainer>
         <EntityType Name="Course">
           <Key>
@@ -793,6 +896,9 @@
           <Property Type="Int32" Name="ReferredByVolunteerId" />
           <NavigationProperty Name="Referrals" Relationship="Model.FK_Volunteer_Volunteer" FromRole="Volunteer" ToRole="Referrals" />
           <NavigationProperty Name="ReferredBy" Relationship="Model.FK_Volunteer_Volunteer" FromRole="Referrals" ToRole="Volunteer" />
+          <Property Type="String" Name="PartnerFirstName" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PartnerSurname" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Notes" MaxLength="2048" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Type="Model.CourseType" Role="CourseType" Multiplicity="0..1" />
@@ -1026,6 +1132,53 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StudentHistory">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="MembershipNumber" />
+            <PropertyRef Name="StudentSurname" />
+          </Key>
+          <Property Type="Int32" Name="StudentId" Nullable="false" />
+          <Property Type="String" Name="MembershipNumber" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="StudentForename" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="StudentSurname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CourseTypeName" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="Year" />
+          <Property Type="Boolean" Name="Completed" />
+          <Property Type="String" Name="PlayTitle" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ProductionTitle" MaxLength="64" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="VolunteerCrbCheck">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+          </Key>
+          <Property Type="Int32" Name="VolunteerId" Nullable="false" />
+          <Property Type="String" Name="FirstName" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Surname" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PerformanceAttended" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CheckDate" />
+          <Property Type="String" Name="CrbNumber" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="OnlineFormSent" />
+          <Property Type="DateTime" Name="FormFilledOut" />
+          <Property Type="DateTime" Name="DateCheckExpires" />
+          <Property Type="DateTime" Name="IdComplete" />
+        </EntityType>
+        <EntityType Name="VolunteerHistory">
+          <Key>
+            <PropertyRef Name="volunteerid" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Type="Int32" Name="volunteerid" Nullable="false" />
+          <Property Type="String" Name="firstname" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="surname" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="type" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="title" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="description" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="notes" MaxLength="2048" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="playid" />
+          <Property Type="Int32" Name="courseid" />
+          <Property Type="Int32" Name="productionid" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1161,6 +1314,9 @@
           <EntitySetMapping Name="Volunteers">
             <EntityTypeMapping TypeName="Model.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="PartnerSurname" ColumnName="PartnerSurname" />
+                <ScalarProperty Name="PartnerFirstName" ColumnName="PartnerFirstName" />
                 <ScalarProperty Name="ReferredByVolunteerId" ColumnName="ReferredByVolunteerId" />
                 <ScalarProperty Name="AvailableFrom" ColumnName="AvailableFrom" />
                 <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
@@ -1178,6 +1334,53 @@
               <ScalarProperty Name="JobId" ColumnName="JobId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="StudentHistories">
+            <EntityTypeMapping TypeName="Model.StudentHistory">
+              <MappingFragment StoreEntitySet="StudentHistory">
+                <ScalarProperty Name="ProductionTitle" ColumnName="ProductionTitle" />
+                <ScalarProperty Name="PlayTitle" ColumnName="PlayTitle" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+                <ScalarProperty Name="StudentSurname" ColumnName="StudentSurname" />
+                <ScalarProperty Name="StudentForename" ColumnName="StudentForename" />
+                <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolunteerCrbChecks">
+            <EntityTypeMapping TypeName="Model.VolunteerCrbCheck">
+              <MappingFragment StoreEntitySet="VolunteerCrbChecks">
+                <ScalarProperty Name="IdComplete" ColumnName="IdComplete" />
+                <ScalarProperty Name="DateCheckExpires" ColumnName="DateCheckExpires" />
+                <ScalarProperty Name="FormFilledOut" ColumnName="FormFilledOut" />
+                <ScalarProperty Name="OnlineFormSent" ColumnName="OnlineFormSent" />
+                <ScalarProperty Name="CrbNumber" ColumnName="CrbNumber" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolunteerHistories">
+            <EntityTypeMapping TypeName="Model.VolunteerHistory">
+              <MappingFragment StoreEntitySet="VolunteerHistory">
+                <ScalarProperty Name="productionid" ColumnName="productionid" />
+                <ScalarProperty Name="courseid" ColumnName="courseid" />
+                <ScalarProperty Name="playid" ColumnName="playid" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="volunteerid" ColumnName="volunteerid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1352,6 +1555,9 @@
           <ConnectorPoint PointX="3.9784615384615383" PointY="19.518697916666667" />
           <ConnectorPoint PointX="3.9784615384615383" PointY="19.268697916666671" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="Model.StudentHistory" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921875000031" />
+        <EntityTypeShape EntityType="Model.VolunteerCrbCheck" Width="1.5" PointX="8.75" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="Model.VolunteerHistory" Width="1.5" PointX="10.75" PointY="0.75" Height="2.9417936197916674" />
       </Diagram>
     </Diagrams>
   </Designer>

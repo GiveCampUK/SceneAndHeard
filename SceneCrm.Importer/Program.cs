@@ -30,6 +30,7 @@ namespace SceneCrm.Importer {
                 context.SaveChanges();
 
                 var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
+
                 foreach (var row in ss.Rows) {
                     var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
                     if (row.AttendedPm1) {
@@ -68,19 +69,8 @@ namespace SceneCrm.Importer {
                         context.SaveChanges();
                     }
                 }
+                ImportVolunteerDataFromAccessDatabase(context, @"C:\Users\dylan.beattie\Documents\Scene & Heard\Volunteers.mdb", "giraffe");
             }
-
-
-            //    foreach (var ct in context.CourseTypes) {
-            //        Console.WriteLine(ct.CourseTypeName);
-            //        var demoCourse = new Course() {
-            //            CourseType = ct,
-            //            Year = 2011,
-            //        };
-            //        context.Courses.AddObject(demoCourse);
-            //    }
-            //    context.SaveChanges();
-            //}
             Console.ReadKey(false);
         }
         static void AddPlayVolunteer(SceneCRM context, Play play, string volunteerName, string jobTitle) {
@@ -108,6 +98,17 @@ namespace SceneCrm.Importer {
                 });
             }
             context.SaveChanges();
+        }
+
+        static void ImportVolunteerDataFromAccessDatabase(SceneCRM context, string fullPathToMdbFile, string databasePassword) {
+            var db = new VolunteerDatabase(fullPathToMdbFile, databasePassword);
+            foreach (var record in db.VolunteerRecords) {
+                var vol = context.Volunteers.FindOrMake(record.FirstName, record.LastName);
+                vol.Notes = record.Notes;
+                vol.PartnerFirstName = record.SecondPersonFirstName;
+                vol.PartnerSurname = record.SecondPersonLastName;
+                context.SaveChanges();
+            }
         }
 
         static void WipeDatabase(SceneCRM context) {
@@ -170,12 +171,12 @@ namespace SceneCrm.Importer {
         public static Production FindOrMake(this ObjectSet<Production> productions, string productionTitle) {
             if (String.IsNullOrWhiteSpace(productionTitle)) return (null);
             var production = productions.FirstOrDefault(p => p.Title == productionTitle);
-            if(production == null) {
+            if (production == null) {
                 production = new Production() { Title = productionTitle };
                 productions.AddObject(production);
-            productions.Context.SaveChanges();
+                productions.Context.SaveChanges();
             }
-            return(production);
+            return (production);
         }
 
         public static Term FindOrMake(this ObjectSet<Term> terms, string termName) {
@@ -201,6 +202,10 @@ namespace SceneCrm.Importer {
                 surname = volunteerName;
                 forename = String.Empty;
             }
+            return (volunteers.FindOrMake(forename, surname));
+        }
+
+        public static Volunteer FindOrMake(this ObjectSet<Volunteer> volunteers, string forename, string surname) {
             var volunteer = volunteers.FirstOrDefault(v => v.FirstName == forename && v.Surname == surname);
             if (volunteer == default(Volunteer)) {
                 volunteer = new Volunteer() {

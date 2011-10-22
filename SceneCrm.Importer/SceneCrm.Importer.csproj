@@ -54,6 +54,7 @@
     <Compile Include="ChildrenProductionsSpreadsheet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VolunteerDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SceneCrm.Entities\SceneCrm.Entities.csproj">
