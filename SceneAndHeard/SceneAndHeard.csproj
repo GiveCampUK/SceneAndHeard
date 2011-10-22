@@ -64,12 +64,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="MVCHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneAndHeard.designer.cs">
       <AutoGen>True</AutoGen>
@@ -161,6 +163,8 @@
     <None Include="SceneAndHeard.dbml.layout">
       <DependentUpon>SceneAndHeard.dbml</DependentUpon>
     </None>
+    <Content Include="Views\Shared\index.cshtml" />
+    <Content Include="Views\Shared\createview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

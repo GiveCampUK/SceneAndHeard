@@ -1,23 +1,144 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Class="SceneAndHeardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Table Name="" Member="Volunteers">
-    <Type Name="Volunteer">
-      <Column Member="Name" Type="System.String" CanBeNull="false" />
-      <Column Member="Id" Type="System.String" CanBeNull="false" />
-      <Association Name="Volunteer_Play" Member="Plays" ThisKey="Id" OtherKey="DirectorId" Type="Play" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SceneCRM" Class="SceneAndHeardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=localhost;Initial Catalog=SceneCRM;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SceneCRMConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Child" Member="Childs">
+    <Type Name="Child">
+      <Column Name="ChildId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Reference" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(64) NOT NULL" CanBeNull="false" />
+      <Association Name="Child_CourseAttendance" Member="CourseAttendances" ThisKey="ChildId" OtherKey="ChildId" Type="CourseAttendance" />
     </Type>
   </Table>
-  <Table Name="" Member="Kids">
-    <Type Name="Kid">
-      <Column Member="Name" Type="System.String" CanBeNull="false" />
-      <Column Member="Id" Type="System.String" CanBeNull="false" />
+  <Table Name="dbo.VolunteerCapability" Member="VolunteerCapabilities">
+    <Type Name="VolunteerCapability">
+      <Column Name="VolunteerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JobId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Job_VolunteerCapability" Member="Job" ThisKey="JobId" OtherKey="JobId" Type="Job" IsForeignKey="true" />
+      <Association Name="Volunteer_VolunteerCapability" Member="Volunteer" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="Volunteer" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="" Member="Plays">
+  <Table Name="dbo.Course" Member="Courses">
+    <Type Name="Course">
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseTypeCode" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="TermId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Course_CourseAttendance" Member="CourseAttendances" ThisKey="CourseId" OtherKey="CourseId" Type="CourseAttendance" />
+      <Association Name="Course_CourseVolunteer" Member="CourseVolunteers" ThisKey="CourseId" OtherKey="CourseId" Type="CourseVolunteer" />
+      <Association Name="CourseType_Course" Member="CourseType" ThisKey="CourseTypeCode" OtherKey="CourseTypeCode" Type="CourseType" IsForeignKey="true" />
+      <Association Name="Term_Course" Member="Term" ThisKey="TermId" OtherKey="TermId" Type="Term" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseAttendance" Member="CourseAttendances">
+    <Type Name="CourseAttendance">
+      <Column Name="ChildId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Completed" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="Child_CourseAttendance" Member="Child" ThisKey="ChildId" OtherKey="ChildId" Type="Child" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Course_CourseAttendance" Member="Course" ThisKey="CourseId" OtherKey="CourseId" Type="Course" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseType" Member="CourseTypes">
+    <Type Name="CourseType">
+      <Column Name="CourseTypeCode" Type="System.String" DbType="VarChar(8) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseTypeName" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Association Name="CourseType_Course" Member="Courses" ThisKey="CourseTypeCode" OtherKey="CourseTypeCode" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CourseVolunteer" Member="CourseVolunteers">
+    <Type Name="CourseVolunteer">
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="VolunteerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JobId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(2048)" CanBeNull="true" />
+      <Association Name="Course_CourseVolunteer" Member="Course" ThisKey="CourseId" OtherKey="CourseId" Type="Course" IsForeignKey="true" />
+      <Association Name="Job_CourseVolunteer" Member="Job" ThisKey="JobId" OtherKey="JobId" Type="Job" IsForeignKey="true" />
+      <Association Name="Volunteer_CourseVolunteer" Member="Volunteer" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="Volunteer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CrbCheck" Member="CrbChecks">
+    <Type Name="CrbCheck">
+      <Column Name="CrbCheckId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VolunteerId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CheckDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CrbNumber" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="OnlineFormSent" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FormFilledOut" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DateCheckExpires" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IdComplete" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Volunteer_CrbCheck" Member="Volunteer" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="Volunteer" IsForeignKey="true" DeleteRule="CASCADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Job" Member="Jobs">
+    <Type Name="Job">
+      <Column Name="JobId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Association Name="Job_VolunteerCapability" Member="VolunteerCapabilities" ThisKey="JobId" OtherKey="JobId" Type="VolunteerCapability" />
+      <Association Name="Job_CourseVolunteer" Member="CourseVolunteers" ThisKey="JobId" OtherKey="JobId" Type="CourseVolunteer" />
+      <Association Name="Job_PlayVolunteer" Member="PlayVolunteers" ThisKey="JobId" OtherKey="JobId" Type="PlayVolunteer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Performance" Member="Performances">
+    <Type Name="Performance">
+      <Column Name="PerformanceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ProductionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="PerformanceDateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EventBriteId" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Play" Member="Plays">
     <Type Name="Play">
-      <Column Member="Name" Type="System.String" CanBeNull="false" />
-      <Column Member="DirectorId" Type="System.String" CanBeNull="false" />
-      <Column Member="Id" Type="System.String" CanBeNull="false" />
-      <Association Name="Volunteer_Play" Member="Volunteer" ThisKey="DirectorId" OtherKey="Id" Type="Volunteer" IsForeignKey="true" />
+      <Column Name="PlayId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ChildId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(128)" CanBeNull="true" />
+      <Association Name="Play_PlayVolunteer" Member="PlayVolunteers" ThisKey="PlayId" OtherKey="PlayId" Type="PlayVolunteer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PlayVolunteer" Member="PlayVolunteers">
+    <Type Name="PlayVolunteer">
+      <Column Name="PlayId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="VolunteerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JobId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(2048)" CanBeNull="true" />
+      <Association Name="Job_PlayVolunteer" Member="Job" ThisKey="JobId" OtherKey="JobId" Type="Job" IsForeignKey="true" />
+      <Association Name="Play_PlayVolunteer" Member="Play" ThisKey="PlayId" OtherKey="PlayId" Type="Play" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Volunteer_PlayVolunteer" Member="Volunteer" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="Volunteer" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Production" Member="Productions">
+    <Type Name="Production">
+      <Column Name="ProductionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Association Name="Production_ProductionVolunteer" Member="ProductionVolunteers" ThisKey="ProductionId" OtherKey="ProductionId" Type="ProductionVolunteer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ProductionVolunteer" Member="ProductionVolunteers">
+    <Type Name="ProductionVolunteer">
+      <Column Name="VounteerId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="JobId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProductionId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Notes" Type="System.String" DbType="VarChar(2048)" CanBeNull="true" />
+      <Association Name="Production_ProductionVolunteer" Member="Production" ThisKey="ProductionId" OtherKey="ProductionId" Type="Production" IsForeignKey="true" />
+      <Association Name="Volunteer_ProductionVolunteer" Member="Volunteer" ThisKey="VounteerId" OtherKey="VolunteerId" Type="Volunteer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Term" Member="Terms">
+    <Type Name="Term">
+      <Column Name="TermId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TermName" Type="System.String" DbType="VarChar(16)" CanBeNull="true" />
+      <Association Name="Term_Course" Member="Courses" ThisKey="TermId" OtherKey="TermId" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Volunteer" Member="Volunteers">
+    <Type Name="Volunteer">
+      <Column Name="VolunteerId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Association Name="Volunteer_VolunteerCapability" Member="VolunteerCapabilities" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="VolunteerCapability" />
+      <Association Name="Volunteer_CourseVolunteer" Member="CourseVolunteers" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="CourseVolunteer" />
+      <Association Name="Volunteer_CrbCheck" Member="CrbChecks" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="CrbCheck" />
+      <Association Name="Volunteer_PlayVolunteer" Member="PlayVolunteers" ThisKey="VolunteerId" OtherKey="VolunteerId" Type="PlayVolunteer" />
+      <Association Name="Volunteer_ProductionVolunteer" Member="ProductionVolunteers" ThisKey="VolunteerId" OtherKey="VounteerId" Type="ProductionVolunteer" />
     </Type>
   </Table>
 </Database>

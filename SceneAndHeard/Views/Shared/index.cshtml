@@ -1,0 +1,22 @@
+﻿@using SceneAndHeard
+@model IList<Play>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Plays</title>
+</head>
+<body>
+    <div>
+    
+    @foreach (var play in Model)
+    {
+        <p>@play.Title</p>
+    }
+    </div>
+</body>
+</html>
