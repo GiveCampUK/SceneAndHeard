@@ -1,13 +1,13 @@
 @model IEnumerable<SceneCrm.Entities.Job>
 
 @{
-    ViewBag.Title = "Jobs";
+    ViewBag.Title = "Index";
 }
 
-<h2>Jobs</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Job", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
@@ -16,13 +16,13 @@
             Description
         </th>
        @* <th>
-            CourseVolunteers
+            Course Volunteers
         </th>
         <th>
-            PlayVolunteers
+            Play Volunteers
         </th>
         <th>
-            ProductionVolunteers
+            Production Volunteers
         </th>
         <th>
             Volunteers
@@ -33,13 +33,12 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JobId }) |
-          
             @Html.ActionLink("Delete", "Delete", new { id=item.JobId })
         </td>
         <td>
 			@item.Description
         </td>
-       @* <td>
+        @*<td>
 			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
         </td>
         <td>
