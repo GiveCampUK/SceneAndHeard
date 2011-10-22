@@ -1,0 +1,32 @@
+@model SceneCrm.Entities.Student
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Student</legend>
+
+    <div class="display-label">Reference</div>
+    <div class="display-field">@Model.Reference</div>
+
+    <div class="display-label">FirstName</div>
+    <div class="display-field">@Model.FirstName</div>
+
+    <div class="display-label">Surname</div>
+    <div class="display-field">@Model.Surname</div>
+
+    <div class="display-label">CourseAttendances</div>
+    <div class="display-field">@(Model.CourseAttendances == null ? "None" : Model.CourseAttendances.Count.ToString())</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

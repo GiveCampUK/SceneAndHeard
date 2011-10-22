@@ -1,0 +1,23 @@
+@model SceneCrm.Entities.Play
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Play</legend>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">@Model.Title</div>
+
+    <div class="display-label">PlayVolunteers</div>
+    <div class="display-field">@(Model.PlayVolunteers == null ? "None" : Model.PlayVolunteers.Count.ToString())</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PlayId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

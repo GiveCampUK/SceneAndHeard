@@ -1,0 +1,53 @@
+@model IEnumerable<SceneCrm.Entities.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            Reference
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            CourseAttendances
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ChildId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ChildId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ChildId })
+        </td>
+        <td>
+			@item.Reference
+        </td>
+        <td>
+			@item.FirstName
+        </td>
+        <td>
+			@item.Surname
+        </td>
+        <td>
+			@(item.CourseAttendances == null ? "None" : item.CourseAttendances.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+
