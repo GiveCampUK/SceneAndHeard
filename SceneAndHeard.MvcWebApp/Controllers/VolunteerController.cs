@@ -20,7 +20,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Index()
         {
-            return View(context.Volunteers.Include("CrbChecks").Include("Jobs").ToList());
+            return View(context.Volunteers.Include("CrbChecks").Include("Jobs").OrderBy(v => v.Surname).ToList());
         }
 
         //
