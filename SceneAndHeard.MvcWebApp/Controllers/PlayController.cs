@@ -35,7 +35,7 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PossibleStudents = context.Students;
+            ViewBag.PossibleStudents = context.Students.AsQueryable().OrderBy(x => x.Forename).ThenBy(x=> x.Surname);
             return View();
         } 
 

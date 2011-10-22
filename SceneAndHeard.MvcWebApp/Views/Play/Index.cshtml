@@ -24,14 +24,14 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })
         </td>
         <td>
 			@item.Title
+
         </td>
         <td>
-			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
+			@(item.Student.FirstName)
         </td>
     </tr>
 }

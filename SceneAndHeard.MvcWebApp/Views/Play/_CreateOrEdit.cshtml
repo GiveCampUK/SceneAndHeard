@@ -15,7 +15,7 @@
 </div>
 <div class="editor-field">
     @Html.DropDownListFor(model => model.StudentId, ((IEnumerable<SceneCrm.Entities.Student>)ViewBag.PossibleStudents).Select(option => new SelectListItem {
-        Text = (option == null ? "None" : option.Surname), 
+    Text = (option == null ? "None" : (option.FirstName + " " + option.LastName + " (" + option.ChildId+ ")")), 
         Value = option.ChildId.ToString(),
         Selected = (Model != null) && (option.ChildId == Model.StudentId)
     }), "Choose...")
