@@ -1,7 +1,7 @@
 @model IEnumerable<SceneCrm.Entities.Play>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Plays";
 }
 
 <h2>Index</h2>
@@ -17,6 +17,9 @@
         </th>
         <th>
            Student
+        </th>
+         <th>
+           Production
         </th>
     </tr>
 
@@ -34,6 +37,10 @@
 
         @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
 			
+        </td>
+
+        <td>
+        @Html.ActionLink(item.Production.Title, "Details", "Production", new { id = item.Production.ProductionId}, null)
         </td>
     </tr>
 }
