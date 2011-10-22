@@ -1,5 +1,74 @@
-﻿@{
+﻿@model IEnumerable<SceneCrm.Entities.VolunteerCrbCheck>
+
+@{
     ViewBag.Title = "CRBChecks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>CRBChecks</h2>
+
+<table>
+    <tr>
+        <th>
+            FirstName
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            PerformanceAttended
+        </th>
+        <th>
+            CheckDate
+        </th>
+        <th>
+            CrbNumber
+        </th>
+        <th>
+            OnlineFormSent
+        </th>
+        <th>
+            FormFilledOut
+        </th>
+        <th>
+            IdComplete
+        </th>
+        <th>
+            DateCheckExpires
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.OrderBy(c => c.DateCheckExpires.GetValueOrDefault())) {
+    <tr @if (item.DateCheckExpires.HasValue && item.DateCheckExpires.Value <= DateTime.UtcNow) { @Html.Raw("style='background-color:pink;") } >
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PerformanceAttended)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CrbNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OnlineFormSent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FormFilledOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdComplete)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCheckExpires)
+        </td>
+    </tr>
+}
+
+</table>
