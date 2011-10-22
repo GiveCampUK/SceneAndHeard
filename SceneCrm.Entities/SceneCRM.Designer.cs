@@ -37,6 +37,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Model", "VolunteerCapability", "Job", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Job), "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Volunteer))]
 [assembly: EdmRelationshipAttribute("Model", "FK_CourseAttendance_Play", "Play", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Play), "CourseAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.CourseAttendance), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_Play_Production", "Production", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Production), "Play", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Play), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_Volunteer_Volunteer", "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Volunteer), "Referrals", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Volunteer), true)]
 
 #endregion
 
@@ -3230,6 +3231,30 @@ namespace SceneCrm.Entities
         private Nullable<global::System.DateTime> _AvailableFrom;
         partial void OnAvailableFromChanging(Nullable<global::System.DateTime> value);
         partial void OnAvailableFromChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ReferredByVolunteerId
+        {
+            get
+            {
+                return _ReferredByVolunteerId;
+            }
+            set
+            {
+                OnReferredByVolunteerIdChanging(value);
+                ReportPropertyChanging("ReferredByVolunteerId");
+                _ReferredByVolunteerId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ReferredByVolunteerId");
+                OnReferredByVolunteerIdChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ReferredByVolunteerId;
+        partial void OnReferredByVolunteerIdChanging(Nullable<global::System.Int32> value);
+        partial void OnReferredByVolunteerIdChanged();
 
         #endregion
     
@@ -3341,6 +3366,66 @@ namespace SceneCrm.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Job>("Model.VolunteerCapability", "Job", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_Volunteer_Volunteer", "Referrals")]
+        public EntityCollection<Volunteer> Referrals
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Volunteer>("Model.FK_Volunteer_Volunteer", "Referrals");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Volunteer>("Model.FK_Volunteer_Volunteer", "Referrals", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_Volunteer_Volunteer", "Volunteer")]
+        public Volunteer ReferredBy
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Volunteer>("Model.FK_Volunteer_Volunteer", "Volunteer").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Volunteer>("Model.FK_Volunteer_Volunteer", "Volunteer").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Volunteer> ReferredByReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Volunteer>("Model.FK_Volunteer_Volunteer", "Volunteer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Volunteer>("Model.FK_Volunteer_Volunteer", "Volunteer", value);
                 }
             }
         }

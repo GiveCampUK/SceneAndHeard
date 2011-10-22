@@ -93,6 +93,10 @@
             <End Role="Volunteer" EntitySet="Volunteer" />
             <End Role="ProductionVolunteer" EntitySet="ProductionVolunteer" />
           </AssociationSet>
+          <AssociationSet Name="FK_Volunteer_Volunteer" Association="Model.Store.FK_Volunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="Volunteer1" EntitySet="Volunteer" />
+          </AssociationSet>
           <AssociationSet Name="FK_VolunteerCapability_Job" Association="Model.Store.FK_VolunteerCapability_Job">
             <End Role="Job" EntitySet="Job" />
             <End Role="VolunteerCapability" EntitySet="VolunteerCapability" />
@@ -231,6 +235,7 @@
           <Property Name="Surname" Type="varchar" MaxLength="64" />
           <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
           <Property Name="AvailableFrom" Type="datetime" />
+          <Property Name="ReferredByVolunteerId" Type="int" />
         </EntityType>
         <EntityType Name="VolunteerCapability">
           <Key>
@@ -478,6 +483,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Volunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="0..1" />
+          <End Role="Volunteer1" Type="Model.Store.Volunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="Volunteer1">
+              <PropertyRef Name="ReferredByVolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_VolunteerCapability_Job">
           <End Role="Job" Type="Model.Store.Job" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -600,6 +617,10 @@
           <AssociationSet Name="FK_Play_Production" Association="Model.FK_Play_Production">
             <End Role="Production" EntitySet="Productions" />
             <End Role="Play" EntitySet="Plays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Volunteer_Volunteer" Association="Model.FK_Volunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteers" />
+            <End Role="Referrals" EntitySet="Volunteers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Course">
@@ -769,6 +790,9 @@
           <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Volunteer" FromRole="Volunteer" ToRole="PlayVolunteer" />
           <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Volunteer" FromRole="Volunteer" ToRole="ProductionVolunteer" />
           <NavigationProperty Name="Jobs" Relationship="Model.VolunteerCapability" FromRole="Volunteer" ToRole="Job" />
+          <Property Type="Int32" Name="ReferredByVolunteerId" />
+          <NavigationProperty Name="Referrals" Relationship="Model.FK_Volunteer_Volunteer" FromRole="Volunteer" ToRole="Referrals" />
+          <NavigationProperty Name="ReferredBy" Relationship="Model.FK_Volunteer_Volunteer" FromRole="Referrals" ToRole="Volunteer" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Type="Model.CourseType" Role="CourseType" Multiplicity="0..1" />
@@ -990,6 +1014,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Volunteer_Volunteer">
+          <End Type="Model.Volunteer" Role="Volunteer" Multiplicity="0..1" />
+          <End Type="Model.Volunteer" Role="Referrals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="ReferredByVolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1125,6 +1161,7 @@
           <EntitySetMapping Name="Volunteers">
             <EntityTypeMapping TypeName="Model.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
+                <ScalarProperty Name="ReferredByVolunteerId" ColumnName="ReferredByVolunteerId" />
                 <ScalarProperty Name="AvailableFrom" ColumnName="AvailableFrom" />
                 <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -1161,7 +1198,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="SceneCRM" ZoomLevel="53">
+      <Diagram Name="SceneCRM" ZoomLevel="117">
         <EntityTypeShape EntityType="Model.Course" Width="1.5" PointX="3" PointY="11.5" Height="2.5571907552083388" />
         <EntityTypeShape EntityType="Model.CourseAttendance" Width="1.5" PointX="8" PointY="7.875" Height="1.9802864583333388" />
         <EntityTypeShape EntityType="Model.CourseType" Width="1.5" PointX="0.75" PointY="10.75" Height="1.5956835937500031" />
@@ -1191,33 +1228,41 @@
         <AssociationConnector Association="Model.FK_CourseAttendance_Course" >
           <ConnectorPoint PointX="4.5" PointY="13.992290039062503" />
           <ConnectorPoint PointX="4.791666666666667" PointY="13.992290039062501" />
-          <ConnectorPoint PointX="5.114583333333333" PointY="13.992290039062503" />
-          <ConnectorPoint PointX="8.09375" PointY="13.992290039062503" />
-          <ConnectorPoint PointX="8.09375" PointY="10.239889322916666" />
+          <ConnectorPoint PointX="5.052083333333333" PointY="13.992290039062503" />
+          <ConnectorPoint PointX="8.1250025" PointY="13.992290039062503" />
+          <ConnectorPoint PointX="8.1250025" PointY="10.239889322916666" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Course" >
           <ConnectorPoint PointX="4.5" PointY="12.682444661458334" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="12.682444661458334" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="4.885416666666667" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="5.052083333333333" PointY="12.682444661458334" />
           <ConnectorPoint PointX="5.25" PointY="12.682444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseAttendance_Child" >
-          <ConnectorPoint PointX="5.03125" PointY="5.79758789062501" />
-          <ConnectorPoint PointX="5.03125" PointY="10.083639322916667" />
-          <ConnectorPoint PointX="8" PointY="10.083639322916667" />
+          <ConnectorPoint PointX="4.875" PointY="5.79758789062501" />
+          <ConnectorPoint PointX="4.875" PointY="10.050713485242227" />
+          <ConnectorPoint PointX="4.885416666666667" PointY="10.050713485242227" />
+          <ConnectorPoint PointX="5.052083333333333" PointY="10.050713485242227" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="10.050713485242227" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="10.050713485242227" />
+          <ConnectorPoint PointX="8" PointY="10.050713485242227" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Job" >
-          <ConnectorPoint PointX="2.25" PointY="8.8660484290865416" />
-          <ConnectorPoint PointX="2.78125" PointY="9.3972984290865416" />
+          <ConnectorPoint PointX="2.25" PointY="8.8972022752403888" />
+          <ConnectorPoint PointX="2.78125" PointY="9.4284522752403888" />
           <ConnectorPoint PointX="2.78125" PointY="11.125" />
           <ConnectorPoint PointX="4.8761528461538459" PointY="11.125" />
+          <ConnectorPoint PointX="4.9098244349011217" PointY="11.158671588747273" />
+          <ConnectorPoint PointX="5.0276755650988791" PointY="11.276522718945031" />
           <ConnectorPoint PointX="5.2511528461538459" PointY="11.5" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.5" PointY="15.807691307692309" />
-          <ConnectorPoint PointX="5.03125" PointY="15.276441307692309" />
-          <ConnectorPoint PointX="5.03125" PointY="13.304918992187496" />
-          <ConnectorPoint PointX="5.25" PointY="13.304918992187496" />
+          <ConnectorPoint PointX="4.5" PointY="15.776537461538462" />
+          <ConnectorPoint PointX="4.875" PointY="15.40153746153846" />
+          <ConnectorPoint PointX="4.875" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="4.885416666666667" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="5.052083333333333" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="5.25" PointY="12.682444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CrbCheck_Volunteer" >
           <ConnectorPoint PointX="4.5" PointY="17.24974609375" />
@@ -1267,29 +1312,27 @@
           <ConnectorPoint PointX="9.6249975" PointY="11.5" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_PlayVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.5" PointY="15.78125" />
-          <ConnectorPoint PointX="9" PointY="15.78125" />
+          <ConnectorPoint PointX="4.5" PointY="18.977845052083335" />
+          <ConnectorPoint PointX="9" PointY="18.977845052083335" />
           <ConnectorPoint PointX="9" PointY="13.864889322916667" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_ProductionVolunteer_Production" >
-          <ConnectorPoint PointX="4.5" PointY="8.5490964589843728" />
-          <ConnectorPoint PointX="4.947916666666667" PointY="8.5490964589843728" />
-          <ConnectorPoint PointX="5.114583333333333" PointY="8.5490964589843728" />
-          <ConnectorPoint PointX="5.25" PointY="8.5490964589843728" />
+          <ConnectorPoint PointX="4.5" PointY="8.8651432291666659" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="8.8651432291666641" />
+          <ConnectorPoint PointX="5.052083333333333" PointY="8.8651432291666659" />
+          <ConnectorPoint PointX="5.25" PointY="8.8651432291666659" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_ProductionVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.47576923076923" PointY="15.75" />
-          <ConnectorPoint PointX="4.875" PointY="15.350769230769231" />
-          <ConnectorPoint PointX="4.875" PointY="9.3481929179687455" />
-          <ConnectorPoint PointX="4.947916666666667" PointY="9.3481929179687455" />
-          <ConnectorPoint PointX="5.114583333333333" PointY="9.3481929179687455" />
-          <ConnectorPoint PointX="5.25" PointY="9.3481929179687455" />
+          <ConnectorPoint PointX="4.5" PointY="15.758075923076925" />
+          <ConnectorPoint PointX="4.96875" PointY="15.289325923076923" />
+          <ConnectorPoint PointX="4.96875" PointY="8.2366576855468736" />
+          <ConnectorPoint PointX="5.25" PointY="8.2366576855468736" />
         </AssociationConnector>
         <AssociationConnector Association="Model.VolunteerCapability" >
           <ConnectorPoint PointX="2.2257692307692296" PointY="8.9225878906250031" />
           <ConnectorPoint PointX="2.625" PointY="9.3218186598557722" />
-          <ConnectorPoint PointX="2.625" PointY="17.220896809895834" />
-          <ConnectorPoint PointX="3" PointY="17.220896809895834" />
+          <ConnectorPoint PointX="2.625" PointY="17.509348958333334" />
+          <ConnectorPoint PointX="3" PointY="17.509348958333334" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseAttendance_Play" >
           <ConnectorPoint PointX="7.15625" PointY="6.3071907552083326" />
@@ -1302,6 +1345,12 @@
           <ConnectorPoint PointX="4.947916666666667" PointY="6.08363932291667" />
           <ConnectorPoint PointX="5.114583333333333" PointY="6.083639322916671" />
           <ConnectorPoint PointX="6" PointY="6.083639322916671" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Volunteer_Volunteer" >
+          <ConnectorPoint PointX="3.5319230769230767" PointY="19.268697916666671" />
+          <ConnectorPoint PointX="3.5319230769230767" PointY="19.518697916666667" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="19.518697916666667" />
+          <ConnectorPoint PointX="3.9784615384615383" PointY="19.268697916666671" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
