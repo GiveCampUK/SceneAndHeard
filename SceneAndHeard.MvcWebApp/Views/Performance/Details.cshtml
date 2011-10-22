@@ -1,0 +1,30 @@
+﻿@model SceneCrm.Entities.Performance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Performance</legend>
+
+    <div class="display-label">Production</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Production.Title)
+    </div>
+
+    <div class="display-label">PerformanceDateTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PerformanceDateTime)
+    </div>
+
+    <div class="display-label">EventBriteId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EventBriteId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PerformanceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
