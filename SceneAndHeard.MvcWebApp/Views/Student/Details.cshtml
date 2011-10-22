@@ -4,25 +4,56 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Student Details</h2>
 
 <fieldset>
     <legend>Student</legend>
 
     <div class="display-label">Reference</div>
-    <div class="display-field">@Model.Reference</div>
+    <div class="display-field">@Model.MembershipNumber</div>
 
     <div class="display-label">FirstName</div>
-    <div class="display-field">@Model.FirstName</div>
+    <div class="display-field">@Model.Forename</div>
 
     <div class="display-label">Surname</div>
     <div class="display-field">@Model.Surname</div>
 
-    <div class="display-label">CourseAttendances</div>
-    <div class="display-field">@(Model.CourseAttendances == null ? "None" : Model.CourseAttendances.Count.ToString())</div>
+    
 </fieldset>
+
+<fieldset>
+    <legend>Courses</legend>
+      @if (Model.CourseAttendances.Count() == 0)
+    {
+        <h3>
+            No courses attended</h3>
+    }
+    @foreach (var course in Model.CourseAttendances)
+    {
+          @Html.ActionLink(course.Course.CourseTypeCode, "Details", "Course", new { id = course.CourseId }, null) <text> - </text> @course.Course.Term.TermName <text> - </text> @course.Course.Year<br />
+    }
+
+    </fieldset>
+
+
+    
+<fieldset>
+    <legend>Plays</legend>
+      @if (Model.Plays.Count() == 0)
+    {
+        <h3>
+            No Plays</h3>
+    }
+    @foreach (var play in Model.Plays)
+    {
+          @Html.ActionLink(play.Title, "Details", "Play", new { id = play.PlayId }, null)
+    }
+
+    </fieldset>
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.StudentId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 

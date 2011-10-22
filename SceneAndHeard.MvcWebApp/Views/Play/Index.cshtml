@@ -1,7 +1,7 @@
 @model IEnumerable<SceneCrm.Entities.Play>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Plays";
 }
 
 <h2>Index</h2>
@@ -16,7 +16,10 @@
             Title
         </th>
         <th>
-            Play Volunteers
+           Student
+        </th>
+         <th>
+           Production
         </th>
     </tr>
 
@@ -24,14 +27,27 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })
+            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) @*
+            
+            // Can't delete plays - FK constraints
+            |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })*@
         </td>
         <td>
 			@item.Title
-
         </td>
         <td>
-		@*	@(item.Student.FirstName)*@
+
+        @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
+			
+        </td>
+
+        <td>
+
+        @if (item.Production != null)
+        {
+            @Html.ActionLink(item.Production.Title, "Details", "Production", new {id = item.Production.ProductionId}, null)
+        }
         </td>
     </tr>
 }

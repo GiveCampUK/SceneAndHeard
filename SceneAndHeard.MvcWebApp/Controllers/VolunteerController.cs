@@ -20,7 +20,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Index()
         {
-            return View(context.Volunteers.Include("CrbChecks").Include("Jobs").ToList());
+            return View(context.Volunteers.Include("CrbChecks").Include("Jobs").OrderBy(v => v.Surname).ToList());
         }
 
         //
@@ -113,5 +113,15 @@ namespace SceneAndHeard.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult Eligible()
+        {
+            var volunteers = context.Volunteers.Where(v => v.IsEligible && v.AvailableFrom >= DateTime.Today);
+            return View("EligibleVolunteers", volunteers);
+        }
+
+
+
     }
 }
