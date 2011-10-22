@@ -1,0 +1,51 @@
+﻿@model SceneCrm.Entities.Performance
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Performance</legend>
+
+        @Html.HiddenFor(model => model.PerformanceId)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductionId, "Production")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ProductionId", String.Empty)
+            @Html.ValidationMessageFor(model => model.ProductionId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PerformanceDateTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PerformanceDateTime)
+            @Html.ValidationMessageFor(model => model.PerformanceDateTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EventBriteId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EventBriteId)
+            @Html.ValidationMessageFor(model => model.EventBriteId)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
