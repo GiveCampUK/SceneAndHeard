@@ -178,9 +178,6 @@
     <Content Include="Views\Job\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Job\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Job\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
