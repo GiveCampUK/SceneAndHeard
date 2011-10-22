@@ -1,0 +1,35 @@
+﻿@model SceneCrm.Entities.Play
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Details</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Play</legend>
+        <div class="display-label">
+            StudentId</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.StudentId)
+        </div>
+        <div class="display-label">
+            Title</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Title)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PlayId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <fieldset title="Volunteers">
+        @foreach (var volunteer in Model.PlayVolunteers)
+        {
+            @Html.ActionLink(volunteer.Volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) <br />
+        }
+    </fieldset>
+</body>
+</html>
