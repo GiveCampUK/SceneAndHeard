@@ -27,8 +27,11 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })
+            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) @*
+            
+            // Can't delete plays - FK constraints
+            |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })*@
         </td>
         <td>
 			@item.Title
@@ -40,7 +43,11 @@
         </td>
 
         <td>
-        @Html.ActionLink(item.Production.Title, "Details", "Production", new { id = item.Production.ProductionId}, null)
+
+        @if (item.Production != null)
+        {
+            @Html.ActionLink(item.Production.Title, "Details", "Production", new {id = item.Production.ProductionId}, null)
+        }
         </td>
     </tr>
 }

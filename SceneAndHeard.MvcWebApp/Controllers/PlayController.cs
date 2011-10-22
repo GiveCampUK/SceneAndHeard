@@ -36,6 +36,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult Create()
         {
             ViewBag.PossibleStudents = context.Students.AsQueryable().OrderBy(x => x.Forename).ThenBy(x=> x.Surname);
+            ViewBag.PossibleProductions = context.Productions.AsQueryable().OrderBy(x => x.Title);
             return View();
         } 
 
@@ -63,6 +64,7 @@ namespace SceneAndHeard.Controllers
         {
             Play play = context.Plays.Single(x => x.PlayId == id);
             ViewBag.PossibleStudents = context.Students;
+            ViewBag.PossibleProductions = context.Productions.AsQueryable().OrderBy(x => x.Title);
             return View(play);
         }
 
