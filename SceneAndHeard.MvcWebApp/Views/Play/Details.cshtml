@@ -1,23 +1,35 @@
-@model SceneCrm.Entities.Play
-
+﻿@model SceneCrm.Entities.Play
 @{
-    ViewBag.Title = "Details";
+    Layout = null;
 }
-
-<h2>Details</h2>
-
-<fieldset>
-    <legend>Play</legend>
-
-    <div class="display-label">Title</div>
-    <div class="display-field">@Model.Title</div>
-
-    <div class="display-label">PlayVolunteers</div>
-    <div class="display-field">@(Model.PlayVolunteers == null ? "None" : Model.PlayVolunteers.Count.ToString())</div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.PlayId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Details</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Play</legend>
+        <div class="display-label">
+            StudentId</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.StudentId)
+        </div>
+        <div class="display-label">
+            Title</div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Title)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.PlayId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <fieldset title="Volunteers">
+        @foreach (var volunteer in Model.PlayVolunteers)
+        {
+            @Html.ActionLink(volunteer.Volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) <br />
+        }
+    </fieldset>
+</body>
+</html>

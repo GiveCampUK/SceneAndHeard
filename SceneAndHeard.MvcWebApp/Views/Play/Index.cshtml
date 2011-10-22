@@ -16,7 +16,7 @@
             Title
         </th>
         <th>
-            Play Volunteers
+           Student
         </th>
     </tr>
 
@@ -31,7 +31,9 @@
 			@item.Title
         </td>
         <td>
-			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
+
+        @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
+			
         </td>
     </tr>
 }

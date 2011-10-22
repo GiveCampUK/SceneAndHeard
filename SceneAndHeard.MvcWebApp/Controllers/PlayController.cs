@@ -26,7 +26,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Details(int id)
         {
-            Play play = context.Plays.Single(x => x.PlayId == id);
+            Play play = context.Plays.SingleOrDefault(x => x.PlayId == id);
             return View(play);
         }
 
@@ -35,7 +35,7 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PossibleStudents = context.Students;
+            ViewBag.PossibleStudents = context.Students.AsQueryable().OrderBy(x => x.Forename).ThenBy(x=> x.Surname);
             return View();
         } 
 
