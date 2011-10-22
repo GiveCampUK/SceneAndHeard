@@ -1,0 +1,33 @@
+﻿@model SceneCrm.Entities.Performance
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Performance</legend>
+
+    <div class="display-label">Production</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Production.Title)
+    </div>
+
+    <div class="display-label">PerformanceDateTime</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PerformanceDateTime)
+    </div>
+
+    <div class="display-label">EventBriteId</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EventBriteId)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

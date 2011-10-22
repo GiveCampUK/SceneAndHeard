@@ -15,31 +15,30 @@
         <th>
             Description
         </th>
-        <th>
-            CourseVolunteers
+       @* <th>
+            Course Volunteers
         </th>
         <th>
-            PlayVolunteers
+            Play Volunteers
         </th>
         <th>
-            ProductionVolunteers
+            Production Volunteers
         </th>
         <th>
             Volunteers
-        </th>
+        </th>*@
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JobId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.JobId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.JobId })
         </td>
         <td>
 			@item.Description
         </td>
-        <td>
+        @*<td>
 			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
         </td>
         <td>
@@ -50,7 +49,7 @@
         </td>
         <td>
 			@(item.Volunteers == null ? "None" : item.Volunteers.Count.ToString())
-        </td>
+        </td>*@
     </tr>
 }
 

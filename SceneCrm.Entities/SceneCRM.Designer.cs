@@ -28,12 +28,13 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("Model", "FK_CrbCheck_Volunteer", "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Volunteer), "CrbCheck", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.CrbCheck), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_PlayVolunteer_Job", "Job", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Job), "PlayVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.PlayVolunteer), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_ProductionVolunteer_Job", "Job", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Job), "ProductionVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.ProductionVolunteer), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_Performance_Production", "Production", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Production), "Performance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Performance), true)]
+[assembly: EdmRelationshipAttribute("Model", "FK_Play_Student", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Student), "Play", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Play), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_PlayVolunteer_Play", "Play", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Play), "PlayVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.PlayVolunteer), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_PlayVolunteer_Volunteer", "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Volunteer), "PlayVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.PlayVolunteer), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_ProductionVolunteer_Production", "Production", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Production), "ProductionVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.ProductionVolunteer), true)]
 [assembly: EdmRelationshipAttribute("Model", "FK_ProductionVolunteer_Volunteer", "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SceneCrm.Entities.Volunteer), "ProductionVolunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.ProductionVolunteer), true)]
 [assembly: EdmRelationshipAttribute("Model", "VolunteerCapability", "Job", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Job), "Volunteer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Volunteer))]
-[assembly: EdmRelationshipAttribute("Model", "FK_Performance_Production", "Production", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SceneCrm.Entities.Production), "Performance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SceneCrm.Entities.Performance), true)]
 
 #endregion
 
@@ -1940,6 +1941,44 @@ namespace SceneCrm.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_Play_Student", "Student")]
+        public Student Student
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("Model.FK_Play_Student", "Student").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("Model.FK_Play_Student", "Student").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Student> StudentReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("Model.FK_Play_Student", "Student");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Student>("Model.FK_Play_Student", "Student", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_PlayVolunteer_Play", "PlayVolunteer")]
         public EntityCollection<PlayVolunteer> PlayVolunteers
         {
@@ -2298,28 +2337,6 @@ namespace SceneCrm.Entities
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ProductionVolunteer_Production", "ProductionVolunteer")]
-        public EntityCollection<ProductionVolunteer> ProductionVolunteers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductionVolunteer>("Model.FK_ProductionVolunteer_Production", "ProductionVolunteer");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductionVolunteer>("Model.FK_ProductionVolunteer_Production", "ProductionVolunteer", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("Model", "FK_Performance_Production", "Performance")]
         public EntityCollection<Performance> Performances
         {
@@ -2332,6 +2349,28 @@ namespace SceneCrm.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Performance>("Model.FK_Performance_Production", "Performance", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_ProductionVolunteer_Production", "ProductionVolunteer")]
+        public EntityCollection<ProductionVolunteer> ProductionVolunteers
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ProductionVolunteer>("Model.FK_ProductionVolunteer_Production", "ProductionVolunteer");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ProductionVolunteer>("Model.FK_ProductionVolunteer_Production", "ProductionVolunteer", value);
                 }
             }
         }
@@ -2606,14 +2645,14 @@ namespace SceneCrm.Entities
         /// <summary>
         /// Create a new Student object.
         /// </summary>
-        /// <param name="childId">Initial value of the ChildId property.</param>
-        /// <param name="reference">Initial value of the Reference property.</param>
+        /// <param name="studentId">Initial value of the StudentId property.</param>
+        /// <param name="membershipNumber">Initial value of the MembershipNumber property.</param>
         /// <param name="surname">Initial value of the Surname property.</param>
-        public static Student CreateStudent(global::System.Int32 childId, global::System.String reference, global::System.String surname)
+        public static Student CreateStudent(global::System.Int32 studentId, global::System.String membershipNumber, global::System.String surname)
         {
             Student student = new Student();
-            student.ChildId = childId;
-            student.Reference = reference;
+            student.StudentId = studentId;
+            student.MembershipNumber = membershipNumber;
             student.Surname = surname;
             return student;
         }
@@ -2626,75 +2665,75 @@ namespace SceneCrm.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 ChildId
+        public global::System.Int32 StudentId
         {
             get
             {
-                return _ChildId;
+                return _StudentId;
             }
             set
             {
-                if (_ChildId != value)
+                if (_StudentId != value)
                 {
-                    OnChildIdChanging(value);
-                    ReportPropertyChanging("ChildId");
-                    _ChildId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ChildId");
-                    OnChildIdChanged();
+                    OnStudentIdChanging(value);
+                    ReportPropertyChanging("StudentId");
+                    _StudentId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("StudentId");
+                    OnStudentIdChanged();
                 }
             }
         }
-        private global::System.Int32 _ChildId;
-        partial void OnChildIdChanging(global::System.Int32 value);
-        partial void OnChildIdChanged();
+        private global::System.Int32 _StudentId;
+        partial void OnStudentIdChanging(global::System.Int32 value);
+        partial void OnStudentIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Reference
+        public global::System.String MembershipNumber
         {
             get
             {
-                return _Reference;
+                return _MembershipNumber;
             }
             set
             {
-                OnReferenceChanging(value);
-                ReportPropertyChanging("Reference");
-                _Reference = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Reference");
-                OnReferenceChanged();
+                OnMembershipNumberChanging(value);
+                ReportPropertyChanging("MembershipNumber");
+                _MembershipNumber = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("MembershipNumber");
+                OnMembershipNumberChanged();
             }
         }
-        private global::System.String _Reference;
-        partial void OnReferenceChanging(global::System.String value);
-        partial void OnReferenceChanged();
+        private global::System.String _MembershipNumber;
+        partial void OnMembershipNumberChanging(global::System.String value);
+        partial void OnMembershipNumberChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String FirstName
+        public global::System.String Forename
         {
             get
             {
-                return _FirstName;
+                return _Forename;
             }
             set
             {
-                OnFirstNameChanging(value);
-                ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FirstName");
-                OnFirstNameChanged();
+                OnForenameChanging(value);
+                ReportPropertyChanging("Forename");
+                _Forename = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Forename");
+                OnForenameChanged();
             }
         }
-        private global::System.String _FirstName;
-        partial void OnFirstNameChanging(global::System.String value);
-        partial void OnFirstNameChanged();
+        private global::System.String _Forename;
+        partial void OnForenameChanging(global::System.String value);
+        partial void OnForenameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2742,6 +2781,28 @@ namespace SceneCrm.Entities
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CourseAttendance>("Model.FK_CourseAttendance_Child", "CourseAttendance", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("Model", "FK_Play_Student", "Play")]
+        public EntityCollection<Play> Plays
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Play>("Model.FK_Play_Student", "Play");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Play>("Model.FK_Play_Student", "Play", value);
                 }
             }
         }
