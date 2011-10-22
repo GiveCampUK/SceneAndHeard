@@ -22,7 +22,10 @@ namespace SceneCrm.Entities
 
         public bool HasValidCrbCheck
         {
-            get { return CrbChecks.Max(crb => crb.DateCheckExpires > DateTime.Today); }
+            get {
+                //return CrbChecks.Max(crb => crb.DateCheckExpires > DateTime.Today); }
+                return (false);
+            }
         }
 
         public bool HasAttendedAPerformance
