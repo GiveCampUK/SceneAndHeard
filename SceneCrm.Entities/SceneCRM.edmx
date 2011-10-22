@@ -57,6 +57,10 @@
             <End Role="Production" EntitySet="Production" />
             <End Role="Performance" EntitySet="Performance" />
           </AssociationSet>
+          <AssociationSet Name="FK_Play_Student" Association="Model.Store.FK_Play_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Play" EntitySet="Play" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlayVolunteer_Job" Association="Model.Store.FK_PlayVolunteer_Job">
             <End Role="Job" EntitySet="Job" />
             <End Role="PlayVolunteer" EntitySet="PlayVolunteer" />
@@ -194,9 +198,9 @@
         </EntityType>
         <EntityType Name="Student">
           <Key>
-            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="StudentId" />
           </Key>
-          <Property Name="ChildId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MembershipNumber" Type="varchar" Nullable="false" MaxLength="16" />
           <Property Name="Forename" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="64" />
@@ -259,7 +263,7 @@
           <End Role="CourseAttendance" Type="Model.Store.CourseAttendance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
-              <PropertyRef Name="ChildId" />
+              <PropertyRef Name="StudentId" />
             </Principal>
             <Dependent Role="CourseAttendance">
               <PropertyRef Name="StudentId" />
@@ -343,6 +347,20 @@
             </Principal>
             <Dependent Role="Performance">
               <PropertyRef Name="ProductionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Play_Student">
+          <End Role="Student" Type="Model.Store.Student" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Play" Type="Model.Store.Play" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Play">
+              <PropertyRef Name="StudentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -511,6 +529,14 @@
             <End Role="Job" EntitySet="Jobs" />
             <End Role="ProductionVolunteer" EntitySet="ProductionVolunteers" />
           </AssociationSet>
+          <AssociationSet Name="FK_Performance_Production" Association="Model.FK_Performance_Production">
+            <End Role="Production" EntitySet="Productions" />
+            <End Role="Performance" EntitySet="Performances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Play_Student" Association="Model.FK_Play_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Play" EntitySet="Plays" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlayVolunteer_Play" Association="Model.FK_PlayVolunteer_Play">
             <End Role="Play" EntitySet="Plays" />
             <End Role="PlayVolunteer" EntitySet="PlayVolunteers" />
@@ -531,16 +557,12 @@
             <End Role="Job" EntitySet="Jobs" />
             <End Role="Volunteer" EntitySet="Volunteers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Performance_Production" Association="Model.FK_Performance_Production">
-            <End Role="Production" EntitySet="Productions" />
-            <End Role="Performance" EntitySet="Performances" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
           </Key>
-          <Property Type="Int32" Name="CourseId" Nullable="false" />
+          <Property Type="Int32" Name="CourseId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="CourseTypeCode" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="TermId" />
           <Property Type="Int32" Name="Year" />
@@ -624,6 +646,7 @@
           <Property Type="Int32" Name="PlayId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="StudentId" Nullable="false" />
           <Property Type="String" Name="Title" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Student" Relationship="Model.FK_Play_Student" FromRole="Play" ToRole="Student" />
           <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Play" FromRole="Play" ToRole="PlayVolunteer" />
         </EntityType>
         <EntityType Name="PlayVolunteer">
@@ -646,8 +669,8 @@
           </Key>
           <Property Type="Int32" Name="ProductionId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Title" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Production" FromRole="Production" ToRole="ProductionVolunteer" />
           <NavigationProperty Name="Performances" Relationship="Model.FK_Performance_Production" FromRole="Production" ToRole="Performance" />
+          <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Production" FromRole="Production" ToRole="ProductionVolunteer" />
         </EntityType>
         <EntityType Name="ProductionVolunteer">
           <Key>
@@ -665,19 +688,20 @@
         </EntityType>
         <EntityType Name="Student">
           <Key>
-            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="StudentId" />
           </Key>
-          <Property Type="Int32" Name="ChildId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Surname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Student" ToRole="CourseAttendance" />
+          <Property Type="Int32" Name="StudentId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="MembershipNumber" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Forename" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Surname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Student" ToRole="CourseAttendance" />
+          <NavigationProperty Name="Plays" Relationship="Model.FK_Play_Student" FromRole="Student" ToRole="Play" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
             <PropertyRef Name="TermId" />
           </Key>
-          <Property Type="Int32" Name="TermId" Nullable="false" />
+          <Property Type="Int32" Name="TermId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="TermName" MaxLength="16" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Courses" Relationship="Model.FK_Course_Term" FromRole="Term" ToRole="Course" />
         </EntityType>
@@ -689,12 +713,12 @@
           <Property Type="String" Name="FirstName" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Surname" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PerformanceAttended" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="AvailableFrom" />
           <NavigationProperty Name="CourseVolunteers" Relationship="Model.FK_CourseVolunteer_Volunteer" FromRole="Volunteer" ToRole="CourseVolunteer" />
           <NavigationProperty Name="CrbChecks" Relationship="Model.FK_CrbCheck_Volunteer" FromRole="Volunteer" ToRole="CrbCheck" />
           <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Volunteer" FromRole="Volunteer" ToRole="PlayVolunteer" />
           <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Volunteer" FromRole="Volunteer" ToRole="ProductionVolunteer" />
           <NavigationProperty Name="Jobs" Relationship="Model.VolunteerCapability" FromRole="Volunteer" ToRole="Job" />
-          <Property Type="DateTime" Name="AvailableFrom" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Type="Model.CourseType" Role="CourseType" Multiplicity="0..1" />
@@ -749,7 +773,7 @@
           <End Type="Model.CourseAttendance" Role="CourseAttendance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Student">
-              <PropertyRef Name="ChildId" />
+              <PropertyRef Name="StudentId" />
             </Principal>
             <Dependent Role="CourseAttendance">
               <PropertyRef Name="StudentId" />
@@ -816,6 +840,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Performance_Production">
+          <End Type="Model.Production" Role="Production" Multiplicity="0..1" />
+          <End Type="Model.Performance" Role="Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Production">
+              <PropertyRef Name="ProductionId" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="ProductionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Play_Student">
+          <End Type="Model.Student" Role="Student" Multiplicity="1" />
+          <End Type="Model.Play" Role="Play" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Play">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlayVolunteer_Play">
           <End Type="Model.Play" Role="Play" Multiplicity="1" />
           <End Type="Model.PlayVolunteer" Role="PlayVolunteer" Multiplicity="*" />
@@ -867,18 +915,6 @@
         <Association Name="VolunteerCapability">
           <End Type="Model.Job" Role="Job" Multiplicity="*" />
           <End Type="Model.Volunteer" Role="Volunteer" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_Performance_Production">
-          <End Type="Model.Production" Role="Production" Multiplicity="0..1" />
-          <End Type="Model.Performance" Role="Performance" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Production">
-              <PropertyRef Name="ProductionId" />
-            </Principal>
-            <Dependent Role="Performance">
-              <PropertyRef Name="ProductionId" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -995,10 +1031,10 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="Model.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Forename" ColumnName="Forename" />
                 <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1049,111 +1085,119 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="SceneCRM" ZoomLevel="78">
-        <EntityTypeShape EntityType="Model.Course" Width="1.5" PointX="6" PointY="4.5" Height="2.5571907552083317" />
-        <EntityTypeShape EntityType="Model.CourseAttendance" Width="1.5" PointX="8.25" PointY="4.75" Height="1.9802864583333317" />
-        <EntityTypeShape EntityType="Model.CourseType" Width="1.5" PointX="3.75" PointY="3.75" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="Model.CourseVolunteer" Width="1.5" PointX="8.25" PointY="12.5" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model.CrbCheck" Width="1.5" PointX="5.25" PointY="16.875" Height="2.749492187499996" />
-        <EntityTypeShape EntityType="Model.Job" Width="1.5" PointX="0.75" PointY="7.875" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="Model.Performance" Width="1.5" PointX="0.875" PointY="2.25" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="Model.Play" Width="1.5" PointX="3" PointY="8.875" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="Model.PlayVolunteer" Width="1.5" PointX="5.25" PointY="8.5" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model.Production" Width="1.5" PointX="3" PointY="13" Height="1.5956835937499996" />
-        <EntityTypeShape EntityType="Model.ProductionVolunteer" Width="1.5" PointX="5.25" PointY="12.5" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model.Student" Width="1.5" PointX="6" PointY="0.75" Height="1.9802864583333339" />
-        <EntityTypeShape EntityType="Model.Term" Width="1.5" PointX="3.75" PointY="6.125" Height="1.5956835937500031" />
-        <EntityTypeShape EntityType="Model.Volunteer" Width="1.5" PointX="3" PointY="16.875" Height="2.749492187499996" />
+      <Diagram Name="SceneCRM" ZoomLevel="53">
+        <EntityTypeShape EntityType="Model.Course" Width="1.5" PointX="3" PointY="11.5" Height="2.5571907552083388" />
+        <EntityTypeShape EntityType="Model.CourseAttendance" Width="1.5" PointX="8" PointY="7.875" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="Model.CourseType" Width="1.5" PointX="0.75" PointY="10.75" Height="1.5956835937500031" />
+        <EntityTypeShape EntityType="Model.CourseVolunteer" Width="1.5" PointX="5.25" PointY="11.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model.CrbCheck" Width="1.5" PointX="5.25" PointY="15.875" Height="2.7494921875000014" />
+        <EntityTypeShape EntityType="Model.Job" Width="1.5" PointX="0.75" PointY="6.75" Height="2.1725878906250022" />
+        <EntityTypeShape EntityType="Model.Performance" Width="1.5" PointX="5.25" PointY="0.75" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="Model.Play" Width="1.5" PointX="6" PointY="3.75" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="Model.PlayVolunteer" Width="1.5" PointX="8.25" PointY="11.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model.Production" Width="1.5" PointX="3" PointY="7.875" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="Model.ProductionVolunteer" Width="1.5" PointX="5.25" PointY="7.5" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="Model.Student" Width="1.5" PointX="3.75" PointY="3.625" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="Model.Term" Width="1.5" PointX="0.75" PointY="13.125" Height="1.595683593749996" />
+        <EntityTypeShape EntityType="Model.Volunteer" Width="1.5" PointX="3" PointY="15.75" Height="2.9417936197916692" />
         <AssociationConnector Association="Model.FK_Course_CourseType" >
-          <ConnectorPoint PointX="5.25" PointY="4.922841796875" />
-          <ConnectorPoint PointX="6" PointY="4.922841796875" />
+          <ConnectorPoint PointX="2.25" PointY="11.922841796875002" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="11.922841796875002" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="11.922841796875002" />
+          <ConnectorPoint PointX="3" PointY="11.922841796875002" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_Course_Term" >
-          <ConnectorPoint PointX="5.25" PointY="6.5910953776041659" />
-          <ConnectorPoint PointX="6" PointY="6.5910953776041659" />
+          <ConnectorPoint PointX="2.25" PointY="13.591095377604169" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="13.591095377604169" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="13.591095377604169" />
+          <ConnectorPoint PointX="3" PointY="13.591095377604169" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseAttendance_Course" >
-          <ConnectorPoint PointX="7.5" PointY="5.7401432291666659" />
-          <ConnectorPoint PointX="8.25" PointY="5.7401432291666659" />
+          <ConnectorPoint PointX="4.5" PointY="13.992290039062503" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="13.992290039062501" />
+          <ConnectorPoint PointX="5.114583333333333" PointY="13.992290039062503" />
+          <ConnectorPoint PointX="8.09375" PointY="13.992290039062503" />
+          <ConnectorPoint PointX="8.09375" PointY="9.8552864583333388" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Course" >
-          <ConnectorPoint PointX="7.5" PointY="7.0571907552083317" />
-          <ConnectorPoint PointX="7.875" PointY="7.4321907552083317" />
-          <ConnectorPoint PointX="7.875" PointY="13.682444661458334" />
-          <ConnectorPoint PointX="8.25" PointY="13.682444661458334" />
+          <ConnectorPoint PointX="4.5" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="12.682444661458334" />
+          <ConnectorPoint PointX="5.25" PointY="12.682444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseAttendance_Child" >
-          <ConnectorPoint PointX="7.5" PointY="1.7401432291666672" />
-          <ConnectorPoint PointX="9" PointY="1.7401432291666672" />
-          <ConnectorPoint PointX="9" PointY="4.75" />
+          <ConnectorPoint PointX="5.25" PointY="3.65625" />
+          <ConnectorPoint PointX="8.75" PointY="3.65625" />
+          <ConnectorPoint PointX="8.75" PointY="7.875" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Job" >
-          <ConnectorPoint PointX="2.25" PointY="8.15625" />
-          <ConnectorPoint PointX="2.2604166666666665" PointY="8.15625" />
-          <ConnectorPoint PointX="2.4270833333333335" PointY="8.15625" />
-          <ConnectorPoint PointX="7.791666666666667" PointY="8.15625" />
-          <ConnectorPoint PointX="7.958333333333333" PointY="8.15625" />
-          <ConnectorPoint PointX="9" PointY="8.15625" />
-          <ConnectorPoint PointX="9" PointY="12.5" />
+          <ConnectorPoint PointX="2.25" PointY="8.8660484290865416" />
+          <ConnectorPoint PointX="2.78125" PointY="9.3972984290865416" />
+          <ConnectorPoint PointX="2.78125" PointY="11.125" />
+          <ConnectorPoint PointX="4.8761528461538459" PointY="11.125" />
+          <ConnectorPoint PointX="5.2511528461538459" PointY="11.5" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.5" PointY="16.913075923076921" />
-          <ConnectorPoint PointX="4.9130759230769208" PointY="16.5" />
-          <ConnectorPoint PointX="9" PointY="16.5" />
-          <ConnectorPoint PointX="9" PointY="14.864889322916667" />
+          <ConnectorPoint PointX="4.5" PointY="15.807691307692309" />
+          <ConnectorPoint PointX="5.03125" PointY="15.276441307692309" />
+          <ConnectorPoint PointX="5.03125" PointY="13.304918992187496" />
+          <ConnectorPoint PointX="5.25" PointY="13.304918992187496" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CrbCheck_Volunteer" >
-          <ConnectorPoint PointX="4.5" PointY="18.28157501682692" />
-          <ConnectorPoint PointX="5.25" PointY="18.28157501682692" />
+          <ConnectorPoint PointX="4.5" PointY="17.24974609375" />
+          <ConnectorPoint PointX="5.25" PointY="17.24974609375" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_PlayVolunteer_Job" >
-          <ConnectorPoint PointX="2.25" PointY="8.65625" />
-          <ConnectorPoint PointX="2.2604166666666665" PointY="8.65625" />
-          <ConnectorPoint PointX="2.4270833333333335" PointY="8.65625" />
-          <ConnectorPoint PointX="5.25" PointY="8.65625" />
+          <ConnectorPoint PointX="2.25" PointY="7.09375" />
+          <ConnectorPoint PointX="3.2604166666666665" PointY="7.0937499999999991" />
+          <ConnectorPoint PointX="3.4270833333333335" PointY="7.09375" />
+          <ConnectorPoint PointX="8.6666666666666661" PointY="7.0937499999999991" />
+          <ConnectorPoint PointX="8.8333333333333339" PointY="7.09375" />
+          <ConnectorPoint PointX="9.65625" PointY="7.09375" />
+          <ConnectorPoint PointX="9.65625" PointY="11.5" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_ProductionVolunteer_Job" >
-          <ConnectorPoint PointX="1.5" PointY="10.047587890625" />
-          <ConnectorPoint PointX="1.5" PointY="12.71875" />
-          <ConnectorPoint PointX="1.8229191666666667" PointY="12.71875" />
-          <ConnectorPoint PointX="1.9895858333333332" PointY="12.71875" />
-          <ConnectorPoint PointX="2.2604166666666665" PointY="12.71875" />
-          <ConnectorPoint PointX="2.4270833333333335" PointY="12.71875" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="12.71875" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="12.71875" />
-          <ConnectorPoint PointX="5.25" PointY="12.71875" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_PlayVolunteer_Play" >
-          <ConnectorPoint PointX="4.5" PointY="9.7689925130208337" />
-          <ConnectorPoint PointX="5.25" PointY="9.7689925130208337" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_PlayVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.4630769230769225" PointY="16.875" />
-          <ConnectorPoint PointX="4.875" PointY="16.463076923076922" />
-          <ConnectorPoint PointX="4.875" PointY="10.348192917968753" />
-          <ConnectorPoint PointX="5.25" PointY="10.348192917968753" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_ProductionVolunteer_Production" >
-          <ConnectorPoint PointX="4.5" PointY="13.618808779947917" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="13.618808779947917" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="13.618808779947917" />
-          <ConnectorPoint PointX="5.25" PointY="13.618808779947917" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.FK_ProductionVolunteer_Volunteer" >
-          <ConnectorPoint PointX="4.5" PointY="16.907306692307689" />
-          <ConnectorPoint PointX="5.03125" PointY="16.376056692307689" />
-          <ConnectorPoint PointX="5.03125" PointY="14.362617559895835" />
-          <ConnectorPoint PointX="5.25" PointY="14.362617559895835" />
-        </AssociationConnector>
-        <AssociationConnector Association="Model.VolunteerCapability" >
-          <ConnectorPoint PointX="1.9062525" PointY="10.047587890625" />
-          <ConnectorPoint PointX="1.9062525" PointY="18.249746093749998" />
-          <ConnectorPoint PointX="3" PointY="18.249746093749998" />
+          <ConnectorPoint PointX="2.25" PointY="7.65625" />
+          <ConnectorPoint PointX="3.2604166666666665" PointY="7.6562499999999991" />
+          <ConnectorPoint PointX="3.4270833333333335" PointY="7.65625" />
+          <ConnectorPoint PointX="5.25" PointY="7.65625" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_Performance_Production" >
-          <ConnectorPoint PointX="3" PointY="13.893992513020834" />
-          <ConnectorPoint PointX="2.34375" PointY="13.893992513020834" />
-          <ConnectorPoint PointX="2.34375" PointY="4.2302864583333335" />
+          <ConnectorPoint PointX="3.34375" PointY="7.875" />
+          <ConnectorPoint PointX="3.34375" PointY="1.7401432291666694" />
+          <ConnectorPoint PointX="5.25" PointY="1.7401432291666694" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Play_Student" >
+          <ConnectorPoint PointX="5.25" PointY="4.7401432291666694" />
+          <ConnectorPoint PointX="6" PointY="4.7401432291666694" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_PlayVolunteer_Play" >
+          <ConnectorPoint PointX="7.5" PointY="4.7401432291666694" />
+          <ConnectorPoint PointX="8.6666666666666661" PointY="4.7401432291666685" />
+          <ConnectorPoint PointX="8.8333333333333339" PointY="4.7401432291666694" />
+          <ConnectorPoint PointX="9.6249975" PointY="4.7401432291666694" />
+          <ConnectorPoint PointX="9.6249975" PointY="11.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_PlayVolunteer_Volunteer" >
+          <ConnectorPoint PointX="4.5" PointY="15.78125" />
+          <ConnectorPoint PointX="9" PointY="15.78125" />
+          <ConnectorPoint PointX="9" PointY="13.864889322916667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_ProductionVolunteer_Production" >
+          <ConnectorPoint PointX="4.5" PointY="8.7689925130208337" />
+          <ConnectorPoint PointX="5.25" PointY="8.7689925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_ProductionVolunteer_Volunteer" >
+          <ConnectorPoint PointX="4.47576923076923" PointY="15.75" />
+          <ConnectorPoint PointX="4.875" PointY="15.350769230769231" />
+          <ConnectorPoint PointX="4.875" PointY="9.3481929179687455" />
+          <ConnectorPoint PointX="5.25" PointY="9.3481929179687455" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.VolunteerCapability" >
+          <ConnectorPoint PointX="2.2257692307692296" PointY="8.9225878906250031" />
+          <ConnectorPoint PointX="2.625" PointY="9.3218186598557722" />
+          <ConnectorPoint PointX="2.625" PointY="17.220896809895834" />
+          <ConnectorPoint PointX="3" PointY="17.220896809895834" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
