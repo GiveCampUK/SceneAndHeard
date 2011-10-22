@@ -113,5 +113,15 @@ namespace SceneAndHeard.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult Eligible()
+        {
+            var volunteers = context.Volunteers.Where(v => v.IsEligible && v.AvailableFrom >= DateTime.Today);
+            return View("EligibleVolunteers", volunteers);
+        }
+
+
+
     }
 }
