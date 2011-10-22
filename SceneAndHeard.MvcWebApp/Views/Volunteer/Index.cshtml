@@ -1,0 +1,93 @@
+@model IEnumerable<SceneCrm.Entities.Volunteer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Volunteer List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<p>
+
+@using (Html.BeginForm("Search","Volunteer", FormMethod.Post))  {
+    
+   @:Search:
+    <input type='text' value='' name='searchPhrase' />
+    <input type="submit" value="Search" />
+}    
+
+
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Surname
+        </th>
+        <th>
+            Performance Attended
+        </th>
+        <th>
+            Available From
+        </th>
+        <th>
+            Course Volunteers
+        </th>
+        <th>
+            Crb Expiry
+        </th>
+        <th>
+            Play Volunteers
+        </th>
+        <th>
+            Production Volunteers
+        </th>
+        <th>
+            Jobs
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.VolunteerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.VolunteerId })
+        </td>
+        <td>
+			@item.FirstName
+        </td>
+        <td>
+			@item.Surname
+        </td>
+        <td>
+			@item.PerformanceAttended
+        </td>
+        <td>
+			@String.Format("{0:d}", item.AvailableFrom)
+        </td>
+        <td>
+			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+        </td>
+        <td>
+			@( item.CrbChecks == null || item.CrbChecks.Count == 0 ? "None" : item.CrbChecks.Max(c => c.DateCheckExpires).Value.ToShortDateString())
+        </td>
+        <td>
+			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
+        </td>
+        <td>
+			@(item.ProductionVolunteers == null ? "None" : item.ProductionVolunteers.Count.ToString())
+        </td>
+        <td>
+			@(item.Jobs == null ? "None" : item.Jobs.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+

@@ -2975,6 +2975,30 @@ namespace SceneCrm.Entities
         private global::System.String _PerformanceAttended;
         partial void OnPerformanceAttendedChanging(global::System.String value);
         partial void OnPerformanceAttendedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AvailableFrom
+        {
+            get
+            {
+                return _AvailableFrom;
+            }
+            set
+            {
+                OnAvailableFromChanging(value);
+                ReportPropertyChanging("AvailableFrom");
+                _AvailableFrom = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AvailableFrom");
+                OnAvailableFromChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AvailableFrom;
+        partial void OnAvailableFromChanging(Nullable<global::System.DateTime> value);
+        partial void OnAvailableFromChanged();
 
         #endregion
     
