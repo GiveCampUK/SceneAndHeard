@@ -1,0 +1,44 @@
+@model SceneCrm.Entities.Volunteer
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    First Name
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.FirstName)
+    @Html.ValidationMessageFor(model => model.FirstName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Surname)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Surname)
+    @Html.ValidationMessageFor(model => model.Surname)
+</div>
+
+<div class="editor-label">
+    Performance Attended
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.PerformanceAttended)
+    @Html.ValidationMessageFor(model => model.PerformanceAttended)
+</div>
+
+<div class="editor-label">
+   Available From
+</div>
+<div class="editor-field">
+
+<script>
+    $(function () {
+        $("#AvailableFrom").datepicker($.datepicker.regional['en-GB']);
+    });
+    </script>
+
+    @Html.EditorFor(model => model.AvailableFrom)
+
+    @Html.ValidationMessageFor(model => model.AvailableFrom)
+</div>
+
