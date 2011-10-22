@@ -28,24 +28,44 @@ namespace SceneCrm.Importer {
                 var pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
                 context.CourseTypes.AddObject(rp);
                 context.SaveChanges();
+
+
+
                 var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
                 foreach (var row in ss.Rows) {
                     var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
                     if (row.AttendedPm1) {
                         var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
+
+                        var dramaturg = context.Jobs.FindOrMake("Dramaturg");
+
                         var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
+
                         if (course != null) {
                             student.CourseAttendances.Add(new CourseAttendance() {
                                 Student = student,
                                 Course = course,
                                 Completed = true
                             });
+                            var dt = context.Volunteers.FindOrMake(row.PlaymakingOneDramaturg);
+                            if (dt != null) {
+                                var job = context.Jobs.FindOrMake(Jobs.Dramaturg);
+                                if (!dt.CourseVolunteers.Any(cv => cv.Job == job && cv.Course == course)) {
+                                    context.CourseVolunteers.AddObject(new CourseVolunteer() {
+                                        Course = course,
+                                        Volunteer = dt,
+                                        Job = job
+                                    });
+                                }
+                            }
                         }
+
+                        Console.WriteLine("Added " + student.Forename + " " + student.Surname);
+                        context.SaveChanges();
                     }
-                    Console.WriteLine("Added " + student.Forename + " " + student.Surname);
-                    context.SaveChanges();
                 }
             }
+
 
             //    foreach (var ct in context.CourseTypes) {
             //        Console.WriteLine(ct.CourseTypeName);
@@ -106,6 +126,17 @@ namespace SceneCrm.Importer {
             }
             return (course);
         }
+
+        public static Job FindOrMake(this ObjectSet<Job> jobs, string jobTitle) {
+            var job = jobs.FirstOrDefault(j => j.Description == jobTitle);
+            if (job == default(Job)) {
+                job = new Job() { Description = jobTitle };
+                jobs.AddObject(job);
+                jobs.Context.SaveChanges();
+            }
+            return (job);
+        }
+
         public static Term FindOrMake(this ObjectSet<Term> terms, string termName) {
             var term = terms.FirstOrDefault(t => t.TermName == termName);
             if (term == default(Term)) {
@@ -115,5 +146,36 @@ namespace SceneCrm.Importer {
             }
             return (term);
         }
+        public static Volunteer FindOrMake(this ObjectSet<Volunteer> volunteers, string volunteerName) {
+            if (string.IsNullOrWhiteSpace(volunteerName)) return (null);
+            string forename, surname;
+            var tokens = volunteerName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (tokens.Length == 2) {
+                forename = tokens[0];
+                surname = tokens[1];
+            } else if (tokens.Length > 2) {
+                surname = tokens[tokens.Length - 1];
+                forename = String.Join(" ", tokens.Take(tokens.Length - 1).ToArray());
+            } else {
+                surname = volunteerName;
+                forename = String.Empty;
+            }
+            var volunteer = volunteers.FirstOrDefault(v => v.FirstName == forename && v.Surname == surname);
+            if (volunteer == default(Volunteer)) {
+                volunteer = new Volunteer() {
+                    FirstName = forename,
+                    Surname = surname,
+                };
+                volunteers.AddObject(volunteer);
+                volunteers.Context.SaveChanges();
+            }
+            return (volunteer);
+        }
+
+    }
+
+    public static class Jobs {
+        public const string Dramaturg = "Dramaturg";
+        public const string Actor = "Actor";
     }
 }
