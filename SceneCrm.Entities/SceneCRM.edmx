@@ -94,7 +94,7 @@
           <Key>
             <PropertyRef Name="CourseId" />
           </Key>
-          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CourseTypeCode" Type="varchar" MaxLength="8" />
           <Property Name="TermId" Type="int" />
           <Property Name="Year" Type="int" />
@@ -198,14 +198,14 @@
           </Key>
           <Property Name="ChildId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MembershipNumber" Type="varchar" Nullable="false" MaxLength="16" />
-          <Property Name="FirstName" Type="varchar" MaxLength="64" />
+          <Property Name="Forename" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="64" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
             <PropertyRef Name="TermId" />
           </Key>
-          <Property Name="TermId" Type="int" Nullable="false" />
+          <Property Name="TermId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TermName" Type="varchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="Volunteer">
@@ -668,10 +668,10 @@
             <PropertyRef Name="ChildId" />
           </Key>
           <Property Type="Int32" Name="ChildId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="FirstName" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Surname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Student" ToRole="CourseAttendance" />
           <Property Type="String" Name="MembershipNumber" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Forename" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
@@ -995,9 +995,9 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="Model.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
                 <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="ChildId" ColumnName="ChildId" />
               </MappingFragment>
             </EntityTypeMapping>

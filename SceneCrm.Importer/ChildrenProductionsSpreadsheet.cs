@@ -18,7 +18,7 @@ namespace SceneCrm.Importer {
             public string Surname { get { return (reader.IsDBNull(i = 2) ? (string)null : reader.GetString(i)); } }
             public string Forename { get { return (reader.IsDBNull(i = 3) ? (string)null : reader.GetString(i)); } }
             public string PlaymakingOneTerm { get { return (reader.IsDBNull(i = 4) ? (string)null : reader.GetString(i)); } }
-            public string PlaymakingOneYear { get { return (reader.IsDBNull(i = 5) ? (string)null : reader.GetString(i)); } }
+            public string PlaymakingOneYear { get { return (reader.IsDBNull(i = 5) ? (string)null : reader[i].ToString()); } }
             public string ReplayTerm { get { return (reader.IsDBNull(i = 6) ? (string)null : reader.GetString(i)); } }
             public string ReplayYear { get { return (reader.IsDBNull(i = 7) ? (string)null : reader.GetString(i)); } }
             public string StageOneTerm { get { return (reader.IsDBNull(i = 8) ? (string)null : reader.GetString(i)); } }
@@ -59,10 +59,20 @@ namespace SceneCrm.Importer {
             public string QuestionnaireResponses { get { return (reader.IsDBNull(i = 43) ? (string)null : reader.GetString(i)); } }
             public bool HasData {
                 get {
-                    return(!( reader.IsDBNull(0) || reader.IsDBNull(2)));
+                    if (this.Forename == "Forename" || this.Surname == "Surname") return (false);
+                    return (!(reader.IsDBNull(0) || reader.IsDBNull(2)));
+                }
+            }
+
+            public bool AttendedPm1 {
+                get {
+                    int year;
+                    if (Int32.TryParse(this.PlaymakingOneYear, out year)) return (!string.IsNullOrEmpty(this.PlaymakingOneTerm));
+                    return (false);
                 }
             }
         }
+        
 
         private string fullPathToExcelFile;
         public ChildrenProductionsSpreadsheet(string fullPathToExcelFile) {

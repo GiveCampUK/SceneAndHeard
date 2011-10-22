@@ -2651,30 +2651,6 @@ namespace SceneCrm.Entities
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String FirstName
-        {
-            get
-            {
-                return _FirstName;
-            }
-            set
-            {
-                OnFirstNameChanging(value);
-                ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("FirstName");
-                OnFirstNameChanged();
-            }
-        }
-        private global::System.String _FirstName;
-        partial void OnFirstNameChanging(global::System.String value);
-        partial void OnFirstNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String Surname
@@ -2719,6 +2695,30 @@ namespace SceneCrm.Entities
         private global::System.String _MembershipNumber;
         partial void OnMembershipNumberChanging(global::System.String value);
         partial void OnMembershipNumberChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Forename
+        {
+            get
+            {
+                return _Forename;
+            }
+            set
+            {
+                OnForenameChanging(value);
+                ReportPropertyChanging("Forename");
+                _Forename = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Forename");
+                OnForenameChanged();
+            }
+        }
+        private global::System.String _Forename;
+        partial void OnForenameChanging(global::System.String value);
+        partial void OnForenameChanged();
 
         #endregion
     
