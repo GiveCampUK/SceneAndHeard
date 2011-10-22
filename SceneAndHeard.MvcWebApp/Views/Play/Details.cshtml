@@ -7,7 +7,11 @@
     <div class="display-label">
         Student</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Student.Name)
+
+     @if (Model.Production != null)
+        {
+            @Html.ActionLink(Model.Student.Name, "Details", "Student", new { id = Model.StudentId }, null)
+        }
     </div>
     <div class="display-label">
         Title</div>
@@ -23,10 +27,7 @@
         }
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PlayId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 <fieldset>
     <legend>Volunteers</legend>
     @if (Model.PlayVolunteers.Count() == 0)
@@ -34,8 +35,13 @@
         <h3>
             No volunteers</h3>
     }
-    @foreach (var volunteer in Model.PlayVolunteers)
+    @foreach (var volunteer in Model.PlayVolunteers.OrderBy(x=>x.Job.Description))
     {
-        @Html.ActionLink(volunteer.Volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) <br />
+        @Html.ActionLink(volunteer.Volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) @:-  @volunteer.Job.Description <br />
     }
 </fieldset>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PlayId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
