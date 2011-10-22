@@ -16,7 +16,7 @@
             Title
         </th>
         <th>
-            Play Volunteers
+           Student
         </th>
     </tr>
 
@@ -24,14 +24,16 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PlayId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })
         </td>
         <td>
 			@item.Title
-
         </td>
         <td>
-		@*	@(item.Student.FirstName)*@
+
+        @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
+			
         </td>
     </tr>
 }
