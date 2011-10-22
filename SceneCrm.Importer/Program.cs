@@ -5,6 +5,7 @@ using System.Text;
 using SceneCrm.Entities;
 using System.Data.SqlClient;
 using System.Data.Objects;
+using SceneCrm.LegacyData;
 
 namespace SceneCrm.Importer {
     class Program {
@@ -57,13 +58,16 @@ namespace SceneCrm.Importer {
                                 AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
                                 AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
                                 AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
+                            } else {
+
+                                AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                                AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
+                                AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
+                                AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
+                                AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
                             }
                             student.CourseAttendances.Add(attendance);
-                            AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
-                            AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
-                            AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
-                            AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
-                            AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
+
                         }
                         Console.WriteLine("Added " + student.Forename + " " + student.Surname);
                         context.SaveChanges();
@@ -101,12 +105,42 @@ namespace SceneCrm.Importer {
         }
 
         static void ImportVolunteerDataFromAccessDatabase(SceneCRM context, string fullPathToMdbFile, string databasePassword) {
-            var db = new VolunteerDatabase(fullPathToMdbFile, databasePassword);
-            foreach (var record in db.VolunteerRecords) {
-                var vol = context.Volunteers.FindOrMake(record.FirstName, record.LastName);
-                vol.Notes = record.Notes;
-                vol.PartnerFirstName = record.SecondPersonFirstName;
-                vol.PartnerSurname = record.SecondPersonLastName;
+            AccessVolunteers av = new AccessVolunteers();
+            var adapter = new LegacyData.AccessVolunteersTableAdapters.AddressTableAdapter();
+            var data = adapter.GetData();
+            foreach (LegacyData.AccessVolunteers.AddressRow row in data.Rows) {
+                var volunteer = context.Volunteers.FindOrMake(row.First_Name, row.Last_Name);
+                volunteer.AccessPersonId = row.Person_ID;
+                var address = row.IsAddressNull() ? String.Empty : row.Address;
+                if (!(row.IsAddress_1Null() && String.IsNullOrWhiteSpace(row.Address_1))) address += Environment.NewLine + row.Address_1;
+                if (!(row.IsAddress_2Null() && String.IsNullOrWhiteSpace(row.Address_2))) address += Environment.NewLine + row.Address_2;
+                volunteer.Address = address;
+                volunteer.AgentName = row.IsAgent_NameNull() ? null : row.Agent_Name;
+                volunteer.CvWebUrl = row.IsCVNull() ? null : row.CV;
+                volunteer.Deadwood = row.IsDeadwoodNull() ? false : row.Deadwood;
+                volunteer.EEDirectDebit = row.Is_E_E_Direct_DebitNull() ? null : row._E_E_Direct_Debit;
+                volunteer.EmailAddress = row.Email_Address;
+                volunteer.EmailAddress2 = row.Email_Address_2;
+                volunteer.EyesEars = row._Eyes___Ears;
+                volunteer.MobilePhone = row.Mobile_telephone;
+                volunteer.NoMailout = row.No_Mailout;
+                volunteer.Notes = row.Notes;
+                volunteer.Organisation = row.Organisation;
+                volunteer.PartnerFirstName = row.Second_Person_1st_Name;
+                volunteer.PartnerSurname = row.Second_Person_Last_Name;
+                volunteer.Postcode = row.Postcode;
+                volunteer.SpotlightNumber = row.Spotlight_Number;
+                volunteer.Trustee = row._Trustee_Board_Member;
+                volunteer.CrbChecks.Clear();
+                volunteer.CrbChecks.Add(new CrbCheck() {
+                    Volunteer = volunteer,
+                    CrbNumber = row.CRB_Number,
+                    ApplicationDate = row.Date_applied_CRB,
+                    ApplicationSent = row.CRB_applied,
+                    Approved = row.CRB_Approved,
+                    ApprovalDate = row.CRB_Date
+                });
+                //TODO: add volunteer capability import here based on boolean fields in Access DB
                 context.SaveChanges();
             }
         }
