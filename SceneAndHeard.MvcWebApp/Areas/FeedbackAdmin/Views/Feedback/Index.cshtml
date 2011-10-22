@@ -1,0 +1,17 @@
+﻿@model List<SceneAndHeardFeedback.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<ul>
+@foreach (var item in Model)
+{
+    <li>
+    @item.id<br />
+    <a href="@Url.Action("ReviewFeedback", new {id = @item.id})">Review Feedback</a><br />
+    </li>
+}
+</ul>
