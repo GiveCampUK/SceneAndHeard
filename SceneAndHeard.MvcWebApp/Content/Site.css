@@ -159,8 +159,8 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
+    background-color: moccasin;
+    color: black;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
@@ -236,7 +236,7 @@ table td {
 table th {
     padding: 6px 5px;
     text-align: left;
-    background-color: #e8eef4;
+    background-color: moccasin;
     border: solid 1px #e8eef4;
 }
 
