@@ -1,0 +1,77 @@
+@model IEnumerable<SceneCrm.Entities.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            CourseTypeCode
+        </th>
+        <th>
+            Year
+        </th>
+        <th>
+            CourseType
+        </th>
+        <th>
+            CourseTypeReference
+        </th>
+        <th>
+            Term
+        </th>
+        <th>
+            TermReference
+        </th>
+        <th>
+            CourseAttendances
+        </th>
+        <th>
+            CourseVolunteers
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
+        </td>
+        <td>
+			@item.CourseTypeCode
+        </td>
+        <td>
+			@item.Year
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.CourseType).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.CourseTypeReference).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Term).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.TermReference).ToString()
+        </td>
+        <td>
+			@(item.CourseAttendances == null ? "None" : item.CourseAttendances.Count.ToString())
+        </td>
+        <td>
+			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+

@@ -1,0 +1,44 @@
+@model SceneCrm.Entities.Course
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Course</legend>
+
+    <div class="display-label">CourseTypeCode</div>
+    <div class="display-field">@Model.CourseTypeCode</div>
+
+    <div class="display-label">Year</div>
+    <div class="display-field">@Model.Year</div>
+
+    <div class="display-label">CourseType</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.CourseType).ToString()</div>
+
+    <div class="display-label">CourseTypeReference</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.CourseTypeReference).ToString()</div>
+
+    <div class="display-label">Term</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.Term).ToString()</div>
+
+    <div class="display-label">TermReference</div>
+    <div class="display-field">@Html.DisplayTextFor(_ => Model.TermReference).ToString()</div>
+
+    <div class="display-label">CourseAttendances</div>
+    <div class="display-field">@(Model.CourseAttendances == null ? "None" : Model.CourseAttendances.Count.ToString())</div>
+
+    <div class="display-label">CourseVolunteers</div>
+    <div class="display-field">@(Model.CourseVolunteers == null ? "None" : Model.CourseVolunteers.Count.ToString())</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

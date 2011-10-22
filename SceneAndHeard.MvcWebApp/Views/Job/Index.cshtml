@@ -1,0 +1,59 @@
+@model IEnumerable<SceneCrm.Entities.Job>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th></th>
+        <th>
+            Description
+        </th>
+        <th>
+            CourseVolunteers
+        </th>
+        <th>
+            PlayVolunteers
+        </th>
+        <th>
+            ProductionVolunteers
+        </th>
+        <th>
+            Volunteers
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.JobId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.JobId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.JobId })
+        </td>
+        <td>
+			@item.Description
+        </td>
+        <td>
+			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+        </td>
+        <td>
+			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
+        </td>
+        <td>
+			@(item.ProductionVolunteers == null ? "None" : item.ProductionVolunteers.Count.ToString())
+        </td>
+        <td>
+			@(item.Volunteers == null ? "None" : item.Volunteers.Count.ToString())
+        </td>
+    </tr>
+}
+
+</table>
+
+
