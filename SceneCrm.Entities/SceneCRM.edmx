@@ -1,0 +1,1051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Child" EntityType="Model.Store.Child" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Course" EntityType="Model.Store.Course" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CourseAttendance" EntityType="Model.Store.CourseAttendance" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CourseType" EntityType="Model.Store.CourseType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CourseVolunteer" EntityType="Model.Store.CourseVolunteer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CrbCheck" EntityType="Model.Store.CrbCheck" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Job" EntityType="Model.Store.Job" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Play" EntityType="Model.Store.Play" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PlayVolunteer" EntityType="Model.Store.PlayVolunteer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Production" EntityType="Model.Store.Production" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductionVolunteer" EntityType="Model.Store.ProductionVolunteer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Term" EntityType="Model.Store.Term" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Volunteer" EntityType="Model.Store.Volunteer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VolunteerCapability" EntityType="Model.Store.VolunteerCapability" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Course_CourseType" Association="Model.Store.FK_Course_CourseType">
+            <End Role="CourseType" EntitySet="CourseType" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Term" Association="Model.Store.FK_Course_Term">
+            <End Role="Term" EntitySet="Term" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseAttendance_Child" Association="Model.Store.FK_CourseAttendance_Child">
+            <End Role="Child" EntitySet="Child" />
+            <End Role="CourseAttendance" EntitySet="CourseAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseAttendance_Course" Association="Model.Store.FK_CourseAttendance_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="CourseAttendance" EntitySet="CourseAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Course" Association="Model.Store.FK_CourseVolunteer_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Job" Association="Model.Store.FK_CourseVolunteer_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Volunteer" Association="Model.Store.FK_CourseVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CrbCheck_Volunteer" Association="Model.Store.FK_CrbCheck_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="CrbCheck" EntitySet="CrbCheck" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Job" Association="Model.Store.FK_PlayVolunteer_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Play" Association="Model.Store.FK_PlayVolunteer_Play">
+            <End Role="Play" EntitySet="Play" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Volunteer" Association="Model.Store.FK_PlayVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Job" Association="Model.Store.FK_ProductionVolunteer_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Production" Association="Model.Store.FK_ProductionVolunteer_Production">
+            <End Role="Production" EntitySet="Production" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Volunteer" Association="Model.Store.FK_ProductionVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerCapability_Job" Association="Model.Store.FK_VolunteerCapability_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="VolunteerCapability" EntitySet="VolunteerCapability" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerCapability_Volunteer" Association="Model.Store.FK_VolunteerCapability_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteer" />
+            <End Role="VolunteerCapability" EntitySet="VolunteerCapability" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Reference" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="FirstName" Type="varchar" MaxLength="64" />
+          <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="CourseTypeCode" Type="varchar" MaxLength="8" />
+          <Property Name="TermId" Type="int" />
+          <Property Name="Year" Type="int" />
+        </EntityType>
+        <EntityType Name="CourseAttendance">
+          <Key>
+            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="Completed" Type="bit" />
+        </EntityType>
+        <EntityType Name="CourseType">
+          <Key>
+            <PropertyRef Name="CourseTypeCode" />
+          </Key>
+          <Property Name="CourseTypeCode" Type="varchar" Nullable="false" MaxLength="8" />
+          <Property Name="CourseTypeName" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="CourseVolunteer">
+          <Key>
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="CourseId" Type="int" Nullable="false" />
+          <Property Name="VolunteerId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="CrbCheck">
+          <Key>
+            <PropertyRef Name="CrbCheckId" />
+          </Key>
+          <Property Name="CrbCheckId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="VolunteerId" Type="int" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="CrbNumber" Type="varchar" MaxLength="32" />
+          <Property Name="OnlineFormSent" Type="datetime" />
+          <Property Name="FormFilledOut" Type="datetime" />
+          <Property Name="DateCheckExpires" Type="datetime" />
+          <Property Name="IdComplete" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Play">
+          <Key>
+            <PropertyRef Name="PlayId" />
+          </Key>
+          <Property Name="PlayId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ChildId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="PlayVolunteer">
+          <Key>
+            <PropertyRef Name="PlayId" />
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="PlayId" Type="int" Nullable="false" />
+          <Property Name="VolunteerId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="Production">
+          <Key>
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="ProductionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="ProductionVolunteer">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="VolunteerId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="ProductionId" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="varchar" MaxLength="2048" />
+        </EntityType>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="TermId" />
+          </Key>
+          <Property Name="TermId" Type="int" Nullable="false" />
+          <Property Name="TermName" Type="varchar" MaxLength="16" />
+        </EntityType>
+        <EntityType Name="Volunteer">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+          </Key>
+          <Property Name="VolunteerId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="varchar" MaxLength="64" />
+          <Property Name="Surname" Type="varchar" MaxLength="64" />
+          <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="VolunteerCapability">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="VolunteerId" Type="int" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Course_CourseType">
+          <End Role="CourseType" Type="Model.Store.CourseType" Multiplicity="0..1" />
+          <End Role="Course" Type="Model.Store.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseType">
+              <PropertyRef Name="CourseTypeCode" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CourseTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Term">
+          <End Role="Term" Type="Model.Store.Term" Multiplicity="0..1" />
+          <End Role="Course" Type="Model.Store.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="TermId" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseAttendance_Child">
+          <End Role="Child" Type="Model.Store.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CourseAttendance" Type="Model.Store.CourseAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="CourseAttendance">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseAttendance_Course">
+          <End Role="Course" Type="Model.Store.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CourseAttendance" Type="Model.Store.CourseAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="CourseAttendance">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Course">
+          <End Role="Course" Type="Model.Store.Course" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.Store.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Job">
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.Store.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.Store.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CrbCheck_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CrbCheck" Type="Model.Store.CrbCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="CrbCheck">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Job">
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="PlayVolunteer" Type="Model.Store.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Play">
+          <End Role="Play" Type="Model.Store.Play" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayVolunteer" Type="Model.Store.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Play">
+              <PropertyRef Name="PlayId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="PlayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayVolunteer" Type="Model.Store.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Job">
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.Store.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Production">
+          <End Role="Production" Type="Model.Store.Production" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.Store.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Production">
+              <PropertyRef Name="ProductionId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="ProductionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.Store.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerCapability_Job">
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="VolunteerCapability" Type="Model.Store.VolunteerCapability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="VolunteerCapability">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerCapability_Volunteer">
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="VolunteerCapability" Type="Model.Store.VolunteerCapability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="VolunteerCapability">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SceneCRM" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Children" EntityType="Model.Child" />
+          <EntitySet Name="Courses" EntityType="Model.Course" />
+          <EntitySet Name="CourseAttendances" EntityType="Model.CourseAttendance" />
+          <EntitySet Name="CourseTypes" EntityType="Model.CourseType" />
+          <EntitySet Name="CourseVolunteers" EntityType="Model.CourseVolunteer" />
+          <EntitySet Name="CrbChecks" EntityType="Model.CrbCheck" />
+          <EntitySet Name="Jobs" EntityType="Model.Job" />
+          <EntitySet Name="Plays" EntityType="Model.Play" />
+          <EntitySet Name="PlayVolunteers" EntityType="Model.PlayVolunteer" />
+          <EntitySet Name="Productions" EntityType="Model.Production" />
+          <EntitySet Name="ProductionVolunteers" EntityType="Model.ProductionVolunteer" />
+          <EntitySet Name="Terms" EntityType="Model.Term" />
+          <EntitySet Name="Volunteers" EntityType="Model.Volunteer" />
+          <AssociationSet Name="FK_CourseAttendance_Child" Association="Model.FK_CourseAttendance_Child">
+            <End Role="Child" EntitySet="Children" />
+            <End Role="CourseAttendance" EntitySet="CourseAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_CourseType" Association="Model.FK_Course_CourseType">
+            <End Role="CourseType" EntitySet="CourseTypes" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Course_Term" Association="Model.FK_Course_Term">
+            <End Role="Term" EntitySet="Terms" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseAttendance_Course" Association="Model.FK_CourseAttendance_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="CourseAttendance" EntitySet="CourseAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Course" Association="Model.FK_CourseVolunteer_Course">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Job" Association="Model.FK_CourseVolunteer_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseVolunteer_Volunteer" Association="Model.FK_CourseVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteers" />
+            <End Role="CourseVolunteer" EntitySet="CourseVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CrbCheck_Volunteer" Association="Model.FK_CrbCheck_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteers" />
+            <End Role="CrbCheck" EntitySet="CrbChecks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Job" Association="Model.FK_PlayVolunteer_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Job" Association="Model.FK_ProductionVolunteer_Job">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Play" Association="Model.FK_PlayVolunteer_Play">
+            <End Role="Play" EntitySet="Plays" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayVolunteer_Volunteer" Association="Model.FK_PlayVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteers" />
+            <End Role="PlayVolunteer" EntitySet="PlayVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Production" Association="Model.FK_ProductionVolunteer_Production">
+            <End Role="Production" EntitySet="Productions" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionVolunteer_Volunteer" Association="Model.FK_ProductionVolunteer_Volunteer">
+            <End Role="Volunteer" EntitySet="Volunteers" />
+            <End Role="ProductionVolunteer" EntitySet="ProductionVolunteers" />
+          </AssociationSet>
+          <AssociationSet Name="VolunteerCapability" Association="Model.VolunteerCapability">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Volunteer" EntitySet="Volunteers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Child">
+          <Key>
+            <PropertyRef Name="ChildId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Child" ToRole="CourseAttendance" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="CourseTypeCode" Type="String" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="TermId" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="CourseType" Relationship="Model.FK_Course_CourseType" FromRole="Course" ToRole="CourseType" />
+          <NavigationProperty Name="Term" Relationship="Model.FK_Course_Term" FromRole="Course" ToRole="Term" />
+          <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Course" FromRole="Course" ToRole="CourseAttendance" />
+          <NavigationProperty Name="CourseVolunteers" Relationship="Model.FK_CourseVolunteer_Course" FromRole="Course" ToRole="CourseVolunteer" />
+        </EntityType>
+        <EntityType Name="CourseAttendance">
+          <Key>
+            <PropertyRef Name="ChildId" />
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="Completed" Type="Boolean" />
+          <NavigationProperty Name="Child" Relationship="Model.FK_CourseAttendance_Child" FromRole="CourseAttendance" ToRole="Child" />
+          <NavigationProperty Name="Course" Relationship="Model.FK_CourseAttendance_Course" FromRole="CourseAttendance" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="CourseType">
+          <Key>
+            <PropertyRef Name="CourseTypeCode" />
+          </Key>
+          <Property Name="CourseTypeCode" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="false" />
+          <Property Name="CourseTypeName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Courses" Relationship="Model.FK_Course_CourseType" FromRole="CourseType" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="CourseVolunteer">
+          <Key>
+            <PropertyRef Name="CourseId" />
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <Property Name="VolunteerId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Course" Relationship="Model.FK_CourseVolunteer_Course" FromRole="CourseVolunteer" ToRole="Course" />
+          <NavigationProperty Name="Job" Relationship="Model.FK_CourseVolunteer_Job" FromRole="CourseVolunteer" ToRole="Job" />
+          <NavigationProperty Name="Volunteer" Relationship="Model.FK_CourseVolunteer_Volunteer" FromRole="CourseVolunteer" ToRole="Volunteer" />
+        </EntityType>
+        <EntityType Name="CrbCheck">
+          <Key>
+            <PropertyRef Name="CrbCheckId" />
+          </Key>
+          <Property Name="CrbCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VolunteerId" Type="Int32" />
+          <Property Name="CheckDate" Type="DateTime" />
+          <Property Name="CrbNumber" Type="String" MaxLength="32" Unicode="false" FixedLength="false" />
+          <Property Name="OnlineFormSent" Type="DateTime" />
+          <Property Name="FormFilledOut" Type="DateTime" />
+          <Property Name="DateCheckExpires" Type="DateTime" />
+          <Property Name="IdComplete" Type="DateTime" />
+          <NavigationProperty Name="Volunteer" Relationship="Model.FK_CrbCheck_Volunteer" FromRole="CrbCheck" ToRole="Volunteer" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="JobId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CourseVolunteers" Relationship="Model.FK_CourseVolunteer_Job" FromRole="Job" ToRole="CourseVolunteer" />
+          <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Job" FromRole="Job" ToRole="PlayVolunteer" />
+          <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Job" FromRole="Job" ToRole="ProductionVolunteer" />
+          <NavigationProperty Name="Volunteers" Relationship="Model.VolunteerCapability" FromRole="Job" ToRole="Volunteer" />
+        </EntityType>
+        <EntityType Name="Play">
+          <Key>
+            <PropertyRef Name="PlayId" />
+          </Key>
+          <Property Name="PlayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChildId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="128" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Play" FromRole="Play" ToRole="PlayVolunteer" />
+        </EntityType>
+        <EntityType Name="PlayVolunteer">
+          <Key>
+            <PropertyRef Name="PlayId" />
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+          </Key>
+          <Property Name="PlayId" Type="Int32" Nullable="false" />
+          <Property Name="VolunteerId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Job" Relationship="Model.FK_PlayVolunteer_Job" FromRole="PlayVolunteer" ToRole="Job" />
+          <NavigationProperty Name="Play" Relationship="Model.FK_PlayVolunteer_Play" FromRole="PlayVolunteer" ToRole="Play" />
+          <NavigationProperty Name="Volunteer" Relationship="Model.FK_PlayVolunteer_Volunteer" FromRole="PlayVolunteer" ToRole="Volunteer" />
+        </EntityType>
+        <EntityType Name="Production">
+          <Key>
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="ProductionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Production" FromRole="Production" ToRole="ProductionVolunteer" />
+        </EntityType>
+        <EntityType Name="ProductionVolunteer">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+            <PropertyRef Name="JobId" />
+            <PropertyRef Name="ProductionId" />
+          </Key>
+          <Property Name="VolunteerId" Type="Int32" Nullable="false" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="ProductionId" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Job" Relationship="Model.FK_ProductionVolunteer_Job" FromRole="ProductionVolunteer" ToRole="Job" />
+          <NavigationProperty Name="Production" Relationship="Model.FK_ProductionVolunteer_Production" FromRole="ProductionVolunteer" ToRole="Production" />
+          <NavigationProperty Name="Volunteer" Relationship="Model.FK_ProductionVolunteer_Volunteer" FromRole="ProductionVolunteer" ToRole="Volunteer" />
+        </EntityType>
+        <EntityType Name="Term">
+          <Key>
+            <PropertyRef Name="TermId" />
+          </Key>
+          <Property Name="TermId" Type="Int32" Nullable="false" />
+          <Property Name="TermName" Type="String" MaxLength="16" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Courses" Relationship="Model.FK_Course_Term" FromRole="Term" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="Volunteer">
+          <Key>
+            <PropertyRef Name="VolunteerId" />
+          </Key>
+          <Property Name="VolunteerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="Surname" Type="String" MaxLength="64" Unicode="false" FixedLength="false" />
+          <Property Name="PerformanceAttended" Type="String" MaxLength="1024" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CourseVolunteers" Relationship="Model.FK_CourseVolunteer_Volunteer" FromRole="Volunteer" ToRole="CourseVolunteer" />
+          <NavigationProperty Name="CrbChecks" Relationship="Model.FK_CrbCheck_Volunteer" FromRole="Volunteer" ToRole="CrbCheck" />
+          <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Volunteer" FromRole="Volunteer" ToRole="PlayVolunteer" />
+          <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Volunteer" FromRole="Volunteer" ToRole="ProductionVolunteer" />
+          <NavigationProperty Name="Jobs" Relationship="Model.VolunteerCapability" FromRole="Volunteer" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK_CourseAttendance_Child">
+          <End Role="Child" Type="Model.Child" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CourseAttendance" Type="Model.CourseAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Child">
+              <PropertyRef Name="ChildId" />
+            </Principal>
+            <Dependent Role="CourseAttendance">
+              <PropertyRef Name="ChildId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_CourseType">
+          <End Role="CourseType" Type="Model.CourseType" Multiplicity="0..1" />
+          <End Role="Course" Type="Model.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseType">
+              <PropertyRef Name="CourseTypeCode" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CourseTypeCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Course_Term">
+          <End Role="Term" Type="Model.Term" Multiplicity="0..1" />
+          <End Role="Course" Type="Model.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Term">
+              <PropertyRef Name="TermId" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="TermId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseAttendance_Course">
+          <End Role="Course" Type="Model.Course" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CourseAttendance" Type="Model.CourseAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="CourseAttendance">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Course">
+          <End Role="Course" Type="Model.Course" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Job">
+          <End Role="Job" Type="Model.Job" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Volunteer" Multiplicity="1" />
+          <End Role="CourseVolunteer" Type="Model.CourseVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="CourseVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CrbCheck_Volunteer">
+          <End Role="Volunteer" Type="Model.Volunteer" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CrbCheck" Type="Model.CrbCheck" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="CrbCheck">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Job">
+          <End Role="Job" Type="Model.Job" Multiplicity="1" />
+          <End Role="PlayVolunteer" Type="Model.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Job">
+          <End Role="Job" Type="Model.Job" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="JobId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Play">
+          <End Role="Play" Type="Model.Play" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayVolunteer" Type="Model.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Play">
+              <PropertyRef Name="PlayId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="PlayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Volunteer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PlayVolunteer" Type="Model.PlayVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="PlayVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Production">
+          <End Role="Production" Type="Model.Production" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Production">
+              <PropertyRef Name="ProductionId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="ProductionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionVolunteer_Volunteer">
+          <End Role="Volunteer" Type="Model.Volunteer" Multiplicity="1" />
+          <End Role="ProductionVolunteer" Type="Model.ProductionVolunteer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Principal>
+            <Dependent Role="ProductionVolunteer">
+              <PropertyRef Name="VolunteerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="VolunteerCapability">
+          <End Role="Job" Type="Model.Job" Multiplicity="*" />
+          <End Role="Volunteer" Type="Model.Volunteer" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="SceneCRM">
+          <EntitySetMapping Name="Children"><EntityTypeMapping TypeName="Model.Child"><MappingFragment StoreEntitySet="Child">
+            <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+            <ScalarProperty Name="Reference" ColumnName="Reference" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="Surname" ColumnName="Surname" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Courses"><EntityTypeMapping TypeName="Model.Course"><MappingFragment StoreEntitySet="Course">
+            <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+            <ScalarProperty Name="CourseTypeCode" ColumnName="CourseTypeCode" />
+            <ScalarProperty Name="TermId" ColumnName="TermId" />
+            <ScalarProperty Name="Year" ColumnName="Year" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CourseAttendances"><EntityTypeMapping TypeName="Model.CourseAttendance"><MappingFragment StoreEntitySet="CourseAttendance">
+            <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+            <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+            <ScalarProperty Name="Completed" ColumnName="Completed" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CourseTypes"><EntityTypeMapping TypeName="Model.CourseType"><MappingFragment StoreEntitySet="CourseType">
+            <ScalarProperty Name="CourseTypeCode" ColumnName="CourseTypeCode" />
+            <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CourseVolunteers"><EntityTypeMapping TypeName="Model.CourseVolunteer"><MappingFragment StoreEntitySet="CourseVolunteer">
+            <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+            <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            <ScalarProperty Name="JobId" ColumnName="JobId" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="CrbChecks"><EntityTypeMapping TypeName="Model.CrbCheck"><MappingFragment StoreEntitySet="CrbCheck">
+            <ScalarProperty Name="CrbCheckId" ColumnName="CrbCheckId" />
+            <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+            <ScalarProperty Name="CrbNumber" ColumnName="CrbNumber" />
+            <ScalarProperty Name="OnlineFormSent" ColumnName="OnlineFormSent" />
+            <ScalarProperty Name="FormFilledOut" ColumnName="FormFilledOut" />
+            <ScalarProperty Name="DateCheckExpires" ColumnName="DateCheckExpires" />
+            <ScalarProperty Name="IdComplete" ColumnName="IdComplete" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Jobs"><EntityTypeMapping TypeName="Model.Job"><MappingFragment StoreEntitySet="Job">
+            <ScalarProperty Name="JobId" ColumnName="JobId" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Plays"><EntityTypeMapping TypeName="Model.Play"><MappingFragment StoreEntitySet="Play">
+            <ScalarProperty Name="PlayId" ColumnName="PlayId" />
+            <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PlayVolunteers"><EntityTypeMapping TypeName="Model.PlayVolunteer"><MappingFragment StoreEntitySet="PlayVolunteer">
+            <ScalarProperty Name="PlayId" ColumnName="PlayId" />
+            <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            <ScalarProperty Name="JobId" ColumnName="JobId" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Productions"><EntityTypeMapping TypeName="Model.Production"><MappingFragment StoreEntitySet="Production">
+            <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ProductionVolunteers"><EntityTypeMapping TypeName="Model.ProductionVolunteer"><MappingFragment StoreEntitySet="ProductionVolunteer">
+            <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            <ScalarProperty Name="JobId" ColumnName="JobId" />
+            <ScalarProperty Name="ProductionId" ColumnName="ProductionId" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Terms"><EntityTypeMapping TypeName="Model.Term"><MappingFragment StoreEntitySet="Term">
+            <ScalarProperty Name="TermId" ColumnName="TermId" />
+            <ScalarProperty Name="TermName" ColumnName="TermName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Volunteers"><EntityTypeMapping TypeName="Model.Volunteer"><MappingFragment StoreEntitySet="Volunteer">
+            <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="Surname" ColumnName="Surname" />
+            <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="VolunteerCapability" TypeName="Model.VolunteerCapability" StoreEntitySet="VolunteerCapability">
+            <EndProperty Name="Job">
+              <ScalarProperty Name="JobId" ColumnName="JobId" />
+            </EndProperty>
+            <EndProperty Name="Volunteer">
+              <ScalarProperty Name="VolunteerId" ColumnName="VolunteerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="SceneCRM">
+        <EntityTypeShape EntityType="Model.Child" Width="1.5" PointX="6" PointY="1.25" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Course" Width="1.5" PointX="3" PointY="11" Height="2.5571907552083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CourseAttendance" Width="1.5" PointX="8.25" PointY="8.25" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CourseType" Width="1.5" PointX="0.75" PointY="10.375" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CourseVolunteer" Width="1.5" PointX="5.25" PointY="11.125" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CrbCheck" Width="1.5" PointX="5.25" PointY="15.5" Height="2.7494921874999978" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Job" Width="1.5" PointX="0.75" PointY="6.375" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Play" Width="1.5" PointX="6" PointY="4.375" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.PlayVolunteer" Width="1.5" PointX="8.25" PointY="11.125" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Production" Width="1.5" PointX="3" PointY="7.5" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.ProductionVolunteer" Width="1.5" PointX="5.25" PointY="7.125" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Term" Width="1.5" PointX="0.75" PointY="12.625" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Volunteer" Width="1.5" PointX="3" PointY="15.5" Height="2.749492187499996" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_CourseAttendance_Child" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="2.2401432291666667" />
+          <ConnectorPoint PointX="9" PointY="2.2401432291666667" />
+          <ConnectorPoint PointX="9" PointY="8.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Course_CourseType" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="11.485341796875" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="11.485341796875" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="11.485341796875" />
+          <ConnectorPoint PointX="3" PointY="11.485341796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_Course_Term" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="13.091095377604166" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="13.091095377604166" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="13.091095377604166" />
+          <ConnectorPoint PointX="3" PointY="13.091095377604166" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CourseAttendance_Course" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="11.001152846153847" />
+          <ConnectorPoint PointX="4.8761528461538468" PointY="10.625" />
+          <ConnectorPoint PointX="5.916666666666667" PointY="10.625" />
+          <ConnectorPoint PointX="6.083333333333333" PointY="10.625" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="10.625" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="10.625" />
+          <ConnectorPoint PointX="8.5416671666666648" PointY="10.625" />
+          <ConnectorPoint PointX="8.7083338333333327" PointY="10.625" />
+          <ConnectorPoint PointX="9" PointY="10.625" />
+          <ConnectorPoint PointX="9" PointY="10.230286458333332" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CourseVolunteer_Course" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="12.307444661458334" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="12.307444661458334" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="12.307444661458334" />
+          <ConnectorPoint PointX="5.25" PointY="12.307444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CourseVolunteer_Job" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.4612939453125" />
+          <ConnectorPoint PointX="2.75" PointY="7.4612939453125" />
+          <ConnectorPoint PointX="2.75" PointY="9.7398893229166674" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="9.7398893229166674" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="9.7398893229166674" />
+          <ConnectorPoint PointX="6" PointY="9.7398893229166674" />
+          <ConnectorPoint PointX="6" PointY="11.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CourseVolunteer_Volunteer" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="15.532306692307694" />
+          <ConnectorPoint PointX="5.03125" PointY="15.001056692307692" />
+          <ConnectorPoint PointX="5.03125" PointY="12.929918992187503" />
+          <ConnectorPoint PointX="5.25" PointY="12.929918992187503" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_CrbCheck_Volunteer" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="16.90657501682692" />
+          <ConnectorPoint PointX="5.25" PointY="16.90657501682692" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_PlayVolunteer_Job" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="8.03569291796875" />
+          <ConnectorPoint PointX="2.5" PointY="8.03569291796875" />
+          <ConnectorPoint PointX="2.5" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="5.916666666666667" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="6.083333333333333" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="7.791666666666667" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="7.958333333333333" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="8.6250004999999987" PointY="10.480286458333332" />
+          <ConnectorPoint PointX="8.6250004999999987" PointY="11.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_ProductionVolunteer_Job" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.23064697265625" />
+          <ConnectorPoint PointX="5.25" PointY="7.23064697265625" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_PlayVolunteer_Play" ManuallyRouted="false">
+          <ConnectorPoint PointX="7.5" PointY="6.1629850260416674" />
+          <ConnectorPoint PointX="7.875" PointY="6.5379850260416674" />
+          <ConnectorPoint PointX="7.875" PointY="12.307444661458334" />
+          <ConnectorPoint PointX="8.25" PointY="12.307444661458334" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_PlayVolunteer_Volunteer" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="15.538075923076924" />
+          <ConnectorPoint PointX="4.9130759230769243" PointY="15.125" />
+          <ConnectorPoint PointX="9" PointY="15.125" />
+          <ConnectorPoint PointX="9" PointY="13.489889322916667" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_ProductionVolunteer_Production" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="8.297841796875" />
+          <ConnectorPoint PointX="5.25" PointY="8.297841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.FK_ProductionVolunteer_Volunteer" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.4630769230769225" PointY="15.5" />
+          <ConnectorPoint PointX="4.875" PointY="15.088076923076923" />
+          <ConnectorPoint PointX="4.875" PointY="8.9251175598958348" />
+          <ConnectorPoint PointX="5.25" PointY="8.9251175598958348" />
+        </AssociationConnector>
+        <AssociationConnector Association="Model.VolunteerCapability" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.2499999999999996" PointY="8.547587890625" />
+          <ConnectorPoint PointX="2.4410744349011213" PointY="8.73866232552612" />
+          <ConnectorPoint PointX="2.5589255650988791" PointY="8.8565134557238778" />
+          <ConnectorPoint PointX="2.625" PointY="8.922587890625" />
+          <ConnectorPoint PointX="2.625" PointY="16.874746093749998" />
+          <ConnectorPoint PointX="3" PointY="16.874746093749998" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
