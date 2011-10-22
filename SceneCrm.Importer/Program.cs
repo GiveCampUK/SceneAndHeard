@@ -29,37 +29,41 @@ namespace SceneCrm.Importer {
                 context.CourseTypes.AddObject(rp);
                 context.SaveChanges();
 
-
-
                 var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
                 foreach (var row in ss.Rows) {
                     var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
                     if (row.AttendedPm1) {
                         var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
-
-                        var dramaturg = context.Jobs.FindOrMake("Dramaturg");
-
                         var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
-
                         if (course != null) {
-                            student.CourseAttendances.Add(new CourseAttendance() {
+                            var attendance = new CourseAttendance() {
                                 Student = student,
                                 Course = course,
                                 Completed = true
-                            });
-                            var dt = context.Volunteers.FindOrMake(row.PlaymakingOneDramaturg);
-                            if (dt != null) {
-                                var job = context.Jobs.FindOrMake(Jobs.Dramaturg);
-                                if (!dt.CourseVolunteers.Any(cv => cv.Job == job && cv.Course == course)) {
-                                    context.CourseVolunteers.AddObject(new CourseVolunteer() {
-                                        Course = course,
-                                        Volunteer = dt,
-                                        Job = job
-                                    });
-                                }
-                            }
-                        }
+                            };
+                            Production production = context.Productions.FindOrMake(row.PlaymakingOneProduction);
 
+                            if (!String.IsNullOrWhiteSpace(row.PlaymakingOnePlay)) {
+                                var play = new Play() {
+                                    Student = student,
+                                    Title = row.PlaymakingOnePlay
+                                };
+                                if (production != null) play.Production = production;
+                                attendance.Play = play;
+                                student.Plays.Add(play);
+                                AddPlayVolunteer(context, play, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                                AddPlayVolunteer(context, play, row.PlaymakingOneDirector, Jobs.Director);
+                                AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
+                                AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
+                                AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
+                            }
+                            student.CourseAttendances.Add(attendance);
+                            AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                            AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
+                            AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
+                            AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
+                            AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
+                        }
                         Console.WriteLine("Added " + student.Forename + " " + student.Surname);
                         context.SaveChanges();
                     }
@@ -78,6 +82,32 @@ namespace SceneCrm.Importer {
             //    context.SaveChanges();
             //}
             Console.ReadKey(false);
+        }
+        static void AddPlayVolunteer(SceneCRM context, Play play, string volunteerName, string jobTitle) {
+            var vol = context.Volunteers.FindOrMake(volunteerName);
+            if (vol == null) return;
+            var job = context.Jobs.FindOrMake(jobTitle);
+            if (!vol.PlayVolunteers.Any(cv => cv.Job == job && cv.Play == play)) {
+                context.PlayVolunteers.AddObject(new PlayVolunteer() {
+                    Play = play,
+                    Volunteer = vol,
+                    Job = job
+                });
+            }
+            context.SaveChanges();
+        }
+        static void AddCourseVolunteer(SceneCRM context, Course course, string volunteerName, string jobTitle) {
+            var vol = context.Volunteers.FindOrMake(volunteerName);
+            if (vol == null) return;
+            var job = context.Jobs.FindOrMake(jobTitle);
+            if (!vol.CourseVolunteers.Any(cv => cv.Job == job && cv.Course == course)) {
+                context.CourseVolunteers.AddObject(new CourseVolunteer() {
+                    Course = course,
+                    Volunteer = vol,
+                    Job = job
+                });
+            }
+            context.SaveChanges();
         }
 
         static void WipeDatabase(SceneCRM context) {
@@ -137,6 +167,17 @@ namespace SceneCrm.Importer {
             return (job);
         }
 
+        public static Production FindOrMake(this ObjectSet<Production> productions, string productionTitle) {
+            if (String.IsNullOrWhiteSpace(productionTitle)) return (null);
+            var production = productions.FirstOrDefault(p => p.Title == productionTitle);
+            if(production == null) {
+                production = new Production() { Title = productionTitle };
+                productions.AddObject(production);
+            productions.Context.SaveChanges();
+            }
+            return(production);
+        }
+
         public static Term FindOrMake(this ObjectSet<Term> terms, string termName) {
             var term = terms.FirstOrDefault(t => t.TermName == termName);
             if (term == default(Term)) {
@@ -177,5 +218,17 @@ namespace SceneCrm.Importer {
     public static class Jobs {
         public const string Dramaturg = "Dramaturg";
         public const string Actor = "Actor";
+        public const string Director = "Director";
+        public const string Designer = "Designer";
+        public const string Technician = "Technician";
+        public const string Class = "Class";
+        public const string Mailout = "Mailout";
+        public const string StageMan = "Stage Management";
+        public const string TechAsst = "Technical Assistant";
+        public const string ProdAsst = "Production Assistant";
+        public const string SoundDesigner = "Sound Designer";
+        public const string Props = "Props Handler";
+        public const string Costume = "Costume Assistant";
+        public const string CourseLeader = "Course Leader";
     }
 }
