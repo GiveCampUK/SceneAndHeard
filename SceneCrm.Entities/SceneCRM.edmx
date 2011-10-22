@@ -197,7 +197,7 @@
             <PropertyRef Name="ChildId" />
           </Key>
           <Property Name="ChildId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Reference" Type="varchar" Nullable="false" MaxLength="16" />
+          <Property Name="MembershipNumber" Type="varchar" Nullable="false" MaxLength="16" />
           <Property Name="FirstName" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="64" />
         </EntityType>
@@ -216,6 +216,7 @@
           <Property Name="FirstName" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" MaxLength="64" />
           <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
+          <Property Name="AvailableFrom" Type="datetime" />
         </EntityType>
         <EntityType Name="VolunteerCapability">
           <Key>
@@ -226,7 +227,9 @@
           <Property Name="JobId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
-          <End Role="CourseType" Type="Model.Store.CourseType" Multiplicity="0..1" />
+          <End Role="CourseType" Type="Model.Store.CourseType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Course" Type="Model.Store.Course" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CourseType">
@@ -290,7 +293,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseVolunteer_Job">
-          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CourseVolunteer" Type="Model.Store.CourseVolunteer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Job">
@@ -302,7 +307,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CourseVolunteer_Volunteer">
-          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CourseVolunteer" Type="Model.Store.CourseVolunteer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Volunteer">
@@ -404,7 +411,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductionVolunteer_Volunteer">
-          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ProductionVolunteer" Type="Model.Store.ProductionVolunteer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Volunteer">
@@ -416,7 +425,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VolunteerCapability_Job">
-          <End Role="Job" Type="Model.Store.Job" Multiplicity="1" />
+          <End Role="Job" Type="Model.Store.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VolunteerCapability" Type="Model.Store.VolunteerCapability" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Job">
@@ -428,7 +439,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VolunteerCapability_Volunteer">
-          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1" />
+          <End Role="Volunteer" Type="Model.Store.Volunteer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VolunteerCapability" Type="Model.Store.VolunteerCapability" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Volunteer">
@@ -655,10 +668,10 @@
             <PropertyRef Name="ChildId" />
           </Key>
           <Property Type="Int32" Name="ChildId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Reference" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="FirstName" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Surname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Student" ToRole="CourseAttendance" />
+          <Property Type="String" Name="MembershipNumber" Nullable="false" MaxLength="16" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
@@ -681,6 +694,7 @@
           <NavigationProperty Name="PlayVolunteers" Relationship="Model.FK_PlayVolunteer_Volunteer" FromRole="Volunteer" ToRole="PlayVolunteer" />
           <NavigationProperty Name="ProductionVolunteers" Relationship="Model.FK_ProductionVolunteer_Volunteer" FromRole="Volunteer" ToRole="ProductionVolunteer" />
           <NavigationProperty Name="Jobs" Relationship="Model.VolunteerCapability" FromRole="Volunteer" ToRole="Job" />
+          <Property Type="DateTime" Name="AvailableFrom" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Type="Model.CourseType" Role="CourseType" Multiplicity="0..1" />
@@ -981,9 +995,9 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="Model.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="ChildId" ColumnName="ChildId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -999,6 +1013,7 @@
           <EntitySetMapping Name="Volunteers">
             <EntityTypeMapping TypeName="Model.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
+                <ScalarProperty Name="AvailableFrom" ColumnName="AvailableFrom" />
                 <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1046,7 +1061,7 @@
         <EntityTypeShape EntityType="Model.PlayVolunteer" Width="1.5" PointX="5.25" PointY="8.5" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="Model.Production" Width="1.5" PointX="3" PointY="13" Height="1.5956835937499996" />
         <EntityTypeShape EntityType="Model.ProductionVolunteer" Width="1.5" PointX="5.25" PointY="12.5" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="Model.Student" Width="1.5" PointX="6" PointY="0.75" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="Model.Student" Width="1.5" PointX="6" PointY="0.75" Height="1.9802864583333339" />
         <EntityTypeShape EntityType="Model.Term" Width="1.5" PointX="3.75" PointY="6.125" Height="1.5956835937500031" />
         <EntityTypeShape EntityType="Model.Volunteer" Width="1.5" PointX="3" PointY="16.875" Height="2.749492187499996" />
         <AssociationConnector Association="Model.FK_Course_CourseType" >
@@ -1068,8 +1083,8 @@
           <ConnectorPoint PointX="8.25" PointY="13.682444661458334" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseAttendance_Child" >
-          <ConnectorPoint PointX="7.5" PointY="1.7401432291666659" />
-          <ConnectorPoint PointX="9" PointY="1.7401432291666659" />
+          <ConnectorPoint PointX="7.5" PointY="1.7401432291666672" />
+          <ConnectorPoint PointX="9" PointY="1.7401432291666672" />
           <ConnectorPoint PointX="9" PointY="4.75" />
         </AssociationConnector>
         <AssociationConnector Association="Model.FK_CourseVolunteer_Job" >

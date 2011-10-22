@@ -2607,14 +2607,14 @@ namespace SceneCrm.Entities
         /// Create a new Student object.
         /// </summary>
         /// <param name="childId">Initial value of the ChildId property.</param>
-        /// <param name="reference">Initial value of the Reference property.</param>
         /// <param name="surname">Initial value of the Surname property.</param>
-        public static Student CreateStudent(global::System.Int32 childId, global::System.String reference, global::System.String surname)
+        /// <param name="membershipNumber">Initial value of the MembershipNumber property.</param>
+        public static Student CreateStudent(global::System.Int32 childId, global::System.String surname, global::System.String membershipNumber)
         {
             Student student = new Student();
             student.ChildId = childId;
-            student.Reference = reference;
             student.Surname = surname;
+            student.MembershipNumber = membershipNumber;
             return student;
         }
 
@@ -2647,30 +2647,6 @@ namespace SceneCrm.Entities
         private global::System.Int32 _ChildId;
         partial void OnChildIdChanging(global::System.Int32 value);
         partial void OnChildIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Reference
-        {
-            get
-            {
-                return _Reference;
-            }
-            set
-            {
-                OnReferenceChanging(value);
-                ReportPropertyChanging("Reference");
-                _Reference = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Reference");
-                OnReferenceChanged();
-            }
-        }
-        private global::System.String _Reference;
-        partial void OnReferenceChanging(global::System.String value);
-        partial void OnReferenceChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2719,6 +2695,30 @@ namespace SceneCrm.Entities
         private global::System.String _Surname;
         partial void OnSurnameChanging(global::System.String value);
         partial void OnSurnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String MembershipNumber
+        {
+            get
+            {
+                return _MembershipNumber;
+            }
+            set
+            {
+                OnMembershipNumberChanging(value);
+                ReportPropertyChanging("MembershipNumber");
+                _MembershipNumber = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("MembershipNumber");
+                OnMembershipNumberChanged();
+            }
+        }
+        private global::System.String _MembershipNumber;
+        partial void OnMembershipNumberChanging(global::System.String value);
+        partial void OnMembershipNumberChanged();
 
         #endregion
     
@@ -2975,6 +2975,30 @@ namespace SceneCrm.Entities
         private global::System.String _PerformanceAttended;
         partial void OnPerformanceAttendedChanging(global::System.String value);
         partial void OnPerformanceAttendedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> AvailableFrom
+        {
+            get
+            {
+                return _AvailableFrom;
+            }
+            set
+            {
+                OnAvailableFromChanging(value);
+                ReportPropertyChanging("AvailableFrom");
+                _AvailableFrom = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AvailableFrom");
+                OnAvailableFromChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _AvailableFrom;
+        partial void OnAvailableFromChanging(Nullable<global::System.DateTime> value);
+        partial void OnAvailableFromChanged();
 
         #endregion
     
