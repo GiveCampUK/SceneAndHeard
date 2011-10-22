@@ -29,9 +29,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ChildId }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.ChildId }) |*@
-            @Html.ActionLink("Delete", "Delete", new { id=item.ChildId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentId }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.StudentId }) |*@
+            @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
         </td>
         <td>
 			@item.Reference

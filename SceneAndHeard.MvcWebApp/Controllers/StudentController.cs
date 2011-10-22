@@ -26,7 +26,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Details(int id)
         {
-            Student student = context.Students.Single(x => x.ChildId == id);
+            Student student = context.Students.Single(x => x.StudentId == id);
             return View(student);
         }
 
@@ -59,7 +59,7 @@ namespace SceneAndHeard.Controllers
  
         public ActionResult Edit(int id)
         {
-            Student student = context.Students.Single(x => x.ChildId == id);
+            Student student = context.Students.Single(x => x.StudentId == id);
             return View(student);
         }
 
@@ -84,7 +84,7 @@ namespace SceneAndHeard.Controllers
  
         public ActionResult Delete(int id)
         {
-            Student student = context.Students.Single(x => x.ChildId == id);
+            Student student = context.Students.Single(x => x.StudentId == id);
             return View(student);
         }
 
@@ -94,7 +94,7 @@ namespace SceneAndHeard.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Student student = context.Students.Single(x => x.ChildId == id);
+            Student student = context.Students.Single(x => x.StudentId == id);
             context.Students.DeleteObject(student);
             context.SaveChanges();
             return RedirectToAction("Index");

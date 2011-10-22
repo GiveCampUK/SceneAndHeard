@@ -22,7 +22,7 @@
     <div class="display-field">@(Model.CourseAttendances == null ? "None" : Model.CourseAttendances.Count.ToString())</div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ChildId }) |
+    @Html.ActionLink("Edit", "Edit", new { id=Model.StudentId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 

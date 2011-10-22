@@ -26,7 +26,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Details(int id)
         {
-            Play play = context.Plays.Single(x => x.PlayId == id);
+            Play play = context.Plays.SingleOrDefault(x => x.PlayId == id);
             return View(play);
         }
 
