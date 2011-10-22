@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Class="SceneAndHeardDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="" Member="Volunteers">
+    <Type Name="Volunteer">
+      <Column Member="Name" Type="System.String" CanBeNull="false" />
+      <Column Member="Id" Type="System.String" CanBeNull="false" />
+      <Association Name="Volunteer_Play" Member="Plays" ThisKey="Id" OtherKey="DirectorId" Type="Play" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Kids">
+    <Type Name="Kid">
+      <Column Member="Name" Type="System.String" CanBeNull="false" />
+      <Column Member="Id" Type="System.String" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="Plays">
+    <Type Name="Play">
+      <Column Member="Name" Type="System.String" CanBeNull="false" />
+      <Column Member="DirectorId" Type="System.String" CanBeNull="false" />
+      <Column Member="Id" Type="System.String" CanBeNull="false" />
+      <Association Name="Volunteer_Play" Member="Volunteer" ThisKey="DirectorId" OtherKey="Id" Type="Volunteer" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
