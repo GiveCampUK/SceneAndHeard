@@ -8,12 +8,12 @@
     <link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script src="../../Scripts/jquery.ui.datepicker-en-GB.js" type="text/javascript"></script>
 </head>
-
 <body>
     <div class="page">
         <div id="header">
             <div id="title">
-                <a href="/"><img src="@Url.Content("~/Content/images/logo.gif")" alt="Scene & Heard" style="vertical-align: middle;"/></a>
+                <a href="/">
+                    <img src="@Url.Content("~/Content/images/logo.gif")" alt="Scene & Heard" style="vertical-align: middle;"/></a>
                 @*<h1>
                     Scene &amp; Heard</h1>*@
             </div>
@@ -25,6 +25,9 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Volunteers", "Index", "Volunteer")</li>
+                    <li>@Html.ActionLink("Plays", "Index", "Play")</li>
+                    <li>@Html.ActionLink("Production", "Index", "Production")</li>
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
                 </ul>
             </div>
         </div>
