@@ -3,19 +3,19 @@
 @* This partial view defines form fields that will appear when creating and editing entities *@
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.Reference)
+    @Html.LabelFor(model => model.MembershipNumber)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.Reference)
-    @Html.ValidationMessageFor(model => model.Reference)
+    @Html.EditorFor(model => model.MembershipNumber)
+    @Html.ValidationMessageFor(model => model.MembershipNumber)
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.FirstName)
+    @Html.LabelFor(model => model.Forename)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.FirstName)
-    @Html.ValidationMessageFor(model => model.FirstName)
+    @Html.EditorFor(model => model.Forename)
+    @Html.ValidationMessageFor(model => model.Forename)
 </div>
 
 <div class="editor-label">
