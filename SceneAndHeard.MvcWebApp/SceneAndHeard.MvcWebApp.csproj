@@ -82,12 +82,15 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Support\InitialisesVolunteerAllocationView.cs" />
+    <Compile Include="Support\InterpretsPostedVolunteerAllocations.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Support\VolunteerAllocation.cs" />
     <Compile Include="Controllers\VolunteerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -336,6 +339,12 @@
     <Content Include="Views\Volunteer\_CreateOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\Volunteer\EligibleVolunteers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AllocateVolunteers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SceneCrm.Entities\SceneCrm.Entities.csproj">
       <Project>{0D0FCA1E-C746-4CA7-BBA4-DBB98A4F7014}</Project>
       <Name>SceneCrm.Entities</Name>
@@ -362,6 +371,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\JustGiving.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Volunteer\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Report\_optionsGrid.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

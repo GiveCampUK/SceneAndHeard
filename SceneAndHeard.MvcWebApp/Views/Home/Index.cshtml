@@ -1,9 +1,50 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+<style>
+    .quickLinks
+    {
+        
+        float: left;
+        margin: 10px;
+        margin-right: 15px;
+    }
+    
+    .quickLinks li
+    {
+      font-weight:bold;
+      margin: 8px;   
+    }
+</style>
 <h2>@ViewBag.Message</h2>
 <p>
-    The Scene & Heard external website is on Wordpress somehwere<br />
-    The ticketing systems is <a href="http://sceneandheard.eventbrite.com">on Eventbrite</a>
+    <div style="height: 500px;">
+        <h2>
+            Quick Links</h2>
+        <ul class="quickLinks">
+            <li>@Html.ActionLink("Add Student", "Create", "Student")</li>
+            <li>@Html.ActionLink("Add Volunteer", "Create", "Volunteer")</li>
+            <li>@Html.ActionLink("Add Course", "Create", "Course")</li>
+            <li>@Html.ActionLink("Add Play", "Create", "Play")</li>
+            <li>@Html.ActionLink("Add Production", "Create", "Production")</li>
+            <li>@Html.ActionLink("Add Performance", "Create", "Performance")</li>
+        </ul>
+    
+        
+        <ul class="quickLinks">
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                    <li>@Html.ActionLink("Volunteers", "Index", "Volunteer")</li>
+                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+                    <li>@Html.ActionLink("Plays", "Index", "Play")</li>
+                    <li>@Html.ActionLink("Productions", "Index", "Production")</li>
+                    <li>@Html.ActionLink("Performances", "Index", "Performance")</li>
+                    <li>@Html.ActionLink("Jobs", "Index", "Job")</li>
+                    <li>@Html.ActionLink("Reports", "CRBChecks", "Report")</li>
+        </ul>
+
+            <ul class="quickLinks">
+            <li><a href="http://sceneandheard.eventbrite.co.uk">Ticketing System</a></li>
+            
+        </ul>
+    </div>
 </p>

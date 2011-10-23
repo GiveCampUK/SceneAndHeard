@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SceneAndHeard.Support;
 using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
@@ -13,6 +11,9 @@ namespace SceneAndHeard.Controllers
     public class CourseController : Controller
     {
         private SceneCRM context = new SceneCRM();
+
+        private readonly InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView = new InitialisesVolunteerAllocationView();
+        private readonly InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations = new InterpretsPostedVolunteerAllocations();
 
         //
         // GET: /Course/
@@ -36,10 +37,10 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PossibleCourseTypes = context.CourseTypes;
-            ViewBag.PossibleVolunteers = context.Volunteers;
-            ViewBag.PossibleJobs = context.Jobs;
+            ViewBag.PossibleCourseTypes = context.CourseTypes;            
             ViewBag.PossibleTerms = context.Terms;
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
+
             return View();
         }
 
@@ -52,12 +53,12 @@ namespace SceneAndHeard.Controllers
             if (ModelState.IsValid)
             {
                 context.Courses.AddObject(course);
+                ApplyCourseVolunteerAllocations(course);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PossibleVolunteers = context.Volunteers;
-            ViewBag.PossibleJobs = context.Jobs;
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
             ViewBag.PossibleTerms = context.Terms;
 
             return View(course);
@@ -71,8 +72,8 @@ namespace SceneAndHeard.Controllers
             Course course = context.Courses.Single(x => x.CourseId == id);
             ViewBag.PossibleCourseTypes = context.CourseTypes;
             ViewBag.PossibleTerms = context.Terms;
-            ViewBag.PossibleVolunteers = context.Volunteers;
-            ViewBag.PossibleJobs = context.Jobs;
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context, course.CourseVolunteers.Select(cv => new VolunteerAllocation(cv.VolunteerId, cv.JobId, cv.Notes)));
 
             return View(course);
         }
@@ -88,27 +89,33 @@ namespace SceneAndHeard.Controllers
                 context.Courses.Attach(course);
                 context.ObjectStateManager.ChangeObjectState(course, EntityState.Modified);
 
-                var allocatedVolunteers = new InterpretsPostedVolunteerAllocations().Interpret(Request.Form);
+                ApplyCourseVolunteerAllocations(course);
 
-                course.CourseVolunteers.Clear();
-                foreach (var volunteerAllocation in allocatedVolunteers)
-                {                    
-                    course.CourseVolunteers.Add(
-                        new CourseVolunteer
-                            {
-                                JobId = volunteerAllocation.JobId,
-                                VolunteerId = volunteerAllocation.VolunteerId, 
-                                Notes = volunteerAllocation.Notes
-                            });
-                }
-                
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PossibleVolunteers = context.Volunteers;
-            ViewBag.PossibleJobs = context.Jobs;
+            
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context, course.CourseVolunteers.Select(cv => new VolunteerAllocation(cv.VolunteerId, cv.JobId, cv.Notes)));
+            
             ViewBag.PossibleTerms = context.Terms;
             return View(course);
+        }
+
+        private void ApplyCourseVolunteerAllocations(Course course)
+        {
+            var allocatedVolunteers = _interpretsPostedVolunteerAllocations.Interpret(Request.Form);
+            
+            course.CourseVolunteers.Clear();
+            foreach (var volunteerAllocation in allocatedVolunteers)
+            {                    
+                course.CourseVolunteers.Add(
+                    new CourseVolunteer
+                        {
+                            JobId = volunteerAllocation.JobId,
+                            VolunteerId = volunteerAllocation.VolunteerId, 
+                            Notes = volunteerAllocation.Notes
+                        });
+            }
         }
 
         //
@@ -131,50 +138,5 @@ namespace SceneAndHeard.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
-    }
-
-    public class InterpretsPostedVolunteerAllocations
-    {
-
-
-        public IEnumerable<VolunteerAllocation> Interpret(NameValueCollection form)
-        {
-            var keyNumbers =
-                form.AllKeys
-                    .Where(key => key.StartsWith("volunteer", StringComparison.InvariantCultureIgnoreCase))
-                    .Select(key => key.Substring(9));
-
-            foreach (var keyNumber in keyNumbers)
-            {
-                var volunteerIdString = form[string.Format("volunteer{0}", keyNumber)];
-                var jobIdString = form[string.Format("job{0}", keyNumber)];
-                var notes = form[string.Format("notes{0}", keyNumber)];
-
-                if (volunteerIdString != null && jobIdString != null)
-                {
-                    int volunteerId;
-                    int jobId;
-
-                    if (int.TryParse(volunteerIdString, out volunteerId) && int.TryParse(jobIdString, out jobId))
-                        yield return new VolunteerAllocation(volunteerId, jobId, notes);
-                }
-
-            }
-
-        }
-    }
-
-    public class VolunteerAllocation
-    {
-        public VolunteerAllocation(int volunteerId, int jobId, string notes)
-        {
-            VolunteerId = volunteerId;
-            JobId = jobId;
-            Notes = notes;
-        }
-
-        public int VolunteerId { get; private set; }
-        public int JobId { get; private set; }
-        public string Notes { get; private set; }
     }
 }

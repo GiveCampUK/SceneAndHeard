@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<SceneCrm.Entities.Performance>
-
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
+<h2>
+    Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -20,26 +18,29 @@
         <th>
             EventBrite Id
         </th>
-        <th></th>
+        <th>
+        </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Production.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PerformanceDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventBriteId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PerformanceId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PerformanceId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PerformanceId })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.Production != null)
+                {
+                    @Html.ActionLink(item.Production.Title, "Details", "Production", new { id = item.Production.ProductionId }, null)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformanceDateTime)
+            </td>
+            <td>
+                <a href="http://www.eventbrite.co.uk/event/@item.EventBriteId">@item.EventBriteId</a>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PerformanceId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PerformanceId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PerformanceId })
+            </td>
+        </tr>
+    }
 </table>

@@ -12,67 +12,68 @@ namespace SceneCrm.Importer {
         static void Main(string[] args) {
             HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
             using (var context = new SceneCRM()) {
-                Console.Write("Wiping database...");
-                WipeDatabase(context);
-                Console.WriteLine("Wiped!");
-            }
-
-            using (var context = new SceneCRM()) {
-                var oneOnOne = new CourseType() { CourseTypeCode = "OO", CourseTypeName = "One on One" };
-                context.CourseTypes.AddObject(oneOnOne);
-                var pm1 = new CourseType() { CourseTypeCode = "PM1", CourseTypeName = "Playmaking One" };
-                context.CourseTypes.AddObject(pm1);
-                var rp = new CourseType() { CourseTypeCode = "RP", CourseTypeName = "Replay" };
-                context.CourseTypes.AddObject(rp);
-                var s1 = new CourseType() { CourseTypeCode = "S1", CourseTypeName = "Stage One" };
-                context.CourseTypes.AddObject(rp);
-                var pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
-                context.CourseTypes.AddObject(rp);
-                context.SaveChanges();
-
-                var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
-
-                foreach (var row in ss.Rows) {
-                    var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
-                    if (row.AttendedPm1) {
-                        var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
-                        var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
-                        if (course != null) {
-                            var attendance = new CourseAttendance() {
-                                Student = student,
-                                Course = course,
-                                Completed = true
-                            };
-                            Production production = context.Productions.FindOrMake(row.PlaymakingOneProduction);
-
-                            if (!String.IsNullOrWhiteSpace(row.PlaymakingOnePlay)) {
-                                var play = new Play() {
-                                    Student = student,
-                                    Title = row.PlaymakingOnePlay
-                                };
-                                if (production != null) play.Production = production;
-                                attendance.Play = play;
-                                student.Plays.Add(play);
-                                AddPlayVolunteer(context, play, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
-                                AddPlayVolunteer(context, play, row.PlaymakingOneDirector, Jobs.Director);
-                                AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
-                                AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
-                                AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
-                            } else {
-
-                                AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
-                                AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
-                                AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
-                                AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
-                                AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
-                            }
-                            student.CourseAttendances.Add(attendance);
-
-                        }
-                        Console.WriteLine("Added " + student.Forename + " " + student.Surname);
-                        context.SaveChanges();
-                    }
+                /*
+                    Console.Write("Wiping database...");
+                    WipeDatabase(context);
+                    Console.WriteLine("Wiped!");
                 }
+
+                using (var context = new SceneCRM()) {
+                    var oneOnOne = new CourseType() { CourseTypeCode = "OO", CourseTypeName = "One on One" };
+                    context.CourseTypes.AddObject(oneOnOne);
+                    var pm1 = new CourseType() { CourseTypeCode = "PM1", CourseTypeName = "Playmaking One" };
+                    context.CourseTypes.AddObject(pm1);
+                    var rp = new CourseType() { CourseTypeCode = "RP", CourseTypeName = "Replay" };
+                    context.CourseTypes.AddObject(rp);
+                    var s1 = new CourseType() { CourseTypeCode = "S1", CourseTypeName = "Stage One" };
+                    context.CourseTypes.AddObject(rp);
+                    var pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
+                    context.CourseTypes.AddObject(rp);
+                    context.SaveChanges();
+
+                    var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
+
+                    foreach (var row in ss.Rows) {
+                        var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
+                        if (row.AttendedPm1) {
+                            var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
+                            var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
+                            if (course != null) {
+                                var attendance = new CourseAttendance() {
+                                    Student = student,
+                                    Course = course,
+                                    Completed = true
+                                };
+                                Production production = context.Productions.FindOrMake(row.PlaymakingOneProduction);
+
+                                if (!String.IsNullOrWhiteSpace(row.PlaymakingOnePlay)) {
+                                    var play = new Play() {
+                                        Student = student,
+                                        Title = row.PlaymakingOnePlay
+                                    };
+                                    if (production != null) play.Production = production;
+                                    attendance.Play = play;
+                                    student.Plays.Add(play);
+                                    AddPlayVolunteer(context, play, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                                    AddPlayVolunteer(context, play, row.PlaymakingOneDirector, Jobs.Director);
+                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
+                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
+                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
+                                } else {
+
+                                    AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
+                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
+                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
+                                    AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
+                                }
+                                student.CourseAttendances.Add(attendance);
+
+                            }
+                            Console.WriteLine("Added " + student.Forename + " " + student.Surname);
+                            context.SaveChanges();
+                        }
+                    }*/
                 ImportVolunteerDataFromAccessDatabase(context, @"C:\Users\dylan.beattie\Documents\Scene & Heard\Volunteers.mdb", "giraffe");
             }
             Console.ReadKey(false);
@@ -112,34 +113,36 @@ namespace SceneCrm.Importer {
                 var volunteer = context.Volunteers.FindOrMake(row.First_Name, row.Last_Name);
                 volunteer.AccessPersonId = row.Person_ID;
                 var address = row.IsAddressNull() ? String.Empty : row.Address;
-                if (!(row.IsAddress_1Null() && String.IsNullOrWhiteSpace(row.Address_1))) address += Environment.NewLine + row.Address_1;
-                if (!(row.IsAddress_2Null() && String.IsNullOrWhiteSpace(row.Address_2))) address += Environment.NewLine + row.Address_2;
+                if (!(row.IsAddress_1Null() || String.IsNullOrWhiteSpace(row.Address_1))) address += Environment.NewLine + row.Address_1;
+                if (!(row.IsAddress_2Null() || String.IsNullOrWhiteSpace(row.Address_2))) address += Environment.NewLine + row.Address_2;
                 volunteer.Address = address;
                 volunteer.AgentName = row.IsAgent_NameNull() ? null : row.Agent_Name;
                 volunteer.CvWebUrl = row.IsCVNull() ? null : row.CV;
                 volunteer.Deadwood = row.IsDeadwoodNull() ? false : row.Deadwood;
-              //  volunteer.EEDirectDebit = row.Is_E_E_Direct_DebitNull() ? null : row._E_E_Direct_Debit;
-                volunteer.EmailAddress = row.Email_Address;
-                volunteer.EmailAddress2 = row.Email_Address_2;
-                volunteer.EyesEars = row._Eyes___Ears;
-                volunteer.MobilePhone = row.Mobile_telephone;
-                volunteer.NoMailout = row.No_Mailout;
-                volunteer.Notes = row.Notes;
-                volunteer.Organisation = row.Organisation;
-                volunteer.PartnerFirstName = row.Second_Person_1st_Name;
-                volunteer.PartnerSurname = row.Second_Person_Last_Name;
-                volunteer.Postcode = row.Postcode;
-                volunteer.SpotlightNumber = row.Spotlight_Number;
-                volunteer.Trustee = row._Trustee_Board_Member;
+                volunteer.EEDirectDebit = row.Is_E_E_Direct_DebitNull() ? false : row._E_E_Direct_Debit;
+                volunteer.EmailAddress = row.IsEmail_AddressNull() ? null : row.Email_Address;
+                volunteer.EmailAddress2 = row.IsEmail_Address_2Null() ? null : row.Email_Address_2;
+                volunteer.EyesEars = row.Is_Eyes___EarsNull() ? false : row._Eyes___Ears;
+                volunteer.MobilePhone = row.IsMobile_telephoneNull() ? null : row.Mobile_telephone;
+                volunteer.NoMailout = row.IsNo_MailoutNull() ? false : row.No_Mailout;
+                volunteer.Notes = row.IsNotesNull() ? null : row.Notes;
+                volunteer.Organisation = row.IsOrganisationNull() ? null : row.Organisation;
+                volunteer.PartnerFirstName = row.IsSecond_Person_1st_NameNull() ? null : row.Second_Person_1st_Name;
+                volunteer.PartnerSurname = row.IsSecond_Person_Last_NameNull() ? null : row.Second_Person_Last_Name;
+                volunteer.Postcode = row.IsPostcodeNull() ? null : row.Postcode;
+                volunteer.SpotlightNumber = row.IsSpotlight_NumberNull() ? false : row.Spotlight_Number;
+                volunteer.Trustee = row.Is_Trustee_Board_MemberNull() ? false : row._Trustee_Board_Member;
                 volunteer.CrbChecks.Clear();
-                volunteer.CrbChecks.Add(new CrbCheck() {
-                    Volunteer = volunteer,
-                    CrbNumber = row.CRB_Number,
-                    ApplicationDate = row.Date_applied_CRB,
-                    ApplicationSent = row.CRB_applied,
-                    Approved = row.CRB_Approved,
-                    ApprovalDate = row.CRB_Date
-                });
+                if (!(row.IsCRB_NumberNull() && row.IsDate_applied_CRBNull() && row.IsCRB_appliedNull() && row.IsCRB_ApprovedNull())) {
+                    volunteer.CrbChecks.Add(new CrbCheck() {
+                        Volunteer = volunteer,
+                        CrbNumber = row.IsCRB_NumberNull() ? null : row.CRB_Number,
+                        ApplicationDate = row.IsDate_applied_CRBNull() ? (DateTime?)null : row.Date_applied_CRB,
+                        ApplicationSent = row.IsCRB_appliedNull() ? false : row.CRB_applied,
+                        Approved = row.IsCRB_ApprovedNull() ? false : row.CRB_Approved,
+                        ApprovalDate = row.IsCRB_DateNull() ? (DateTime?)null : row.CRB_Date
+                    });
+                }
                 //TODO: add volunteer capability import here based on boolean fields in Access DB
                 context.SaveChanges();
             }
