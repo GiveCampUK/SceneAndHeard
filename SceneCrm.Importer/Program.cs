@@ -17,43 +17,23 @@ namespace SceneCrm.Importer {
  
         static void Main(string[] args) {
             HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
-            using (var context = new SceneCRM()) {
-                Console.Write("Wiping database...");
-                WipeDatabase(context);
-                Console.WriteLine("Wiped!");
-            }
 
             using (var context = new SceneCRM()) {
-                oneOnOne = new CourseType() { CourseTypeCode = "OO", CourseTypeName = "One on One" };
-                context.CourseTypes.AddObject(oneOnOne);
-                pm1 = new CourseType() { CourseTypeCode = "PM1", CourseTypeName = "Playmaking One" };
-                context.CourseTypes.AddObject(pm1);
-                rp = new CourseType() { CourseTypeCode = "RP", CourseTypeName = "Replay" };
-                context.CourseTypes.AddObject(rp);
-                s1 = new CourseType() { CourseTypeCode = "S1", CourseTypeName = "Stage One" };
-                context.CourseTypes.AddObject(rp);
-                pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
-                context.CourseTypes.AddObject(rp);
-                context.SaveChanges();
-                context.Jobs.FindOrMake(Jobs.Actor);
-                context.Jobs.FindOrMake(Jobs.Class);
-                context.Jobs.FindOrMake(Jobs.Costume);
-                context.Jobs.FindOrMake(Jobs.CostumePropMaker);
-                context.Jobs.FindOrMake(Jobs.CourseLeader);
-                context.Jobs.FindOrMake(Jobs.Designer);
-                context.Jobs.FindOrMake(Jobs.Director);
-                context.Jobs.FindOrMake(Jobs.Dramaturg);
-                context.Jobs.FindOrMake(Jobs.Mailout);
-                context.Jobs.FindOrMake(Jobs.ProdAsst);
-                context.Jobs.FindOrMake(Jobs.SoundDesigner);
-                context.Jobs.FindOrMake(Jobs.StageMan);
-                context.Jobs.FindOrMake(Jobs.TechAsst);
-                context.Jobs.FindOrMake(Jobs.Technician);
+                WipeDatabase(context);
+
+                oneOnOne = context.CourseTypes.FindOrMake("OO", "One on One");
+                pm1 = context.CourseTypes.FindOrMake("PM1", "Playmaking One");
+                rp = context.CourseTypes.FindOrMake("RP", "Replay");
+                s1 = context.CourseTypes.FindOrMake("S1", "Stage One");
+                pb = context.CourseTypes.FindOrMake("PB", "Playback");
+
+                PopulateJobTypes(context);
 
                 var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
 
                 foreach (var row in ss.Rows) {
                     var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
+                    student.QuestionnaireResponse = row.QuestionnaireResponses;
                     ImportPlaymakingOne(context, student, row);
                     ImportPlayback(context, student, row);
                     ImportReplay(context, student, row);
@@ -202,6 +182,7 @@ namespace SceneCrm.Importer {
             var data = adapter.GetData();
             foreach (LegacyData.AccessVolunteers.AddressRow row in data.Rows) {
                 var volunteer = context.Volunteers.FindOrMake(row.First_Name, row.Last_Name);
+                Console.WriteLine("Volunteer {0} {1} (#{2})", volunteer.FirstName, volunteer.Surname, volunteer.VolunteerId);
                 volunteer.AccessPersonId = row.Person_ID;
                 var address = row.IsAddressNull() ? String.Empty : row.Address;
                 if (!(row.IsAddress_1Null() || String.IsNullOrWhiteSpace(row.Address_1))) address += Environment.NewLine + row.Address_1;
@@ -271,6 +252,22 @@ namespace SceneCrm.Importer {
             context.Volunteers.ToList().ForEach(context.Volunteers.DeleteObject);
             context.SaveChanges();
         }
+        static void PopulateJobTypes(SceneCRM context) {
+            context.Jobs.FindOrMake(Jobs.Actor);
+            context.Jobs.FindOrMake(Jobs.Class);
+            context.Jobs.FindOrMake(Jobs.Costume);
+            context.Jobs.FindOrMake(Jobs.CostumePropMaker);
+            context.Jobs.FindOrMake(Jobs.CourseLeader);
+            context.Jobs.FindOrMake(Jobs.Designer);
+            context.Jobs.FindOrMake(Jobs.Director);
+            context.Jobs.FindOrMake(Jobs.Dramaturg);
+            context.Jobs.FindOrMake(Jobs.Mailout);
+            context.Jobs.FindOrMake(Jobs.ProdAsst);
+            context.Jobs.FindOrMake(Jobs.SoundDesigner);
+            context.Jobs.FindOrMake(Jobs.StageMan);
+            context.Jobs.FindOrMake(Jobs.TechAsst);
+            context.Jobs.FindOrMake(Jobs.Technician);
+        }
     }
 
     public static class SceneCRMExtensions {
@@ -286,6 +283,19 @@ namespace SceneCrm.Importer {
                 students.Context.SaveChanges();
             }
             return (student);
+        }
+
+        public static CourseType FindOrMake(this ObjectSet<CourseType> types, string code, string name) {
+            var ct = types.FirstOrDefault(t => t.CourseTypeCode == code);
+            if (ct == default(CourseType)) {
+                ct = new CourseType() {
+                    CourseTypeName = name,
+                    CourseTypeCode = code
+                };
+                types.AddObject(ct);
+                types.Context.SaveChanges();
+            }
+            return (ct);
         }
         public static Course FindOrMake(this ObjectSet<Course> courses, CourseType type, Term term, string fourDigitYear) {
             int year;

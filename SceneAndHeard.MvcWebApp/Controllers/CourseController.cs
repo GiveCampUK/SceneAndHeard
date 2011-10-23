@@ -139,5 +139,30 @@ namespace SceneAndHeard.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        // POST Course/Students/5
+        [Authorize]
+        [HttpPost]
+        public ActionResult Students(int id, string verb, int[] possibleStudents, int[] allocatedStudents) {
+            var course = context.Courses.FirstOrDefault(c => c.CourseId == id);
+            if (course != default(Course)) {
+                switch (verb) {
+                    case "Add":
+                        foreach (var studentId in possibleStudents) {
+                            course.CourseAttendances.Add(new CourseAttendance() {
+                                Student = context.Students.First(s => s.StudentId == studentId),
+                                Course = course
+                            });
+                        }
+                        context.SaveChanges();
+                        break;
+                    case "Remove":
+                        course.CourseAttendances.Where(ca => allocatedStudents.Contains(ca.StudentId)).ToList().ForEach(ca => course.CourseAttendances.Remove(ca));
+                        context.SaveChanges();
+                        break;
+                }
+            }
+            return (Details(id));
+        }
     }
 }
