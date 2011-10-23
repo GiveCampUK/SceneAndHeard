@@ -7,6 +7,7 @@ using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class ProductionController : Controller
     {
         private SceneCRM db = new SceneCRM();

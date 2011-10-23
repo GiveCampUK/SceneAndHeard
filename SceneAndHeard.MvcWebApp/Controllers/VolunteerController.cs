@@ -10,8 +10,8 @@ using SceneCrm.Entities;
 
 
 namespace SceneAndHeard.Controllers
-{   
-    [Authorize]
+{
+    [Authorize(Roles = "Editor")]
     public class VolunteerController : Controller
     {
         private SceneCRM context = new SceneCRM();

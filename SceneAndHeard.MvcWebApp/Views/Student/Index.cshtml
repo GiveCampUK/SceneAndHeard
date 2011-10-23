@@ -7,11 +7,11 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Student", "Create")
+    @Html.ActionLink("Create New Student", "Create", null, new { @class = "button big" })
 </p>
 <table>
     <tr>
-        <th></th>
+        
         <th>
             Membership #
         </th>
@@ -27,15 +27,12 @@
         <th>
             Play Count
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StudentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.StudentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StudentId })
-        </td>
+        
         <td>
 			@item.MembershipNumber 
         </td>
@@ -50,6 +47,13 @@
         </td>
          <td>
 			@(item.Plays == null ? "None" : item.Plays.Count.ToString())
+        </td>
+        <td>
+             <div class="button-group">
+            @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }, new { @class = "button primary pill icon edit" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.StudentId }, new { @class = "button primary pill icon log" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.StudentId }, new { @class = "button primary pill icon trash" })
+            </div>
         </td>
     </tr>
 }

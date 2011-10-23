@@ -9,6 +9,7 @@ using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class JobController : Controller
     {
         private SceneCRM context = new SceneCRM();
@@ -45,10 +46,6 @@ namespace SceneAndHeard.Controllers
 
             ViewBag.CurrentVolunteers = v.OrderBy(x => x.Name);
             
-
-
-
-
             return View(job);
         }
 

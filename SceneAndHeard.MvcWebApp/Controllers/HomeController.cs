@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace SceneAndHeard.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class HomeController : Controller
     {
         [Authorize]
