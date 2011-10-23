@@ -19,28 +19,25 @@
             PerformanceAttended
         </th>
         <th>
-            CheckDate
-        </th>
-        <th>
             CrbNumber
         </th>
         <th>
-            OnlineFormSent
+            Application Date
         </th>
         <th>
-            FormFilledOut
+            Application Expiry Date
         </th>
         <th>
-            IdComplete
+            Approved
         </th>
         <th>
-            DateCheckExpires
+            Approval Date
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model.OrderBy(c => c.DateCheckExpires.GetValueOrDefault())) {
-    <tr @if (item.DateCheckExpires.HasValue && item.DateCheckExpires.Value <= DateTime.UtcNow) { @Html.Raw("style='background-color:pink;") } >
+@foreach (var item in Model.OrderBy(c => c.ApplicationExpiryDate.GetValueOrDefault())) {
+    <tr @if (item.ApplicationExpiryDate.HasValue && item.ApplicationExpiryDate.Value <= DateTime.UtcNow) { @Html.Raw("style='background-color:pink;") } >
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>
@@ -51,22 +48,19 @@
             @Html.DisplayFor(modelItem => item.PerformanceAttended)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CheckDate)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.CrbNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.OnlineFormSent)
+            @Html.DisplayFor(modelItem => item.ApplicationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.FormFilledOut)
+            @Html.DisplayFor(modelItem => item.ApplicationExpiryDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IdComplete)
+            @Html.DisplayFor(modelItem => item.Approved)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DateCheckExpires)
+            @Html.DisplayFor(modelItem => item.ApprovalDate)
         </td>
     </tr>
 }

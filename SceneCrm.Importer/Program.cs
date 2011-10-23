@@ -118,7 +118,7 @@ namespace SceneCrm.Importer {
                 volunteer.AgentName = row.IsAgent_NameNull() ? null : row.Agent_Name;
                 volunteer.CvWebUrl = row.IsCVNull() ? null : row.CV;
                 volunteer.Deadwood = row.IsDeadwoodNull() ? false : row.Deadwood;
-                volunteer.EEDirectDebit = row.Is_E_E_Direct_DebitNull() ? null : row._E_E_Direct_Debit;
+              //  volunteer.EEDirectDebit = row.Is_E_E_Direct_DebitNull() ? null : row._E_E_Direct_Debit;
                 volunteer.EmailAddress = row.Email_Address;
                 volunteer.EmailAddress2 = row.Email_Address_2;
                 volunteer.EyesEars = row._Eyes___Ears;
