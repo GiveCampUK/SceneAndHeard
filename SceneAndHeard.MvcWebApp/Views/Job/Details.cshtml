@@ -1,0 +1,56 @@
+﻿@using SceneCrm.Entities
+@model SceneCrm.Entities.Job
+@{
+    ViewBag.Title = "Job Details - " + Model.Description;
+}
+<fieldset>
+    <legend>Job - @Model.Description</legend>
+    <div class="display-label">
+        Name</div>
+    <div class="display-field">
+
+     @Model.Description
+      
+    </div>
+    
+</fieldset>
+
+<fieldset>
+    <legend>Capable Volunteers</legend>
+    @if (Model.Volunteers.Count() == 0)
+    {
+        <h3>
+            No volunteers able to do this job</h3>
+    }
+    @foreach (var volunteer in Model.Volunteers.OrderBy(x=>x.Name))
+    {
+        @Html.ActionLink(volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) <br />
+    }
+</fieldset>
+
+
+<fieldset>
+    <legend>Volunteers in this Job</legend>
+
+    @{
+        var volunteers = (IEnumerable<Volunteer>)ViewBag.CurrentVolunteers;
+        
+        
+    }
+
+    @if (volunteers.Count() == 0)
+    {
+        <h3>
+            No volunteers able to do this job</h3>
+    }
+    @foreach (Volunteer volunteer in volunteers)
+    {
+        @Html.ActionLink(volunteer.Name, "Details", "Volunteer", new { id = volunteer.VolunteerId }, null) <br />
+    }
+</fieldset>
+
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.JobId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
