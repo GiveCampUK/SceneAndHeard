@@ -6,15 +6,15 @@ using SceneAndHeard.Support;
 using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
-{ 
+{
     public class ProductionController : Controller
     {
         private SceneCRM db = new SceneCRM();
 
-        private InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView =
+        private readonly InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView =
             new InitialisesVolunteerAllocationView();
 
-        private InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations =
+        private readonly InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations =
             new InterpretsPostedVolunteerAllocations();
 
         //
@@ -42,7 +42,7 @@ namespace SceneAndHeard.Controllers
             _initialisesVolunteerAllocationView.Initialise(ViewBag, db);
 
             return View();
-        } 
+        }
 
         //
         // POST: /Production/Create
@@ -57,21 +57,23 @@ namespace SceneAndHeard.Controllers
                 ApplyProductionVolunteerAllocations(production);
 
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, db);
+
             return View(production);
-        }      
+        }
 
         //
         // GET: /Production/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Production production = db.Productions.Single(p => p.ProductionId == id);
 
             _initialisesVolunteerAllocationView.Initialise(ViewBag, db, production.ProductionVolunteers
-                .Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes) ));
+                .Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes)));
 
             return View(production);
         }
@@ -92,12 +94,16 @@ namespace SceneAndHeard.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, db, production.ProductionVolunteers
+                .Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes)));
+
             return View(production);
         }
 
         //
         // GET: /Production/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Production production = db.Productions.Single(p => p.ProductionId == id);
@@ -109,7 +115,7 @@ namespace SceneAndHeard.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             Production production = db.Productions.Single(p => p.ProductionId == id);
             db.Productions.DeleteObject(production);
             db.SaveChanges();

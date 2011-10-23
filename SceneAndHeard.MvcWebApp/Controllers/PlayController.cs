@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SceneAndHeard.Support;
 using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
@@ -12,6 +13,12 @@ namespace SceneAndHeard.Controllers
     public class PlayController : Controller
     {
         private SceneCRM context = new SceneCRM();
+
+        private readonly InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView =
+            new InitialisesVolunteerAllocationView();
+
+        private readonly InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations =
+            new InterpretsPostedVolunteerAllocations();
 
         //
         // GET: /Play/
@@ -37,6 +44,9 @@ namespace SceneAndHeard.Controllers
         {
             ViewBag.PossibleStudents = context.Students.AsQueryable().OrderBy(x => x.Forename).ThenBy(x=> x.Surname);
             ViewBag.PossibleProductions = context.Productions.AsQueryable().OrderBy(x => x.Title);
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
+
             return View();
         } 
 
@@ -49,11 +59,16 @@ namespace SceneAndHeard.Controllers
             if (ModelState.IsValid)
             {
                 context.Plays.AddObject(play);
+
+                ApplyAllocatedVolunteers(play);
+
                 context.SaveChanges();
                 return RedirectToAction("Index");  
             }
 
             ViewBag.PossibleStudents = context.Students;
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
+
             return View(play);
         }
         
@@ -65,6 +80,10 @@ namespace SceneAndHeard.Controllers
             Play play = context.Plays.Single(x => x.PlayId == id);
             ViewBag.PossibleStudents = context.Students;
             ViewBag.PossibleProductions = context.Productions.AsQueryable().OrderBy(x => x.Title);
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context, 
+                play.PlayVolunteers.Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes)));
+
             return View(play);
         }
 
@@ -78,10 +97,17 @@ namespace SceneAndHeard.Controllers
             {
                 context.Plays.Attach(play);
                 context.ObjectStateManager.ChangeObjectState(play, EntityState.Modified);
+
+                ApplyAllocatedVolunteers(play);
+
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.PossibleStudents = context.Students;
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context,
+               play.PlayVolunteers.Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes)));
+
             return View(play);
         }
 
@@ -105,5 +131,23 @@ namespace SceneAndHeard.Controllers
             context.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        private void ApplyAllocatedVolunteers(Play play)
+        {
+            var volunteerAllocations = _interpretsPostedVolunteerAllocations.Interpret(Request.Form);
+
+            play.PlayVolunteers.Clear();
+
+            foreach (var volunteerAllocation in volunteerAllocations)
+            {
+                play.PlayVolunteers.Add(new PlayVolunteer
+                {
+                    VolunteerId = volunteerAllocation.VolunteerId,
+                    JobId = volunteerAllocation.JobId,
+                    Notes = volunteerAllocation.Notes
+                });
+            }
+        }
+
     }
 }
