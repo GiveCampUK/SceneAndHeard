@@ -49,7 +49,7 @@
         $("#referee").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "http://localhost:54108/Volunteer/AllVolunteers",
+                    url: "../AllVolunteers",
                     dataType: "json",
                     data: {
                         featureClass: "P",
