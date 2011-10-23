@@ -4289,6 +4289,30 @@ namespace SceneCrm.Entities
         private Nullable<global::System.Boolean> _EEDirectDebit;
         partial void OnEEDirectDebitChanging(Nullable<global::System.Boolean> value);
         partial void OnEEDirectDebitChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OtherProfession
+        {
+            get
+            {
+                return _OtherProfession;
+            }
+            set
+            {
+                OnOtherProfessionChanging(value);
+                ReportPropertyChanging("OtherProfession");
+                _OtherProfession = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OtherProfession");
+                OnOtherProfessionChanged();
+            }
+        }
+        private global::System.String _OtherProfession;
+        partial void OnOtherProfessionChanging(global::System.String value);
+        partial void OnOtherProfessionChanged();
 
         #endregion
     

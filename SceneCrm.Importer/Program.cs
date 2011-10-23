@@ -127,6 +127,7 @@ namespace SceneCrm.Importer {
                 volunteer.NoMailout = row.IsNo_MailoutNull() ? false : row.No_Mailout;
                 volunteer.Notes = row.IsNotesNull() ? null : row.Notes;
                 volunteer.Organisation = row.IsOrganisationNull() ? null : row.Organisation;
+                volunteer.OtherProfession = row.IsOther_ProfessionNull() ? null : row.Other_Profession;
                 volunteer.PartnerFirstName = row.IsSecond_Person_1st_NameNull() ? null : row.Second_Person_1st_Name;
                 volunteer.PartnerSurname = row.IsSecond_Person_Last_NameNull() ? null : row.Second_Person_Last_Name;
                 volunteer.Postcode = row.IsPostcodeNull() ? null : row.Postcode;
@@ -143,9 +144,22 @@ namespace SceneCrm.Importer {
                         ApprovalDate = row.IsCRB_DateNull() ? (DateTime?)null : row.CRB_Date
                     });
                 }
-                //TODO: add volunteer capability import here based on boolean fields in Access DB
-                context.SaveChanges();
+                volunteer.Jobs.Clear();
+                AddJob(context, volunteer, ((!(row.IsActorNull())) && row.Actor), Jobs.Actor);
+                AddJob(context, volunteer, ((!(row.IsDirectorNull())) && row.Director), Jobs.Director);
+                AddJob(context, volunteer, ((!(row.IsTechnicianNull())) && row.Technician), Jobs.Technician);
+                AddJob(context, volunteer, ((!(row.Is_Costume_Prop_MakerNull())) && row._Costume_Prop_Maker), Jobs.CostumePropMaker);
             }
+        }
+
+        static void AddJob(SceneCRM context, Volunteer volunteer, bool condition, string jobTitle) {
+            if (!condition) return;
+            var job = context.Jobs.FindOrMake(jobTitle);
+            if (!volunteer.Jobs.Contains(job)) {
+                Console.WriteLine("Marking {0} as a {1}", volunteer.Name, job.Description);
+                volunteer.Jobs.Add(job);
+            }
+            context.SaveChanges();
         }
 
         static void WipeDatabase(SceneCRM context) {
@@ -270,6 +284,7 @@ namespace SceneCrm.Importer {
         public const string ProdAsst = "Production Assistant";
         public const string SoundDesigner = "Sound Designer";
         public const string Props = "Props Handler";
+        public const string CostumePropMaker = "Costume & Prop Maker";
         public const string Costume = "Costume Assistant";
         public const string CourseLeader = "Course Leader";
     }
