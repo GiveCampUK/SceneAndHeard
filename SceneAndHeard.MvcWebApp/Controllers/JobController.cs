@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
-{   
+{
     public class JobController : Controller
     {
         private SceneCRM context = new SceneCRM();
@@ -27,6 +27,28 @@ namespace SceneAndHeard.Controllers
         public ViewResult Details(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
+            var v = new List<Volunteer>();
+            foreach (var cv in job.CourseVolunteers.Where(cv => !v.Contains(cv.Volunteer)))
+            {
+                v.Add(cv.Volunteer);
+            }
+
+            foreach (var cv in job.PlayVolunteers.Where(cv => !v.Contains(cv.Volunteer)))
+            {
+                v.Add(cv.Volunteer);
+            }
+
+            foreach (var cv in job.ProductionVolunteers.Where(cv => !v.Contains(cv.Volunteer)))
+            {
+                v.Add(cv.Volunteer);
+            }
+
+            ViewBag.CurrentVolunteers = v.OrderBy(x => x.Name);
+            
+
+
+
+
             return View(job);
         }
 
@@ -36,7 +58,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /Job/Create
@@ -48,15 +70,15 @@ namespace SceneAndHeard.Controllers
             {
                 context.Jobs.AddObject(job);
                 context.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
             return View(job);
         }
-        
+
         //
         // GET: /Job/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
@@ -81,7 +103,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
