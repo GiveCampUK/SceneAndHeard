@@ -4,11 +4,17 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Volunteer List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-    @Html.ActionLink("Eligiable Volunteers", "Eligible")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button big" })
+    <br />
+    <div class="button-group">
+    @Html.ActionLink("Eligiable Volunteers", "Eligible", new { IsEligible= true }, new { @class = "button pill" })
+    @Html.ActionLink("Non Eligiable Volunteers", "Eligible", new { IsEligible = false }, new { @class = "button pill" })
+    </div>
+    
 </p>
 <p>
 
@@ -16,14 +22,13 @@
     
    @:Search:
     <input type='text' value='' name='searchPhrase' />
-    <input type="submit" value="Search" />
+    <input type="submit" value="Search" class="button"/>
 }    
 
 
 </p>
 <table>
     <tr>
-        <th></th>
         <th>
             First Name
         </th>
@@ -51,40 +56,43 @@
         <th>
             Jobs
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VolunteerId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VolunteerId })
+            @item.FirstName
         </td>
         <td>
-			@item.FirstName
+            @item.Surname
         </td>
         <td>
-			@item.Surname
+            @item.PerformanceAttended
         </td>
         <td>
-			@item.PerformanceAttended
+            @String.Format("{0:d}", item.AvailableFrom)
         </td>
         <td>
-			@String.Format("{0:d}", item.AvailableFrom)
+            @(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
         </td>
         <td>
-			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+            @(item.CrbExpiry)
         </td>
         <td>
-			@(item.CrbExpiry)
+            @(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
         </td>
         <td>
-			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
+            @(item.ProductionVolunteers == null ? "None" : item.ProductionVolunteers.Count.ToString())
         </td>
         <td>
-			@(item.ProductionVolunteers == null ? "None" : item.ProductionVolunteers.Count.ToString())
+            @(item.Jobs == null ? "None" : item.Jobs.Count.ToString())
         </td>
         <td>
-			@(item.Jobs == null ? "None" : item.Jobs.Count.ToString())
+        <div class="button-group">
+            @Html.ActionLink("Edit", "Edit", new { id = item.VolunteerId }, new { @class = "button primary pill icon edit" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.VolunteerId, }, new {  @class = "button pill icon trash" })
+        </div>
         </td>
     </tr>
 }
