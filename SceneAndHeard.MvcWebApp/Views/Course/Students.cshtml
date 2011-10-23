@@ -1,0 +1,47 @@
+﻿@model SceneCrm.Entities.Course
+<h2>
+    Course Details - Student Allocation</h2>
+<fieldset>
+    <legend>Course</legend>
+    <div class="display-label">
+        CourseTypeCode</div>
+    <div class="display-field">@Model.CourseTypeCode</div>
+    <div class="display-label">
+        Year</div>
+    <div class="display-field">@Model.Year</div>
+    <div class="display-label">
+        CourseType</div>
+    <div class="display-field">@Model.CourseType.CourseTypeName</div>
+    <div class="display-label">
+        Term</div>
+    <div class="display-field">@Model.Term.TermName</div>
+</fieldset>
+@using (Html.BeginForm)
+{
+    <input type="hidden" value="@Model.CourseId" name="id" />
+    <fieldset>
+        <legend>Students</legend>
+
+        <select multiple="multiple" name="PossibleStudents">
+        @foreach (var item in ViewBag.PossibleStudents)
+        {
+            <option value="@item.StudentId">@item.Forename @item.Surname</option>
+        }
+        </select>
+
+        <input type="submit" name='Verb' value='Add' />
+        <input type="submit" name='Verb' value='Remove' />
+
+        <select multiple="multiple" name="AllocatedStudents">
+        @foreach (var item in ViewBag.PossibleStudents)
+        {
+            <option value="@item.StudentId">@item.Forename @item.Surname</option>
+        }
+        </select>
+
+    </fieldset>
+   
+}
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
