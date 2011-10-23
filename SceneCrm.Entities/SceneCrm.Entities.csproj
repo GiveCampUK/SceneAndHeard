@@ -54,7 +54,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SceneCRM.edmx</DependentUpon>
-    </Compile>
+    </Compile>    
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">

@@ -1,0 +1,115 @@
+﻿@model SceneCrm.Entities.Course
+@{ 
+    var volunteers = ((IEnumerable<SceneCrm.Entities.Volunteer>)ViewBag.PossibleVolunteers ?? new SceneCrm.Entities.Volunteer[0])
+        .OrderBy(v => v.IsEligible)
+        .Select(v => new { Id = v.VolunteerId.ToString(), Name = string.Format("{0}, {1}{2}", v.Surname, v.FirstName, v.IsEligible ? string.Empty : " (NOT ELIGIBLE)") })
+        .ToDictionary(v => v.Id, v => v.Name);
+
+    var jobs = ((IEnumerable<SceneCrm.Entities.Job>)ViewBag.PossibleJobs ?? new SceneCrm.Entities.Job[0])
+        .Select(j => new { Id = j.JobId.ToString(), Name = j.Description })
+        .ToDictionary(j => j.Id, j => j.Name);
+
+
+    var courseVolunteersSource = (Model == null || Model.CourseVolunteers == null) ? new SceneCrm.Entities.CourseVolunteer[] {} : (IEnumerable<SceneCrm.Entities.CourseVolunteer>)Model.CourseVolunteers;   
+    
+    var courseVolunteers = courseVolunteersSource
+        .Select(cv => new { jobId = cv.JobId.ToString(), volunteerId = cv.VolunteerId.ToString(), notes = cv.Notes })
+        .OrderBy(cv => cv.jobId);        
+        
+}
+<script type="text/javascript">
+    var courseVolunteers = @Html.Raw(Json.Encode(courseVolunteers));
+    var volunteers = @Html.Raw(Json.Encode(volunteers));
+    var jobs = @Html.Raw(Json.Encode(jobs));
+    console.log(volunteers);
+    console.log(jobs);
+
+    var volunteerCount = 0;
+
+    function createVolunteerChooser(courseVolunteer, parent) {
+        volunteerCount = volunteerCount + 1;
+
+        var p = $('<p></p>');
+        var volunteerSelect = createSelect(volunteers, courseVolunteer.volunteerId, 'volunteer' + volunteerCount);
+        p.append(volunteerSelect);
+        p.append(createSelect(jobs, courseVolunteer.jobId, 'job' + volunteerCount));        
+        p.append(createTextBox(courseVolunteer.notes, 'notes' + volunteerCount, 'notes:'));
+        p.append(createButton(" remove ", function() { removeVolunteer(p, volunteerSelect.find('option:selected').attr('value')); }));
+        
+        $(parent).append(p);
+    }
+
+    function createTextBox(value, name, labelText) {
+        var span = $('<span />');
+
+        var label = $('<label />');
+        label.text(labelText);
+        label.attr('for', name);
+
+        var text = $('<input type="text" />');
+        text.val(value);
+        text.attr('name', name);
+        text.attr('id', name);
+
+        span.append(label);
+        span.append(text);
+        return span;
+    }
+
+    function removeVolunteer(container, id) {        
+        courseVolunteers[id]
+        container = $(container).remove();        
+    }
+
+    function createSelect(sourceData, selectedId, name) { 
+        var select = $("<select></select>");
+        select.attr('name', name);
+
+        select.append($("<option value=''>-- Select --</option>"));
+
+        $.each(sourceData, function(key, value) {
+            var option = $("<option></option>");
+            option.text(value);
+            option.val(key);
+
+            if (selectedId == key) {
+                option.attr('selected', 'selected');
+            }
+
+            select.append(option);
+        });        
+
+        return select;
+    }
+
+    function createButton(text, onclick) {
+        var button = $("<input type='button' />");
+
+        button.val(text);
+        button.click(onclick);
+
+        return button;
+    }    
+
+    $().ready(function(){
+        var volunteer_allocation_parent = $('#volunteer_allocation');
+
+        $(".notification .template").hide();
+        $("#add_volunteer").click(function(){
+            createVolunteerChooser({volunteerId:null, courseId:5, jobId:null}, volunteer_allocation_parent); 
+        });
+        
+        $.each(courseVolunteers, function(key, value) {
+            createVolunteerChooser(value, volunteer_allocation_parent);
+        });
+    });
+</script>
+
+<div class="editor-label">
+    Volunteers
+</div>
+<div class="editor-field" id='volunteer_allocation'>
+</div>
+<div class="editor-field">
+    <p><input id="add_volunteer" type="button" value=" add volunteer "/></p>
+</div>

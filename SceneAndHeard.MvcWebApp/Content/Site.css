@@ -331,3 +331,8 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
+#volunteer_allocation input, label {
+   margin-left: 5px;
+}
+
