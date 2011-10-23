@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<SceneCrm.Entities.Production>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Production Index";
 }
 <h2>
-    Index</h2>
+    Production Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button big" })
 </p>
 <table>
     <tr>
@@ -44,10 +44,13 @@
                 @item.AllAssociatedVolunteers.Count()
             </td>*@
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ProductionId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ProductionId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ProductionId })
+             <div class="button-group">
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductionId }, new { @class = "button primary pill icon edit" }) 
+                @Html.ActionLink("Details", "Details", new { id = item.ProductionId }, new { @class = "button primary pill icon log" }) 
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductionId }, new { @class = "button primary pill icon trash" })
+                </div>
             </td>
+            
         </tr>
     }
 </table>

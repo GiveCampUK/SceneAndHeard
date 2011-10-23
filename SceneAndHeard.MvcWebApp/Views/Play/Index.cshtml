@@ -1,57 +1,55 @@
 @model IEnumerable<SceneCrm.Entities.Play>
-
 @{
     ViewBag.Title = "Plays";
 }
-
-<h2>Index</h2>
-
+<h2>
+    Plays Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button big" })
 </p>
 <table>
     <tr>
-        <th></th>
+        
         <th>
             Title
         </th>
         <th>
-           Student
+            Student
         </th>
-         <th>
-           Production
+        <th>
+            Production
+        </th>
+        <th>
         </th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
+            </td>
+            <td>
+                @if (item.Production != null)
+                {
+                    @Html.ActionLink(item.Production.Title, "Details", "Production", new { id = item.Production.ProductionId }, null)
+                }
+            </td>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.PlayId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.PlayId }) @*
+            <td>
+                <div class="button-group">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.PlayId }, new { @class = "button primary pill icon edit" })
+                    @Html.ActionLink("Details", "Details", new { id = item.PlayId }, new { @class = "button primary pill icon trash" })
+                </div>
+                @*
             
             // Can't delete plays - FK constraints
             |
             @Html.ActionLink("Delete", "Delete", new { id=item.PlayId })*@
-        </td>
-        <td>
-			@item.Title
-        </td>
-        <td>
-
-        @Html.ActionLink(item.Student.Name, "Details", "Student", new { id = item.Student.StudentId }, null)
-			
-        </td>
-
-        <td>
-
-        @if (item.Production != null)
-        {
-            @Html.ActionLink(item.Production.Title, "Details", "Production", new {id = item.Production.ProductionId}, null)
-        }
-        </td>
-    </tr>
-}
-
+            </td>
+        </tr>
+    }
 </table>
-
-
