@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using SceneAndHeardFeedback.Models;
 using Util.ConfigManager;
+using SceneCrm.Entities;
 
 namespace SceneAndHeard.Areas.FeedbackAdmin.Controllers
 {
