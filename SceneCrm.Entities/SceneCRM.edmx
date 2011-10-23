@@ -11,6 +11,7 @@
           <EntitySet Name="CourseType" EntityType="Model.Store.CourseType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CourseVolunteer" EntityType="Model.Store.CourseVolunteer" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CrbCheck" EntityType="Model.Store.CrbCheck" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Feedback" EntityType="Model.Store.Feedback" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Job" EntityType="Model.Store.Job" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Performance" EntityType="Model.Store.Performance" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Play" EntityType="Model.Store.Play" store:Type="Tables" Schema="dbo" />
@@ -194,6 +195,19 @@
           <Property Name="Approved" Type="bit" />
           <Property Name="ApprovalDate" Type="datetime" />
           <Property Name="CrbNumber" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FeedbackText" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="FeedbackLeft" Type="date" />
+          <Property Name="eventBriteId" Type="varchar" MaxLength="64" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContactEmailAddress" Type="nvarchar" MaxLength="256" />
+          <Property Name="OrganisationName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Approved" Type="bit" />
         </EntityType>
         <EntityType Name="Job">
           <Key>
@@ -739,6 +753,7 @@
           <EntitySet Name="StudentHistories" EntityType="Model.StudentHistory" />
           <EntitySet Name="VolunteerCrbChecks" EntityType="Model.VolunteerCrbCheck" />
           <EntitySet Name="VolunteerHistories" EntityType="Model.VolunteerHistory" />
+          <EntitySet Name="Feedbacks" EntityType="Model.Feedback" />
         </EntityContainer>
         <EntityType Name="Course">
           <Key>
@@ -1208,6 +1223,19 @@
           <Property Type="Int32" Name="courseid" />
           <Property Type="Int32" Name="productionid" />
         </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Type="Int32" Name="FeedbackId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="FeedbackText" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="FeedbackLeft" />
+          <Property Type="String" Name="eventBriteId" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContactEmailAddress" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OrganisationName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="Approved" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1425,6 +1453,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="Model.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="OrganisationName" ColumnName="OrganisationName" />
+                <ScalarProperty Name="ContactEmailAddress" ColumnName="ContactEmailAddress" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="eventBriteId" ColumnName="eventBriteId" />
+                <ScalarProperty Name="FeedbackLeft" ColumnName="FeedbackLeft" />
+                <ScalarProperty Name="FeedbackText" ColumnName="FeedbackText" />
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1626,6 +1668,7 @@
         <EntityTypeShape EntityType="Model.StudentHistory" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921875000031" />
         <EntityTypeShape EntityType="Model.VolunteerCrbCheck" Width="1.5" PointX="2.75" PointY="0.875" Height="2.7494921875" />
         <EntityTypeShape EntityType="Model.VolunteerHistory" Width="1.5" PointX="4.75" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="Model.Feedback" Width="1.5" PointX="7.375" PointY="0.75" Height="2.5571907552083388" />
       </Diagram>
     </Diagrams>
   </Designer>

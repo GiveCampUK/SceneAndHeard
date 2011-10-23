@@ -95,7 +95,6 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EventBriteLayer.cs" />
     <Compile Include="Models\EventModels.cs" />
-    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FeedbackContext.cs" />
     <Compile Include="Models\FeedbackService.cs" />
     <Compile Include="MVCHelpers.cs" />

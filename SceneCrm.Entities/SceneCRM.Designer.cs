@@ -360,6 +360,22 @@ namespace SceneCrm.Entities
             }
         }
         private ObjectSet<VolunteerHistory> _VolunteerHistories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Feedback> Feedbacks
+        {
+            get
+            {
+                if ((_Feedbacks == null))
+                {
+                    _Feedbacks = base.CreateObjectSet<Feedback>("Feedbacks");
+                }
+                return _Feedbacks;
+            }
+        }
+        private ObjectSet<Feedback> _Feedbacks;
 
         #endregion
         #region AddTo Methods
@@ -498,6 +514,14 @@ namespace SceneCrm.Entities
         public void AddToVolunteerHistories(VolunteerHistory volunteerHistory)
         {
             base.AddObject("VolunteerHistories", volunteerHistory);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Feedbacks EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFeedbacks(Feedback feedback)
+        {
+            base.AddObject("Feedbacks", feedback);
         }
 
         #endregion
@@ -1603,6 +1627,231 @@ namespace SceneCrm.Entities
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="Model", Name="Feedback")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Feedback : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Feedback object.
+        /// </summary>
+        /// <param name="feedbackId">Initial value of the FeedbackId property.</param>
+        /// <param name="feedbackText">Initial value of the FeedbackText property.</param>
+        public static Feedback CreateFeedback(global::System.Int32 feedbackId, global::System.String feedbackText)
+        {
+            Feedback feedback = new Feedback();
+            feedback.FeedbackId = feedbackId;
+            feedback.FeedbackText = feedbackText;
+            return feedback;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 FeedbackId
+        {
+            get
+            {
+                return _FeedbackId;
+            }
+            set
+            {
+                if (_FeedbackId != value)
+                {
+                    OnFeedbackIdChanging(value);
+                    ReportPropertyChanging("FeedbackId");
+                    _FeedbackId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FeedbackId");
+                    OnFeedbackIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _FeedbackId;
+        partial void OnFeedbackIdChanging(global::System.Int32 value);
+        partial void OnFeedbackIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FeedbackText
+        {
+            get
+            {
+                return _FeedbackText;
+            }
+            set
+            {
+                OnFeedbackTextChanging(value);
+                ReportPropertyChanging("FeedbackText");
+                _FeedbackText = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FeedbackText");
+                OnFeedbackTextChanged();
+            }
+        }
+        private global::System.String _FeedbackText;
+        partial void OnFeedbackTextChanging(global::System.String value);
+        partial void OnFeedbackTextChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FeedbackLeft
+        {
+            get
+            {
+                return _FeedbackLeft;
+            }
+            set
+            {
+                OnFeedbackLeftChanging(value);
+                ReportPropertyChanging("FeedbackLeft");
+                _FeedbackLeft = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FeedbackLeft");
+                OnFeedbackLeftChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FeedbackLeft;
+        partial void OnFeedbackLeftChanging(Nullable<global::System.DateTime> value);
+        partial void OnFeedbackLeftChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String eventBriteId
+        {
+            get
+            {
+                return _eventBriteId;
+            }
+            set
+            {
+                OneventBriteIdChanging(value);
+                ReportPropertyChanging("eventBriteId");
+                _eventBriteId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("eventBriteId");
+                OneventBriteIdChanged();
+            }
+        }
+        private global::System.String _eventBriteId;
+        partial void OneventBriteIdChanging(global::System.String value);
+        partial void OneventBriteIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactName
+        {
+            get
+            {
+                return _ContactName;
+            }
+            set
+            {
+                OnContactNameChanging(value);
+                ReportPropertyChanging("ContactName");
+                _ContactName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactName");
+                OnContactNameChanged();
+            }
+        }
+        private global::System.String _ContactName;
+        partial void OnContactNameChanging(global::System.String value);
+        partial void OnContactNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactEmailAddress
+        {
+            get
+            {
+                return _ContactEmailAddress;
+            }
+            set
+            {
+                OnContactEmailAddressChanging(value);
+                ReportPropertyChanging("ContactEmailAddress");
+                _ContactEmailAddress = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactEmailAddress");
+                OnContactEmailAddressChanged();
+            }
+        }
+        private global::System.String _ContactEmailAddress;
+        partial void OnContactEmailAddressChanging(global::System.String value);
+        partial void OnContactEmailAddressChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String OrganisationName
+        {
+            get
+            {
+                return _OrganisationName;
+            }
+            set
+            {
+                OnOrganisationNameChanging(value);
+                ReportPropertyChanging("OrganisationName");
+                _OrganisationName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("OrganisationName");
+                OnOrganisationNameChanged();
+            }
+        }
+        private global::System.String _OrganisationName;
+        partial void OnOrganisationNameChanging(global::System.String value);
+        partial void OnOrganisationNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> Approved
+        {
+            get
+            {
+                return _Approved;
+            }
+            set
+            {
+                OnApprovedChanging(value);
+                ReportPropertyChanging("Approved");
+                _Approved = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Approved");
+                OnApprovedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _Approved;
+        partial void OnApprovedChanging(Nullable<global::System.Boolean> value);
+        partial void OnApprovedChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
