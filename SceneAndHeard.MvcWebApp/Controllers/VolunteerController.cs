@@ -17,7 +17,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Volunteer/
-
+        [Authorize]
         public ViewResult Index()
         {
             return View(context.Volunteers.Include("CrbChecks").Include("Jobs").OrderBy(v => v.Surname).ToList());
@@ -25,7 +25,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Volunteer/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Volunteer volunteer = context.Volunteers.Single(x => x.VolunteerId == id);
@@ -34,7 +34,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Volunteer/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -42,7 +42,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Volunteer/Create
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Volunteer volunteer)
         {
@@ -58,7 +58,7 @@ namespace SceneAndHeard.Controllers
         
         //
         // GET: /Volunteer/Edit/5
- 
+ [Authorize]
         public ActionResult Edit(int id)
         {
             Volunteer volunteer = context.Volunteers.Single(x => x.VolunteerId == id);
@@ -67,7 +67,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Volunteer/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Volunteer volunteer)
         {
@@ -84,7 +84,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Volunteer/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Search(string searchPhrase)
         {
@@ -95,7 +95,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Volunteer/Delete/5
- 
+ [Authorize]
         public ActionResult Delete(int id)
         {
             Volunteer volunteer = context.Volunteers.Single(x => x.VolunteerId == id);
@@ -104,7 +104,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Volunteer/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
@@ -114,7 +114,7 @@ namespace SceneAndHeard.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [Authorize]
         public ActionResult Eligible(bool? IsEligible)
         {
             
@@ -125,7 +125,7 @@ namespace SceneAndHeard.Controllers
                                     .Where(v => IsEligible.Value);
             return View("EligibleVolunteers", volunteers);
         }
-
+        [Authorize]
         [HttpGet]
         public JsonResult AllVolunteers(string pleaseWork)
         {

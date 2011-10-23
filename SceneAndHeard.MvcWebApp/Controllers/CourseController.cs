@@ -17,7 +17,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Course/
-
+        [Authorize]
         public ViewResult Index()
         {
             return View(context.Courses.Include("Term").AsQueryable().OrderByDescending(x => x.CourseId).ToList());
@@ -25,7 +25,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Course/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);
@@ -34,7 +34,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Course/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.PossibleCourseTypes = context.CourseTypes;            
@@ -46,7 +46,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Course/Create
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Course course)
         {
@@ -66,7 +66,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Course/Edit/5
-
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);
@@ -80,7 +80,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Course/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Course course)
         {
@@ -120,7 +120,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Course/Delete/5
-
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);
@@ -129,7 +129,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Course/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
