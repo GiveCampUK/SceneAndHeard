@@ -86,6 +86,7 @@
     <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Support\VolunteerAllocation.cs" />
     <Compile Include="Controllers\VolunteerController.cs" />
@@ -214,8 +215,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\createview.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -354,7 +353,13 @@
     <Content Include="Views\Volunteer\EligibleVolunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Report\CRBChecks.cshtml" />
+    <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Feedback\LeaveFeedback.cshtml" />
+    <Content Include="Views\Feedback\Thanks.cshtml" />
+    <Content Include="Views\Feedback\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\FeedbackAdmin\Views\AdminFeedback\Index.cshtml" />
@@ -362,12 +367,6 @@
     <Content Include="Areas\FeedbackAdmin\Views\Feedback\Index.cshtml" />
     <Content Include="Areas\FeedbackAdmin\Views\Feedback\ReviewFeedback.cshtml" />
     <Content Include="Areas\FeedbackAdmin\Views\Web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Feedback\Index.cshtml" />
-    <Content Include="Views\Feedback\LeaveFeedback.cshtml" />
-    <Content Include="Views\Feedback\Thanks.cshtml" />
-    <Content Include="Views\Feedback\ThankYou.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\JustGiving.cshtml" />
