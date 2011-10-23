@@ -4,12 +4,10 @@
 }
 <h2>Course Index</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button big" })
 </p>
 <table>
     <tr>
-        <th>
-        </th>
         <th>
             Course Code
         </th>
@@ -25,15 +23,12 @@
         <th>
             Volunteer Count
         </th>
+        <th></th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
-            </td>
+            
             <td>
               
                 @item.CourseTypeCode
@@ -49,6 +44,13 @@
             </td>
             <td>
                 @(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+            </td>
+            <td>
+                    <div class="button-group">
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "button primary pill icon edit" }) 
+                @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "button primary pill icon log" }) 
+                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "button primary pill icon trash" })
+                </div>
             </td>
         </tr>
     }
