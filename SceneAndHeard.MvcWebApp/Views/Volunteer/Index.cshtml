@@ -91,6 +91,7 @@
         <td>
         <div class="button-group">
             @Html.ActionLink("Edit", "Edit", new { id = item.VolunteerId }, new { @class = "button primary pill icon edit" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.VolunteerId, }, new { @class = "button pill icon log" })
             @Html.ActionLink("Delete", "Delete", new { id = item.VolunteerId, }, new {  @class = "button pill icon trash" })
         </div>
         </td>
@@ -98,5 +99,3 @@
 }
 
 </table>
-
-

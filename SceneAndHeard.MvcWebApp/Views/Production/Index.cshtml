@@ -1,11 +1,9 @@
 ﻿@model IEnumerable<SceneCrm.Entities.Production>
-
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
+<h2>
+    Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -14,20 +12,42 @@
         <th>
             Title
         </th>
-        <th></th>
+        <th>
+            Play Count
+        </th>
+        <th>
+            Performance Count
+        </th>
+        <th>
+            Student Count
+        </th>
+        <th>
+          
+        </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductionId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductionId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductionId })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @item.Plays.Count()
+            </td>
+            <td>
+                @item.Performances.Count()
+            </td>
+            <td>
+                @item.AssociatedStudents.Count()
+            </td>
+          @*  <td>
+                @item.AllAssociatedVolunteers.Count()
+            </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductionId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductionId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductionId })
+            </td>
+        </tr>
+    }
 </table>
