@@ -1,0 +1,95 @@
+﻿<script type="text/javascript">
+    var currentVolunteers = @Html.Raw(Json.Encode(ViewBag.CurrentVolunteers));
+    var volunteers = @Html.Raw(Json.Encode(ViewBag.PossibleVolunteers));
+    var jobs = @Html.Raw(Json.Encode(ViewBag.PossibleJobs));
+    console.log(volunteers);
+    console.log(jobs);
+
+    var volunteerCount = 0;
+
+    function createVolunteerChooser(allocatedVolunteer, parent) {
+        volunteerCount = volunteerCount + 1;
+
+        var p = $('<p></p>');
+        var volunteerSelect = createSelect(volunteers, allocatedVolunteer.volunteerId, 'volunteer' + volunteerCount);
+        p.append(volunteerSelect);
+        p.append(createSelect(jobs, allocatedVolunteer.jobId, 'job' + volunteerCount));        
+        p.append(createTextBox(allocatedVolunteer.notes, 'notes' + volunteerCount, 'notes:'));
+        p.append(createButton(" remove ", function() { removeVolunteer(p, volunteerSelect.find('option:selected').attr('value')); }));
+        
+        $(parent).append(p);
+    }
+
+    function createTextBox(value, name, labelText) {
+        var span = $('<span />');
+
+        var label = $('<label />');
+        label.text(labelText);
+        label.attr('for', name);
+
+        var text = $('<input type="text" />');
+        text.val(value);
+        text.attr('name', name);
+        text.attr('id', name);
+
+        span.append(label);
+        span.append(text);
+        return span;
+    }
+
+    function removeVolunteer(container, id) {
+        container = $(container).remove();        
+    }
+
+    function createSelect(sourceData, selectedId, name) { 
+        var select = $("<select></select>");
+        select.attr('name', name);
+
+        select.append($("<option value=''>-- Select --</option>"));
+
+        $.each(sourceData, function(key, value) {
+            var option = $("<option></option>");
+            option.text(value);
+            option.val(key);
+
+            if (selectedId == key) {
+                option.attr('selected', 'selected');
+            }
+
+            select.append(option);
+        });        
+
+        return select;
+    }
+
+    function createButton(text, onclick) {
+        var button = $("<input type='button' />");
+
+        button.val(text);
+        button.click(onclick);
+
+        return button;
+    }    
+
+    $().ready(function(){
+        var volunteer_allocation_parent = $('#volunteer_allocation');
+
+        $(".notification .template").hide();
+        $("#add_volunteer").click(function(){
+            createVolunteerChooser({volunteerId:null,jobId:null,notes:null}, volunteer_allocation_parent); 
+        });
+        
+        $.each(currentVolunteers, function(key, value) {
+            createVolunteerChooser(value, volunteer_allocation_parent);
+        });
+    });
+</script>
+
+<div class="editor-label">
+    Volunteers
+</div>
+<div class="editor-field" id='volunteer_allocation'>
+</div>
+<div class="editor-field">
+    <p><input id="add_volunteer" type="button" value=" add volunteer "/></p>
+</div>
