@@ -9,75 +9,84 @@ using SceneCrm.LegacyData;
 
 namespace SceneCrm.Importer {
     class Program {
+        static CourseType oneOnOne;
+        static CourseType pm1;
+        static CourseType rp;
+        static CourseType s1;
+        static CourseType pb;
+ 
         static void Main(string[] args) {
             HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
             using (var context = new SceneCRM()) {
-                /*
-                    Console.Write("Wiping database...");
-                    WipeDatabase(context);
-                    Console.WriteLine("Wiped!");
-                }
+                Console.Write("Wiping database...");
+                WipeDatabase(context);
+                Console.WriteLine("Wiped!");
+            }
 
-                using (var context = new SceneCRM()) {
-                    var oneOnOne = new CourseType() { CourseTypeCode = "OO", CourseTypeName = "One on One" };
-                    context.CourseTypes.AddObject(oneOnOne);
-                    var pm1 = new CourseType() { CourseTypeCode = "PM1", CourseTypeName = "Playmaking One" };
-                    context.CourseTypes.AddObject(pm1);
-                    var rp = new CourseType() { CourseTypeCode = "RP", CourseTypeName = "Replay" };
-                    context.CourseTypes.AddObject(rp);
-                    var s1 = new CourseType() { CourseTypeCode = "S1", CourseTypeName = "Stage One" };
-                    context.CourseTypes.AddObject(rp);
-                    var pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
-                    context.CourseTypes.AddObject(rp);
+            using (var context = new SceneCRM()) {
+                oneOnOne = new CourseType() { CourseTypeCode = "OO", CourseTypeName = "One on One" };
+                context.CourseTypes.AddObject(oneOnOne);
+                pm1 = new CourseType() { CourseTypeCode = "PM1", CourseTypeName = "Playmaking One" };
+                context.CourseTypes.AddObject(pm1);
+                rp = new CourseType() { CourseTypeCode = "RP", CourseTypeName = "Replay" };
+                context.CourseTypes.AddObject(rp);
+                s1 = new CourseType() { CourseTypeCode = "S1", CourseTypeName = "Stage One" };
+                context.CourseTypes.AddObject(rp);
+                pb = new CourseType() { CourseTypeCode = "PB", CourseTypeName = "Playback" };
+                context.CourseTypes.AddObject(rp);
+                context.SaveChanges();
+
+                var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
+
+                foreach (var row in ss.Rows) {
+                    var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
+                    ImportPlaymakingOne(context, student, row);
+                    Console.WriteLine("Added " + student.Forename + " " + student.Surname);
                     context.SaveChanges();
-
-                    var ss = new ChildrenProductionsSpreadsheet(@"C:\Users\dylan.beattie\Documents\Scene & Heard\Children and Productions.xls");
-
-                    foreach (var row in ss.Rows) {
-                        var student = context.Students.FindOrMake(row.MembershipNumber, row.Forename, row.Surname);
-                        if (row.AttendedPm1) {
-                            var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
-                            var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
-                            if (course != null) {
-                                var attendance = new CourseAttendance() {
-                                    Student = student,
-                                    Course = course,
-                                    Completed = true
-                                };
-                                Production production = context.Productions.FindOrMake(row.PlaymakingOneProduction);
-
-                                if (!String.IsNullOrWhiteSpace(row.PlaymakingOnePlay)) {
-                                    var play = new Play() {
-                                        Student = student,
-                                        Title = row.PlaymakingOnePlay
-                                    };
-                                    if (production != null) play.Production = production;
-                                    attendance.Play = play;
-                                    student.Plays.Add(play);
-                                    AddPlayVolunteer(context, play, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
-                                    AddPlayVolunteer(context, play, row.PlaymakingOneDirector, Jobs.Director);
-                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
-                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
-                                    AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
-                                } else {
-
-                                    AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
-                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
-                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
-                                    AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
-                                    AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
-                                }
-                                student.CourseAttendances.Add(attendance);
-
-                            }
-                            Console.WriteLine("Added " + student.Forename + " " + student.Surname);
-                            context.SaveChanges();
-                        }
-                    }*/
+                }
                 ImportVolunteerDataFromAccessDatabase(context, @"C:\Users\dylan.beattie\Documents\Scene & Heard\Volunteers.mdb", "giraffe");
             }
             Console.ReadKey(false);
         }
+
+        static void ImportPlaymakingOne(SceneCRM context, Student student, ChildrenProductionsSpreadsheet.Row row) {
+            if (row.AttendedPm1) {
+                var term = context.Terms.FindOrMake(row.PlaymakingOneTerm);
+                var course = context.Courses.FindOrMake(pm1, term, row.PlaymakingOneYear);
+                if (course != null) {
+                    var attendance = new CourseAttendance() {
+                        Student = student,
+                        Course = course,
+                        Completed = true
+                    };
+                    Production production = context.Productions.FindOrMake(row.PlaymakingOneProduction);
+
+                    if (!String.IsNullOrWhiteSpace(row.PlaymakingOnePlay)) {
+                        var play = new Play() {
+                            Student = student,
+                            Title = row.PlaymakingOnePlay
+                        };
+                        if (production != null) play.Production = production;
+                        attendance.Play = play;
+                        student.Plays.Add(play);
+                        AddPlayVolunteer(context, play, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                        AddPlayVolunteer(context, play, row.PlaymakingOneDirector, Jobs.Director);
+                        AddPlayVolunteer(context, play, row.PlaymakingOneActor1, Jobs.Actor);
+                        AddPlayVolunteer(context, play, row.PlaymakingOneActor2, Jobs.Actor);
+                        AddPlayVolunteer(context, play, row.PlaymakingOneActor3, Jobs.Actor);
+                    } else {
+                        AddCourseVolunteer(context, course, row.PlaymakingOneDramaturg, Jobs.Dramaturg);
+                        AddCourseVolunteer(context, course, row.PlaymakingOneActor1, Jobs.Actor);
+                        AddCourseVolunteer(context, course, row.PlaymakingOneActor2, Jobs.Actor);
+                        AddCourseVolunteer(context, course, row.PlaymakingOneActor3, Jobs.Actor);
+                        AddCourseVolunteer(context, course, row.PlaymakingOneDirector, Jobs.Director);
+                    }
+                    student.CourseAttendances.Add(attendance);
+
+                }
+            }
+        }
+ 
         static void AddPlayVolunteer(SceneCRM context, Play play, string volunteerName, string jobTitle) {
             var vol = context.Volunteers.FindOrMake(volunteerName);
             if (vol == null) return;
