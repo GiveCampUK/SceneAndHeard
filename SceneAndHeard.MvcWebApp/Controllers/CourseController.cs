@@ -18,7 +18,7 @@ namespace SceneAndHeard.Controllers
 
         public ViewResult Index()
         {
-            return View(context.Courses.Include("Term").ToList());
+            return View(context.Courses.Include("Term").AsQueryable().OrderByDescending(x => x.CourseId).ToList());
         }
 
         //
@@ -35,6 +35,7 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.PossibleCourseTypes = context.CourseTypes;
             ViewBag.PossibleTerms = context.Terms;
             return View();
         } 
@@ -62,6 +63,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult Edit(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);
+            ViewBag.PossibleCourseTypes = context.CourseTypes;
             ViewBag.PossibleTerms = context.Terms;
             return View(course);
         }

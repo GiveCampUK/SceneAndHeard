@@ -121,6 +121,15 @@ namespace SceneAndHeard.Controllers
             return View("EligibleVolunteers", volunteers);
         }
 
+        [HttpGet]
+        public JsonResult AllVolunteers(string pleaseWork)
+        {
+            var matches = context.Volunteers.Where(v => v.FirstName.StartsWith(pleaseWork) || v.Surname.StartsWith(pleaseWork))
+                                            .OrderBy(v => v.Surname)
+                                            .Select(v => new { Id = v.VolunteerId, Name = v.FirstName + " " + v.Surname });
+
+            return Json(matches, JsonRequestBehavior.AllowGet);
+        }
 
 
     }
