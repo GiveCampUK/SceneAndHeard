@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -80,12 +80,14 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Support\InitialisesVolunteerAllocationView.cs" />
+    <Compile Include="Support\InterpretsPostedVolunteerAllocations.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\PlayController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
-
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Support\VolunteerAllocation.cs" />
     <Compile Include="Controllers\VolunteerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -340,7 +342,7 @@
     <Content Include="Views\Volunteer\EligibleVolunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
+    <Content Include="Views\Shared\_AllocateVolunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SceneCrm.Entities\SceneCrm.Entities.csproj">
@@ -369,12 +371,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\JustGiving.cshtml" />
-
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
-
-
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,39 +1,20 @@
-﻿@model SceneCrm.Entities.Course
-@{ 
-    var volunteers = ((IEnumerable<SceneCrm.Entities.Volunteer>)ViewBag.PossibleVolunteers ?? new SceneCrm.Entities.Volunteer[0])
-        .OrderBy(v => v.IsEligible)
-        .Select(v => new { Id = v.VolunteerId.ToString(), Name = string.Format("{0}, {1}{2}", v.Surname, v.FirstName, v.IsEligible ? string.Empty : " (NOT ELIGIBLE)") })
-        .ToDictionary(v => v.Id, v => v.Name);
-
-    var jobs = ((IEnumerable<SceneCrm.Entities.Job>)ViewBag.PossibleJobs ?? new SceneCrm.Entities.Job[0])
-        .Select(j => new { Id = j.JobId.ToString(), Name = j.Description })
-        .ToDictionary(j => j.Id, j => j.Name);
-
-
-    var courseVolunteersSource = (Model == null || Model.CourseVolunteers == null) ? new SceneCrm.Entities.CourseVolunteer[] {} : (IEnumerable<SceneCrm.Entities.CourseVolunteer>)Model.CourseVolunteers;   
-    
-    var courseVolunteers = courseVolunteersSource
-        .Select(cv => new { jobId = cv.JobId.ToString(), volunteerId = cv.VolunteerId.ToString(), notes = cv.Notes })
-        .OrderBy(cv => cv.jobId);        
-        
-}
-<script type="text/javascript">
-    var courseVolunteers = @Html.Raw(Json.Encode(courseVolunteers));
-    var volunteers = @Html.Raw(Json.Encode(volunteers));
-    var jobs = @Html.Raw(Json.Encode(jobs));
+﻿<script type="text/javascript">
+    var currentVolunteers = @Html.Raw(Json.Encode(ViewBag.CurrentVolunteers));
+    var volunteers = @Html.Raw(Json.Encode(ViewBag.PossibleVolunteers));
+    var jobs = @Html.Raw(Json.Encode(ViewBag.PossibleJobs));
     console.log(volunteers);
     console.log(jobs);
 
     var volunteerCount = 0;
 
-    function createVolunteerChooser(courseVolunteer, parent) {
+    function createVolunteerChooser(allocatedVolunteer, parent) {
         volunteerCount = volunteerCount + 1;
 
         var p = $('<p></p>');
-        var volunteerSelect = createSelect(volunteers, courseVolunteer.volunteerId, 'volunteer' + volunteerCount);
+        var volunteerSelect = createSelect(volunteers, allocatedVolunteer.volunteerId, 'volunteer' + volunteerCount);
         p.append(volunteerSelect);
-        p.append(createSelect(jobs, courseVolunteer.jobId, 'job' + volunteerCount));        
-        p.append(createTextBox(courseVolunteer.notes, 'notes' + volunteerCount, 'notes:'));
+        p.append(createSelect(jobs, allocatedVolunteer.jobId, 'job' + volunteerCount));        
+        p.append(createTextBox(allocatedVolunteer.notes, 'notes' + volunteerCount, 'notes:'));
         p.append(createButton(" remove ", function() { removeVolunteer(p, volunteerSelect.find('option:selected').attr('value')); }));
         
         $(parent).append(p);
@@ -56,8 +37,7 @@
         return span;
     }
 
-    function removeVolunteer(container, id) {        
-        courseVolunteers[id]
+    function removeVolunteer(container, id) {
         container = $(container).remove();        
     }
 
@@ -96,10 +76,10 @@
 
         $(".notification .template").hide();
         $("#add_volunteer").click(function(){
-            createVolunteerChooser({volunteerId:null, courseId:5, jobId:null}, volunteer_allocation_parent); 
+            createVolunteerChooser({volunteerId:null,jobId:null,notes:null}, volunteer_allocation_parent); 
         });
         
-        $.each(courseVolunteers, function(key, value) {
+        $.each(currentVolunteers, function(key, value) {
             createVolunteerChooser(value, volunteer_allocation_parent);
         });
     });
