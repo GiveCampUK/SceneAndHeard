@@ -22,7 +22,7 @@
             Student Count
         </th>
         <th>
-            Volunter Count
+            Volunteer Count
         </th>
     </tr>
     @foreach (var item in Model)
@@ -40,9 +40,9 @@
             <td>
                 @item.AssociatedStudents.Count()
             </td>
-            <td>
+          @*  <td>
                 @item.AllAssociatedVolunteers.Count()
-            </td>
+            </td>*@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ProductionId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ProductionId }) |

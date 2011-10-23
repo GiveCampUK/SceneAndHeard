@@ -57,8 +57,8 @@
     }
     @foreach (var vol in Model.AllAssociatedVolunteers)
     {
-        @Html.ActionLink(vol.Key.Name, "Details", "Volunteer", new { id = vol.Key.VolunteerId }, null) <text>
-        - </text> @vol.Value.Description<br />
+        @Html.ActionLink(vol.Item1.Name, "Details", "Volunteer", new { id = vol.Item1.VolunteerId }, null) <text>
+        - </text> @vol.Item2.Description<br />
     }
 </fieldset>
 <p>
