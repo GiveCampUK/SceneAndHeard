@@ -1,0 +1,7 @@
+﻿@model IEnumerable<SceneCrm.Entities.VolunteerCrbCheck>
+
+@{
+    var optionsGrid = new WebGrid(Model, 
+        rowsPerPage: 15);
+    @optionsGrid.GetHtml();
+}
