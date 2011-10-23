@@ -77,6 +77,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CRBController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Support\InitialisesVolunteerAllocationView.cs" />
@@ -370,6 +371,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Job\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CRB\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CRB\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CRB\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CRB\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\CRB\Delete.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

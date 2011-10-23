@@ -1,0 +1,45 @@
+﻿@model SceneCrm.Entities.CrbCheck
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>CrbCheck</legend>
+
+    <div class="display-label">Volunteer</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Volunteer.FirstName)
+    </div>
+
+    <div class="display-label">CrbNumber</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CrbNumber)
+    </div>
+
+    <div class="display-label">ApplicationSent</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApplicationSent)
+    </div>
+
+    <div class="display-label">ApplicationDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApplicationDate)
+    </div>
+
+    <div class="display-label">Approved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Approved)
+    </div>
+
+    <div class="display-label">ApprovalDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApprovalDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CrbCheckId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

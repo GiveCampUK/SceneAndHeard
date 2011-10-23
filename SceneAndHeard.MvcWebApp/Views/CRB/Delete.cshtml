@@ -1,0 +1,48 @@
+﻿@model SceneCrm.Entities.CrbCheck
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>CrbCheck</legend>
+
+    <div class="display-label">Volunteer</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Volunteer.FirstName)
+    </div>
+
+    <div class="display-label">CrbNumber</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CrbNumber)
+    </div>
+
+    <div class="display-label">ApplicationSent</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApplicationSent)
+    </div>
+
+    <div class="display-label">ApplicationDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApplicationDate)
+    </div>
+
+    <div class="display-label">Approved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Approved)
+    </div>
+
+    <div class="display-label">ApprovalDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApprovalDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
