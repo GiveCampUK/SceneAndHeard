@@ -114,13 +114,8 @@ namespace SceneAndHeard.Controllers
             return RedirectToAction("Index");
         }
 
-<<<<<<< HEAD
-
-        public ActionResult Eligible(bool? isEligible)
-=======
         [Authorize]
-        public ActionResult Eligible(bool? IsEligible)
->>>>>>> origin/master
+        public ActionResult Eligible(bool? isEligible)
         {
             var volunteers = context.Volunteers
                                     .Where(v => v.AvailableFrom.HasValue && v.AvailableFrom <= DateTime.Today)
@@ -128,6 +123,7 @@ namespace SceneAndHeard.Controllers
                                     .Where(v => isEligible.Value);
             return View("EligibleVolunteers", volunteers);
         }
+
         [Authorize]
         [HttpGet]
         public JsonResult AllVolunteers(string searchPhrase)
