@@ -20,11 +20,11 @@ namespace SceneCrm.Importer {
             public string PlaymakingOneTerm { get { return (reader.IsDBNull(i = 4) ? (string)null : reader.GetString(i)); } }
             public string PlaymakingOneYear { get { return (reader.IsDBNull(i = 5) ? (string)null : reader[i].ToString()); } }
             public string ReplayTerm { get { return (reader.IsDBNull(i = 6) ? (string)null : reader.GetString(i)); } }
-            public string ReplayYear { get { return (reader.IsDBNull(i = 7) ? (string)null : reader.GetString(i)); } }
+            public string ReplayYear { get { return (reader.IsDBNull(i = 7) ? (string)null : reader[i].ToString()); } }
             public string StageOneTerm { get { return (reader.IsDBNull(i = 8) ? (string)null : reader.GetString(i)); } }
-            public string StageOneYear { get { return (reader.IsDBNull(i = 9) ? (string)null : reader.GetString(i)); } }
+            public string StageOneYear { get { return (reader.IsDBNull(i = 9) ? (string)null : reader[i].ToString()); } }
             public string OneonOneTerm { get { return (reader.IsDBNull(i = 10) ? (string)null : reader.GetString(i)); } }
-            public string OneonOneYear { get { return (reader.IsDBNull(i = 11) ? (string)null : reader.GetString(i)); } }
+            public string OneonOneYear { get { return (reader.IsDBNull(i = 11) ? (string)null : reader[i].ToString()); } }
             public string Playback { get { return (reader.IsDBNull(i = 12) ? (string)null : reader.GetString(i)); } }
             public string PlaymakingOneProduction { get { return (reader.IsDBNull(i = 13) ? (string)null : reader.GetString(i)); } }
             public string Z_PlaymakingOneYear { get { return (reader.IsDBNull(i = 14) ? (string)null : reader.GetString(i)); } }
@@ -49,7 +49,7 @@ namespace SceneCrm.Importer {
             public string OneonOneDirector { get { return (reader.IsDBNull(i = 33) ? (string)null : reader.GetString(i)); } }
             public string OneonOneActor { get { return (reader.IsDBNull(i = 34) ? (string)null : reader.GetString(i)); } }
             public string PlaybackProduction { get { return (reader.IsDBNull(i = 35) ? (string)null : reader.GetString(i)); } }
-            public string PlaybackYear { get { return (reader.IsDBNull(i = 36) ? (string)null : reader.GetString(i)); } }
+            public string PlaybackYear { get { return (reader.IsDBNull(i = 36) ? (string)null : reader[i].ToString()); } }
             public string PlaybackPlay { get { return (reader.IsDBNull(i = 37) ? (string)null : reader.GetString(i)); } }
             public string PlaybackDramaturg { get { return (reader.IsDBNull(i = 38) ? (string)null : reader.GetString(i)); } }
             public string PlaybackDirector { get { return (reader.IsDBNull(i = 39) ? (string)null : reader.GetString(i)); } }
@@ -64,6 +64,38 @@ namespace SceneCrm.Importer {
                 }
             }
 
+            public bool AttendedReplay {
+                get {
+                    int year;
+                    if (Int32.TryParse(this.ReplayYear, out year)) return (!string.IsNullOrEmpty(this.ReplayTerm));
+                    return (false);
+                }
+            }
+            public bool AttendedStageOne {
+                get {
+                    int year;
+                    if (Int32.TryParse(this.StageOneYear, out year)) return (!String.IsNullOrWhiteSpace(this.StageOneTerm));
+                    return (false);
+                }
+            }
+
+            public bool AttendedOneOnOne {
+                get {
+                    int year;
+                    if (Int32.TryParse(this.OneonOneYear, out year)) return (!String.IsNullOrWhiteSpace(this.OneonOneTerm));
+                    return (false);
+                }
+            }
+
+            public bool AttendedPlayback {
+                get {
+                    int year;
+                    if (Int32.TryParse(this.PlaybackYear, out year)) return (!String.IsNullOrWhiteSpace(this.PlaybackPlay));
+                    return (false);
+                }
+            }
+
+
             public bool AttendedPm1 {
                 get {
                     int year;
@@ -72,7 +104,7 @@ namespace SceneCrm.Importer {
                 }
             }
         }
-        
+
 
         private string fullPathToExcelFile;
         public ChildrenProductionsSpreadsheet(string fullPathToExcelFile) {
