@@ -6,7 +6,8 @@ namespace SceneAndHeardFeedback.Models
     public class Feedback
     {
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Int64 Id { get; set; }
         [DataType(DataType.MultilineText)]
         [Required]
         public string FeedbackText { get; set; }
