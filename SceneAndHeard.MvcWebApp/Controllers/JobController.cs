@@ -46,10 +46,6 @@ namespace SceneAndHeard.Controllers
 
             ViewBag.CurrentVolunteers = v.OrderBy(x => x.Name);
             
-
-
-
-
             return View(job);
         }
 
