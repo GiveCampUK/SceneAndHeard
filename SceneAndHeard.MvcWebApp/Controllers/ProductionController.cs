@@ -11,10 +11,10 @@ namespace SceneAndHeard.Controllers
     {
         private SceneCRM db = new SceneCRM();
 
-        private InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView =
+        private readonly InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView =
             new InitialisesVolunteerAllocationView();
 
-        private InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations =
+        private readonly InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations =
             new InterpretsPostedVolunteerAllocations();
 
         //
@@ -60,6 +60,8 @@ namespace SceneAndHeard.Controllers
                 return RedirectToAction("Index");
             }
 
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, db);
+
             return View(production);
         }
 
@@ -92,6 +94,10 @@ namespace SceneAndHeard.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, db, production.ProductionVolunteers
+                .Select(pv => new VolunteerAllocation(pv.VolunteerId, pv.JobId, pv.Notes)));
+
             return View(production);
         }
 
