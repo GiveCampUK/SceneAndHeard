@@ -351,9 +351,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Feedback\LeaveFeedback.cshtml" />
     <Content Include="Views\Feedback\Thanks.cshtml" />

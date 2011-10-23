@@ -24,6 +24,8 @@
             @Html.ValidationMessageFor(model => model.Title)
         </div>
 
+        @Html.Partial("_AllocateVolunteers", Model)
+
         <p>
             <input type="submit" value="Save" />
         </p>
