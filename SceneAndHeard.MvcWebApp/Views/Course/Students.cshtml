@@ -16,29 +16,32 @@
         Term</div>
     <div class="display-field">@Model.Term.TermName</div>
 </fieldset>
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm()) {
     <input type="hidden" value="@Model.CourseId" name="id" />
     <fieldset>
         <legend>Students</legend>
-
-        <select multiple="multiple" name="PossibleStudents">
-        @foreach (var item in ViewBag.PossibleStudents)
-        {
-            <option value="@item.StudentId">@item.Forename @item.Surname</option>
-        }
-        </select>
-
-        <input type="submit" name='Verb' value='Add' />
-        <input type="submit" name='Verb' value='Remove' />
-
-        <select multiple="multiple" name="AllocatedStudents">
-        @foreach (var item in ViewBag.AllocatedStudents)
-        {
-            <option value="@item.StudentId">@item.Forename @item.Surname</option>
-        }
-        </select>
-
+        <div style="float: left;">
+            <p>
+                All Students</p>
+            <select class="dual-list" multiple="multiple" name="PossibleStudents">
+                @foreach (var item in ViewBag.PossibleStudents) {
+                    <option value="@item.StudentId">@item.Forename @item.Surname</option>
+                }
+            </select>
+        </div>
+        <div style="float: left; padding-top: 50px; text-align: center;">
+            <input type="submit" name='Verb' value='Add' /><br />
+            <input type="submit" name='Verb' value='Remove' />
+        </div>
+        <div style="float: left;">
+            <p>
+                Students on this course</p>
+            <select class="dual-list" multiple="multiple" name="AllocatedStudents">
+                @foreach (var item in ViewBag.AllocatedStudents) {
+                    <option value="@item.StudentId">@item.Forename @item.Surname</option>
+                }
+            </select>
+        </div>
     </fieldset>
    
 }
