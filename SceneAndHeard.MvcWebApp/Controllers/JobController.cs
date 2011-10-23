@@ -15,7 +15,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/
-
+        [Authorize]
         public ViewResult Index()
         {
             return View(context.Jobs.Include("Volunteers").ToList());
@@ -23,7 +23,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/Details/5
-
+        [Authorize]
         public ViewResult Details(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
@@ -54,7 +54,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -62,7 +62,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Job/Create
-
+        [Authorize]
         [HttpPost]
         public ActionResult Create(Job job)
         {
@@ -78,7 +78,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/Edit/5
-
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
@@ -87,7 +87,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Job/Edit/5
-
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Job job)
         {
@@ -103,7 +103,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Job/Delete/5
-
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
@@ -112,7 +112,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Job/Delete/5
-
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
