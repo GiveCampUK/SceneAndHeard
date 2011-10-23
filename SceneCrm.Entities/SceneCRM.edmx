@@ -295,6 +295,7 @@
           <Property Name="Deadwood" Type="bit" />
           <Property Name="NoMailout" Type="bit" />
           <Property Name="EEDirectDebit" Type="bit" />
+          <Property Name="OtherProfession" Type="varchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="VolunteerCapability">
           <Key>
@@ -929,6 +930,7 @@
           <Property Type="Boolean" Name="Deadwood" />
           <Property Type="Boolean" Name="NoMailout" />
           <Property Type="Boolean" Name="EEDirectDebit" />
+          <Property Type="String" Name="OtherProfession" MaxLength="64" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Course_CourseType">
           <End Type="Model.CourseType" Role="CourseType" Multiplicity="0..1" />
@@ -1342,6 +1344,7 @@
           <EntitySetMapping Name="Volunteers">
             <EntityTypeMapping TypeName="Model.Volunteer">
               <MappingFragment StoreEntitySet="Volunteer">
+                <ScalarProperty Name="OtherProfession" ColumnName="OtherProfession" />
                 <ScalarProperty Name="EEDirectDebit" ColumnName="EEDirectDebit" />
                 <ScalarProperty Name="NoMailout" ColumnName="NoMailout" />
                 <ScalarProperty Name="Deadwood" ColumnName="Deadwood" />
