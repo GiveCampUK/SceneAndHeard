@@ -16,7 +16,7 @@
         Term</div>
     <div class="display-field">@Model.Term.TermName</div>
 </fieldset>
-@using (Html.BeginForm)
+@using (Html.BeginForm())
 {
     <input type="hidden" value="@Model.CourseId" name="id" />
     <fieldset>
@@ -33,7 +33,7 @@
         <input type="submit" name='Verb' value='Remove' />
 
         <select multiple="multiple" name="AllocatedStudents">
-        @foreach (var item in ViewBag.PossibleStudents)
+        @foreach (var item in ViewBag.AllocatedStudents)
         {
             <option value="@item.StudentId">@item.Forename @item.Surname</option>
         }
