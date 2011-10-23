@@ -115,27 +115,23 @@ namespace SceneAndHeard.Controllers
         }
 
 
-        public ActionResult Eligible(bool? IsEligible)
+        public ActionResult Eligible(bool? isEligible)
         {
-            
-            
             var volunteers = context.Volunteers
                                     .Where(v => v.AvailableFrom.HasValue && v.AvailableFrom <= DateTime.Today)
                                     .ToList()
-                                    .Where(v => IsEligible.Value);
+                                    .Where(v => isEligible.Value);
             return View("EligibleVolunteers", volunteers);
         }
 
         [HttpGet]
-        public JsonResult AllVolunteers(string pleaseWork)
+        public JsonResult AllVolunteers(string searchPhrase)
         {
-            var matches = context.Volunteers.Where(v => v.FirstName.StartsWith(pleaseWork) || v.Surname.StartsWith(pleaseWork))
+            var matches = context.Volunteers.Where(v => v.FirstName.StartsWith(searchPhrase) || v.Surname.StartsWith(searchPhrase))
                                             .OrderBy(v => v.Surname)
                                             .Select(v => new { Id = v.VolunteerId, Name = v.FirstName + " " + v.Surname });
 
             return Json(matches, JsonRequestBehavior.AllowGet);
         }
-
-
     }
 }
