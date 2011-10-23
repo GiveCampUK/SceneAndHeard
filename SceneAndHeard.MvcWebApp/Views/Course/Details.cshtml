@@ -53,7 +53,7 @@
     }
     @foreach (var volunteers in Model.CourseVolunteers)
     {
-          @Html.ActionLink(volunteers.Volunteer.Name, "Details", "Volunteer", new { id = volunteers.VolunteerId }, null) @:-  @volunteers.Job.Description <br />
+          @Html.ActionLink(volunteers.Volunteer.Name, "Details", "Volunteer", new { id = volunteers.VolunteerId }, null) @:-  @volunteers.Job.Descriptions <br />
     }
 
     </fieldset>
