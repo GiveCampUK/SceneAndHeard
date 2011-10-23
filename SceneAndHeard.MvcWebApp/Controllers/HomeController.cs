@@ -8,6 +8,7 @@ namespace SceneAndHeard.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to the Scene & Heard Database";
@@ -15,9 +16,9 @@ namespace SceneAndHeard.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            return View();
-        }
+        //public ActionResult About()
+        //{
+        //    return View();
+        //}
     }
 }

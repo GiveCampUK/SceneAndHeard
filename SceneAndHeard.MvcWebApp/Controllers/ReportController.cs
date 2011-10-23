@@ -13,7 +13,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Report/
-
+        [Authorize]
         public ActionResult CRBChecks()
         {
             return View(context.VolunteerCrbChecks);

@@ -33,6 +33,7 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JobId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.JobId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.JobId })
         </td>
         <td>
@@ -54,5 +55,4 @@
 }
 
 </table>
-
 

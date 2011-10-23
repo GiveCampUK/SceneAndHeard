@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -73,7 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Areas\FeedbackAdmin\Controllers\AdminFeedbackController.cs" />
-    <Compile Include="Areas\FeedbackAdmin\Controllers\FeedbackController.cs" />
     <Compile Include="Areas\FeedbackAdmin\FeedbackAdminAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -96,7 +95,6 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EventBriteLayer.cs" />
     <Compile Include="Models\EventModels.cs" />
-    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FeedbackContext.cs" />
     <Compile Include="Models\FeedbackService.cs" />
     <Compile Include="MVCHelpers.cs" />
@@ -352,9 +350,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Feedback\Index.cshtml" />
     <Content Include="Views\Feedback\LeaveFeedback.cshtml" />
     <Content Include="Views\Feedback\Thanks.cshtml" />
@@ -370,8 +365,13 @@
   <ItemGroup>
     <Content Include="App_Code\JustGiving.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Volunteer\Details.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Job\Details.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

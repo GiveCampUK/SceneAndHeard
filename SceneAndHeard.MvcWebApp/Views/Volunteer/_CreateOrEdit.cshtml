@@ -39,23 +39,15 @@
     
     <input id="referee" type="text" name="referee" />
 </div>
-<script>
+<script type="text/javascript">
     $(function () {
-        function log(message) {
-            $("<div/>").text(message).prependTo("#log");
-            $("#log").scrollTop(0);
-        }
-
         $("#referee").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "./AllVolunteers",
+                    url: "/Volunteer/AllVolunteers",
                     dataType: "json",
                     data: {
-                        featureClass: "P",
-                        style: "full",
-                        maxRows: 12,
-                        pleaseWork: request.term
+                        searchPhrase: request.term
                     },
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -73,7 +65,7 @@
                 $("#ReferredByVolunteerId").value = ui.item.value;
                 ui.item.value = ui.item.label;
 
-                
+
                 //$("#referee").value = ui.item.label;
             },
             open: function () {
@@ -90,7 +82,7 @@
     Available From
 </div>
 <div class="editor-field">
-    <script>
+    <script type="text/javascript">
         $(function () {
             $("#AvailableFrom").datepicker($.datepicker.regional['en-GB']);
         });
