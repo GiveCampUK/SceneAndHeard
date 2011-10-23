@@ -7,8 +7,14 @@
 }
 
 <h2>Volunteer CRB Checks</h2>
+<p>This report shows volunteers whose CRB Checks are</p>
+<ul>
+    <li>Not approved</li>
+    <li>Expired (three years since approval)</li>
+    <li>Status unknown</li>
+</ul>
 
-@using (Html.BeginForm())
+@*@using (Html.BeginForm())
 { 
     <fieldset>
         <legend>Search</legend>
@@ -29,7 +35,7 @@
             <input type="submit" value="Search" />
         </p>
     </fieldset>
-}
+}*@
 
 <div id="optionsGrid">
     @Html.Partial("_optionsGrid", Model)

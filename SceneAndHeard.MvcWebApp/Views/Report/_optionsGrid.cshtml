@@ -2,6 +2,17 @@
 
 @{
     var optionsGrid = new WebGrid(Model, 
-        rowsPerPage: 15);
-    @optionsGrid.GetHtml();
+        rowsPerPage: 15,
+        defaultSort: "Surname");
+    @optionsGrid.GetHtml(
+    tableStyle: "grid",
+    headerStyle: "head",
+    alternatingRowStyle: "alt",
+    columns: optionsGrid.Columns(
+        optionsGrid.Column("FirstName", "First Name"),
+        optionsGrid.Column("Surname"),
+        optionsGrid.Column("CrbNumber", "CRB Number"),
+        optionsGrid.Column("ApplicationDate", "Application Date"),
+        optionsGrid.Column("Approved"),
+        optionsGrid.Column("ApprovalDate")));
 }
