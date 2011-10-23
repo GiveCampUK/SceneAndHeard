@@ -8,6 +8,7 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Eligiable Volunteers", "Eligible")
 </p>
 <p>
 
@@ -56,6 +57,7 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.VolunteerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VolunteerId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.VolunteerId })
         </td>
         <td>

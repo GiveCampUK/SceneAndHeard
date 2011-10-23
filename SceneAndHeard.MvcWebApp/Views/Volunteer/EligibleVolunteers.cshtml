@@ -7,9 +7,6 @@
 
 <h2>EligibleVolunteers</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table>
     <tr>
         <th>
@@ -21,7 +18,6 @@
         <th>
             Is Eligible
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -33,12 +29,7 @@
             @Html.DisplayFor(modelItem => item.Surname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsEligible ? "Is Eligible" : "Not Eligible")
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VolunteerId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VolunteerId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VolunteerId })
+            @itemitem.IsEligible ? "Is Eligible" : "Not Eligible";
         </td>
     </tr>
 }

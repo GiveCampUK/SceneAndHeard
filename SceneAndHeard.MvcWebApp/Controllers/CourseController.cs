@@ -1,17 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SceneAndHeard.Support;
 using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
-{   
+{
     public class CourseController : Controller
     {
         private SceneCRM context = new SceneCRM();
+
+        private readonly InitialisesVolunteerAllocationView _initialisesVolunteerAllocationView = new InitialisesVolunteerAllocationView();
+        private readonly InterpretsPostedVolunteerAllocations _interpretsPostedVolunteerAllocations = new InterpretsPostedVolunteerAllocations();
 
         //
         // GET: /Course/
@@ -35,10 +37,12 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.PossibleCourseTypes = context.CourseTypes;
+            ViewBag.PossibleCourseTypes = context.CourseTypes;            
             ViewBag.PossibleTerms = context.Terms;
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
+
             return View();
-        } 
+        }
 
         //
         // POST: /Course/Create
@@ -49,22 +53,28 @@ namespace SceneAndHeard.Controllers
             if (ModelState.IsValid)
             {
                 context.Courses.AddObject(course);
+                ApplyCourseVolunteerAllocations(course);
                 context.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context);
             ViewBag.PossibleTerms = context.Terms;
+
             return View(course);
         }
-        
+
         //
         // GET: /Course/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);
             ViewBag.PossibleCourseTypes = context.CourseTypes;
             ViewBag.PossibleTerms = context.Terms;
+
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context, course.CourseVolunteers.Select(cv => new VolunteerAllocation(cv.VolunteerId, cv.JobId, cv.Notes)));
+
             return View(course);
         }
 
@@ -78,16 +88,39 @@ namespace SceneAndHeard.Controllers
             {
                 context.Courses.Attach(course);
                 context.ObjectStateManager.ChangeObjectState(course, EntityState.Modified);
+
+                ApplyCourseVolunteerAllocations(course);
+
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
+            _initialisesVolunteerAllocationView.Initialise(ViewBag, context, course.CourseVolunteers.Select(cv => new VolunteerAllocation(cv.VolunteerId, cv.JobId, cv.Notes)));
+            
             ViewBag.PossibleTerms = context.Terms;
             return View(course);
         }
 
+        private void ApplyCourseVolunteerAllocations(Course course)
+        {
+            var allocatedVolunteers = _interpretsPostedVolunteerAllocations.Interpret(Request.Form);
+            
+            course.CourseVolunteers.Clear();
+            foreach (var volunteerAllocation in allocatedVolunteers)
+            {                    
+                course.CourseVolunteers.Add(
+                    new CourseVolunteer
+                        {
+                            JobId = volunteerAllocation.JobId,
+                            VolunteerId = volunteerAllocation.VolunteerId, 
+                            Notes = volunteerAllocation.Notes
+                        });
+            }
+        }
+
         //
         // GET: /Course/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Course course = context.Courses.Single(x => x.CourseId == id);

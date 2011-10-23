@@ -49,7 +49,7 @@
         $("#referee").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "../AllVolunteers",
+                    url: "./AllVolunteers",
                     dataType: "json",
                     data: {
                         featureClass: "P",
@@ -69,8 +69,12 @@
             },
             minLength: 2,
             select: function (event, ui) {
+                // they haven't seen value.
                 $("#ReferredByVolunteerId").value = ui.item.value;
-                $("#referee").value = ui.item.label;
+                ui.item.value = ui.item.label;
+
+                
+                //$("#referee").value = ui.item.label;
             },
             open: function () {
                 $(this).removeClass("ui-corner-all").addClass("ui-corner-top");

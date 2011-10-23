@@ -117,7 +117,10 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Eligible()
         {
-            var volunteers = context.Volunteers.Where(v => v.IsEligible && v.AvailableFrom >= DateTime.Today);
+            var volunteers = context.Volunteers
+                                    .Where(v => v.AvailableFrom.HasValue && v.AvailableFrom <= DateTime.Today)
+                                    .ToList()
+                                    .Where(v => !v.IsEligible);
             return View("EligibleVolunteers", volunteers);
         }
 

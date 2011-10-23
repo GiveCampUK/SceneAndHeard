@@ -1,0 +1,39 @@
+﻿@model List<SceneAndHeardFeedback.Models.Feedback>
+@{
+    ViewBag.Title = "ReviewFeedback";
+}
+<h2>
+    Review Feedback for
+</h2>
+<!-- Insert performane name here -->
+<table border="0" cellpadding="0" cellspacing="0">
+    @foreach (var item in Model)
+    {
+        // Put the feedbacks in a table with a checkbox for Approved ones
+        // When the page is posted we'll mark the approved ones in the DB
+    
+        <tr>
+            <td>
+                Feedback left by:
+            </td>
+            <td>
+                @item.ContactName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Feedback:
+            </td>
+            <td>@item.FeedbackText
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                Approved:
+                @Html.CheckBoxFor(c => item.Approved)
+            </td>
+        </tr>
+    }
+</table>
+
+<input type="submit" value="Save" />
