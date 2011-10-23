@@ -1,17 +1,17 @@
 @model IEnumerable<SceneCrm.Entities.Job>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Jobs";
 }
 
-<h2>Index</h2>
+<h2>Jobs</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "button big" })
 </p>
 <table>
     <tr>
-        <th></th>
+       
         <th>
             Description
         </th>
@@ -27,15 +27,12 @@
         <th>
             Volunteers
         </th>*@
+         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.JobId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.JobId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.JobId })
-        </td>
+        
         <td>
 			@item.Description
         </td>
@@ -51,6 +48,13 @@
         <td>
 			@(item.Volunteers == null ? "None" : item.Volunteers.Count.ToString())
         </td>*@
+        <td>
+        <div class="button-group">
+            @Html.ActionLink("Edit", "Edit", new { id = item.JobId }, new { @class = "button primary pill icon edit" })
+            @Html.ActionLink("Details", "Details", new { id = item.JobId }, new { @class = "button primary pill icon log" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.JobId }, new { @class = "button primary pill icon trash" })
+        </div>
+        </td>
     </tr>
 }
 

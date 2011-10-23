@@ -7,6 +7,7 @@ using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class ReportController : Controller
     {
         private SceneCRM context = new SceneCRM();
@@ -16,7 +17,10 @@ namespace SceneAndHeard.Controllers
         [Authorize]
         public ActionResult CRBChecks()
         {
-            return View(context.VolunteerCrbChecks);
+            var expired = from vcc in context.VolunteerCrbChecks
+                          where ((vcc.ApplicationExpiryDate.HasValue && vcc.ApplicationExpiryDate.Value < DateTime.UtcNow) || (vcc.Approved.HasValue && !vcc.Approved.Value))
+                          select vcc;
+            return View(expired);
         }
 
     }

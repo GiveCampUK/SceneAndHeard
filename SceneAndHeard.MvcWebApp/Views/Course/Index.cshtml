@@ -48,6 +48,7 @@
             <td>
                     <div class="button-group">
                 @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "button primary pill icon edit" }) 
+                @Html.ActionLink("Students", "Students", new { id = item.CourseId }, new { @class = "button primary pill icon edit" }) 
                 @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "button primary pill icon log" }) 
                 @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "button primary pill icon trash" })
                 </div>

@@ -27,7 +27,7 @@
       }
     </div>
 
-    <div class="display-label">ReferredBy</div>
+    <div class="display-label">Referred By</div>
     <div class="display-field">
       @if (Model.ReferredBy != null)
       {
@@ -35,17 +35,17 @@
       }
     </div>
 
-    <div class="display-label">IsEligible</div>
+    <div class="display-label">Is Eligible? (Has a valid CRB, has attended a performance and has a referrer)</div>
     <div class="display-field">@Model.IsEligible</div>
 
-    <div class="display-label">CrbExpiry</div>
+    <div class="display-label">CRB Expiry Date</div>
     <div class="display-field">@Model.CrbExpiry - @(Model.HasValidCrbCheck ? "Valid" : "Does not currently have valid CRB")</div>
 
 
-    <div class="display-label">PerformanceAttended</div>
+    <div class="display-label">Performance Attended</div>
     <div class="display-field">@Model.PerformanceAttended</div>
 
-    <div class="display-label">AvailableFrom</div>
+    <div class="display-label">Available From</div>
     <div class="display-field">@String.Format("{0:g}", Model.AvailableFrom)</div>
 
     <div class="display-label">Notes</div>
@@ -57,7 +57,7 @@
     <div class="display-label">Mobile</div>
     <div class="display-field">@Model.MobilePhone</div>
 
-    <div class="display-label">EmailAddresses</div>
+    <div class="display-label">Email Addresses</div>
     <div class="display-field">
     @Model.EmailAddress
     <br />
@@ -67,19 +67,19 @@
     <div class="display-label">Address</div>
     <div class="display-field">@Model.Address @Model.Postcode</div>
 
-    <div class="display-label">CvWebUrl</div>
+    <div class="display-label">CV Web Url</div>
     <div class="display-field">@Model.CvWebUrl</div>
 
-    <div class="display-label">SpotlightNumber</div>
+    <div class="display-label">Spotlight Number</div>
     <div class="display-field">@Model.SpotlightNumber</div>
 
-    <div class="display-label">AgentName</div>
+    <div class="display-label">Agent Name</div>
     <div class="display-field">@Model.AgentName</div>
 
     <div class="display-label">Organisation</div>
     <div class="display-field">@Model.Organisation</div>
 
-    <div class="display-label">EyesEars</div>
+    <div class="display-label">Eyes Ears</div>
     <div class="display-field">@Model.EyesEars</div>
 
     <div class="display-label">Schools</div>
@@ -91,10 +91,10 @@
     <div class="display-label">Deadwood</div>
     <div class="display-field">@Model.Deadwood</div>
 
-    <div class="display-label">NoMailout</div>
+    <div class="display-label">No Mailout</div>
     <div class="display-field">@Model.NoMailout</div>
 
-    <div class="display-label">EEDirectDebit</div>
+    <div class="display-label">EE Direct Debit</div>
     <div class="display-field">@Model.EEDirectDebit</div>
 
 </fieldset>
