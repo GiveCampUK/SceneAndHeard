@@ -4346,30 +4346,6 @@ namespace SceneCrm.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CheckDate
-        {
-            get
-            {
-                return _CheckDate;
-            }
-            set
-            {
-                OnCheckDateChanging(value);
-                ReportPropertyChanging("CheckDate");
-                _CheckDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CheckDate");
-                OnCheckDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CheckDate;
-        partial void OnCheckDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnCheckDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String CrbNumber
         {
             get
@@ -4394,96 +4370,96 @@ namespace SceneCrm.Entities
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> OnlineFormSent
+        public Nullable<global::System.DateTime> ApplicationDate
         {
             get
             {
-                return _OnlineFormSent;
+                return _ApplicationDate;
             }
             set
             {
-                OnOnlineFormSentChanging(value);
-                ReportPropertyChanging("OnlineFormSent");
-                _OnlineFormSent = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("OnlineFormSent");
-                OnOnlineFormSentChanged();
+                OnApplicationDateChanging(value);
+                ReportPropertyChanging("ApplicationDate");
+                _ApplicationDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ApplicationDate");
+                OnApplicationDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _OnlineFormSent;
-        partial void OnOnlineFormSentChanging(Nullable<global::System.DateTime> value);
-        partial void OnOnlineFormSentChanged();
+        private Nullable<global::System.DateTime> _ApplicationDate;
+        partial void OnApplicationDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnApplicationDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> FormFilledOut
+        public Nullable<global::System.DateTime> ApplicationExpiryDate
         {
             get
             {
-                return _FormFilledOut;
+                return _ApplicationExpiryDate;
             }
             set
             {
-                OnFormFilledOutChanging(value);
-                ReportPropertyChanging("FormFilledOut");
-                _FormFilledOut = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("FormFilledOut");
-                OnFormFilledOutChanged();
+                OnApplicationExpiryDateChanging(value);
+                ReportPropertyChanging("ApplicationExpiryDate");
+                _ApplicationExpiryDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ApplicationExpiryDate");
+                OnApplicationExpiryDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _FormFilledOut;
-        partial void OnFormFilledOutChanging(Nullable<global::System.DateTime> value);
-        partial void OnFormFilledOutChanged();
+        private Nullable<global::System.DateTime> _ApplicationExpiryDate;
+        partial void OnApplicationExpiryDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnApplicationExpiryDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> DateCheckExpires
+        public Nullable<global::System.Boolean> Approved
         {
             get
             {
-                return _DateCheckExpires;
+                return _Approved;
             }
             set
             {
-                OnDateCheckExpiresChanging(value);
-                ReportPropertyChanging("DateCheckExpires");
-                _DateCheckExpires = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DateCheckExpires");
-                OnDateCheckExpiresChanged();
+                OnApprovedChanging(value);
+                ReportPropertyChanging("Approved");
+                _Approved = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Approved");
+                OnApprovedChanged();
             }
         }
-        private Nullable<global::System.DateTime> _DateCheckExpires;
-        partial void OnDateCheckExpiresChanging(Nullable<global::System.DateTime> value);
-        partial void OnDateCheckExpiresChanged();
+        private Nullable<global::System.Boolean> _Approved;
+        partial void OnApprovedChanging(Nullable<global::System.Boolean> value);
+        partial void OnApprovedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> IdComplete
+        public Nullable<global::System.DateTime> ApprovalDate
         {
             get
             {
-                return _IdComplete;
+                return _ApprovalDate;
             }
             set
             {
-                OnIdCompleteChanging(value);
-                ReportPropertyChanging("IdComplete");
-                _IdComplete = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IdComplete");
-                OnIdCompleteChanged();
+                OnApprovalDateChanging(value);
+                ReportPropertyChanging("ApprovalDate");
+                _ApprovalDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ApprovalDate");
+                OnApprovalDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _IdComplete;
-        partial void OnIdCompleteChanging(Nullable<global::System.DateTime> value);
-        partial void OnIdCompleteChanged();
+        private Nullable<global::System.DateTime> _ApprovalDate;
+        partial void OnApprovalDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnApprovalDateChanged();
 
         #endregion
     

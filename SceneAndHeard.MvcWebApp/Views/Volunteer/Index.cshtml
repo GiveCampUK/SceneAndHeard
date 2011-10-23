@@ -74,7 +74,7 @@
 			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
         </td>
         <td>
-			@( item.CrbChecks == null || item.CrbChecks.Count == 0 ? "None" : item.CrbChecks.Max(c => c.DateCheckExpires).Value.ToShortDateString())
+			@(item.CrbExpiry)
         </td>
         <td>
 			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())
