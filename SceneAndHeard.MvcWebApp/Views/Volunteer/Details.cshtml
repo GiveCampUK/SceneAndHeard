@@ -9,64 +9,77 @@
 <fieldset>
     <legend>Volunteer</legend>
 
-    <div class="display-label">FirstName</div>
-    <div class="display-field">@Model.FirstName</div>
+    <div class="display-label">Name</div>
+    <div class="display-field">@Model.FirstName @Model.Surname</div>
 
-    <div class="display-label">Surname</div>
-    <div class="display-field">@Model.Surname</div>
+    <div class="display-label">Partner</div>
+    <div class="display-field">@Model.PartnerFirstName @Model.PartnerSurname</div>
 
-    <div class="display-label">PerformanceAttended</div>
+    <div class="display-label">Referrals</div>
+    <div class="display-field">
+      @if (Model.Referrals != null)
+      {
+          foreach (var referral in Model.Referrals)
+          {
+                @Html.ActionLink(referral.Name, "Details", "Volunteer", new { id = referral.VolunteerId }, null)
+                <br />
+          }
+      }
+    </div>
+
+    <div class="display-label">Referred By</div>
+    <div class="display-field">
+      @if (Model.ReferredBy != null)
+      {
+            @Html.ActionLink(Model.ReferredBy.Name, "Details", "Volunteer", new { id = Model.ReferredByVolunteerId }, null)
+      }
+    </div>
+
+    <div class="display-label">Is Eligible? (Has a valid CRB, has attended a performance and has a referrer)</div>
+    <div class="display-field">@Model.IsEligible</div>
+
+    <div class="display-label">CRB Expiry Date</div>
+    <div class="display-field">@Model.CrbExpiry - @(Model.HasValidCrbCheck ? "Valid" : "Does not currently have valid CRB")</div>
+
+
+    <div class="display-label">Performance Attended</div>
     <div class="display-field">@Model.PerformanceAttended</div>
 
-    <div class="display-label">AvailableFrom</div>
+    <div class="display-label">Available From</div>
     <div class="display-field">@String.Format("{0:g}", Model.AvailableFrom)</div>
-
-    <div class="display-label">ReferredByVolunteerId</div>
-    <div class="display-field">@Model.ReferredByVolunteerId</div>
-
-    <div class="display-label">PartnerFirstName</div>
-    <div class="display-field">@Model.PartnerFirstName</div>
-
-    <div class="display-label">PartnerSurname</div>
-    <div class="display-field">@Model.PartnerSurname</div>
 
     <div class="display-label">Notes</div>
     <div class="display-field">@Model.Notes</div>
 
-    <div class="display-label">AccessPersonId</div>
-    <div class="display-field">@Model.AccessPersonId</div>
-
     <div class="display-label">Telephone</div>
     <div class="display-field">@Model.Telephone</div>
 
-    <div class="display-label">MobilePhone</div>
+    <div class="display-label">Mobile</div>
     <div class="display-field">@Model.MobilePhone</div>
 
-    <div class="display-label">EmailAddress</div>
-    <div class="display-field">@Model.EmailAddress</div>
-
-    <div class="display-label">EmailAddress2</div>
-    <div class="display-field">@Model.EmailAddress2</div>
+    <div class="display-label">Email Addresses</div>
+    <div class="display-field">
+    @Model.EmailAddress
+    <br />
+    @Model.EmailAddress2
+    </div>
 
     <div class="display-label">Address</div>
-    <div class="display-field">@Model.Address</div>
+    <div class="display-field">@Model.Address @Model.Postcode</div>
 
-    <div class="display-label">Postcode</div>
-    <div class="display-field">@Model.Postcode</div>
-
-    <div class="display-label">CvWebUrl</div>
+    <div class="display-label">CV Web Url</div>
     <div class="display-field">@Model.CvWebUrl</div>
 
-    <div class="display-label">SpotlightNumber</div>
+    <div class="display-label">Spotlight Number</div>
     <div class="display-field">@Model.SpotlightNumber</div>
 
-    <div class="display-label">AgentName</div>
+    <div class="display-label">Agent Name</div>
     <div class="display-field">@Model.AgentName</div>
 
     <div class="display-label">Organisation</div>
     <div class="display-field">@Model.Organisation</div>
 
-    <div class="display-label">EyesEars</div>
+    <div class="display-label">Eyes Ears</div>
     <div class="display-field">@Model.EyesEars</div>
 
     <div class="display-label">Schools</div>
@@ -78,53 +91,12 @@
     <div class="display-label">Deadwood</div>
     <div class="display-field">@Model.Deadwood</div>
 
-    <div class="display-label">NoMailout</div>
+    <div class="display-label">No Mailout</div>
     <div class="display-field">@Model.NoMailout</div>
 
-    <div class="display-label">EEDirectDebit</div>
+    <div class="display-label">EE Direct Debit</div>
     <div class="display-field">@Model.EEDirectDebit</div>
 
-    <div class="display-label">CourseVolunteers</div>
-    <div class="display-field">@(Model.CourseVolunteers == null ? "None" : Model.CourseVolunteers.Count.ToString())</div>
-
-    <div class="display-label">CrbChecks</div>
-    <div class="display-field">@(Model.CrbChecks == null ? "None" : Model.CrbChecks.Count.ToString())</div>
-
-    <div class="display-label">PlayVolunteers</div>
-    <div class="display-field">@(Model.PlayVolunteers == null ? "None" : Model.PlayVolunteers.Count.ToString())</div>
-
-    <div class="display-label">ProductionVolunteers</div>
-    <div class="display-field">@(Model.ProductionVolunteers == null ? "None" : Model.ProductionVolunteers.Count.ToString())</div>
-
-    <div class="display-label">Jobs</div>
-    <div class="display-field">@(Model.Jobs == null ? "None" : Model.Jobs.Count.ToString())</div>
-
-    <div class="display-label">Referrals</div>
-    <div class="display-field">@(Model.Referrals == null ? "None" : Model.Referrals.Count.ToString())</div>
-
-    <div class="display-label">ReferredBy</div>
-    <div class="display-field">@(Model.ReferredBy == null ? "None" : Model.ReferredBy.Name)</div>
-
-    <div class="display-label">ReferredByReference</div>
-    <div class="display-field">@Html.DisplayTextFor(_ => Model.ReferredByReference).ToString()</div>
-
-    <div class="display-label">Name</div>
-    <div class="display-field">@Model.Name</div>
-
-    <div class="display-label">IsEligible</div>
-    <div class="display-field">@Model.IsEligible</div>
-
-    <div class="display-label">HasValidCrbCheck</div>
-    <div class="display-field">@Model.HasValidCrbCheck</div>
-
-    <div class="display-label">HasAttendedAPerformance</div>
-    <div class="display-field">@Model.HasAttendedAPerformance</div>
-
-    <div class="display-label">HasReferrer</div>
-    <div class="display-field">@Model.HasReferrer</div>
-
-    <div class="display-label">CrbExpiry</div>
-    <div class="display-field">@Model.CrbExpiry</div>
 </fieldset>
 
 <fieldset>
@@ -164,6 +136,51 @@
     @foreach (var cv in Model.ProductionVolunteers)
     {
         @Html.ActionLink(cv.Production.Title, "Details", "Production", new { id = cv.ProductionId }, null)@: - @cv.Job.Description <br />
+    }
+</fieldset>
+
+
+<fieldset>
+    <legend>CRB History</legend>
+    @if (Model.CrbChecks.Count() == 0)
+    {
+        <h3>No CRB History</h3>
+    }
+    else
+    {
+        <table>
+            <tr>
+                <th>
+                    CRB number
+                </th>
+ 
+                <th>
+                    Application Date
+                </th>
+                <th>
+                    Application Sent
+                </th>
+                <th>
+                    Approval Date
+                </th>
+                <th>
+                    Approved?
+                </th>
+            </tr>
+
+        @foreach (var crb in Model.CrbChecks)
+        {
+            <tr>
+            
+                <td>@crb.CrbNumber</td>
+                <td>@crb.ApplicationDate</td>
+                <td>@crb.ApplicationSent</td>
+                <td>@crb.ApprovalDate</td>
+                <td>@crb.Approved</td>
+            </tr>
+        
+        }
+    </table>
     }
 </fieldset>
 

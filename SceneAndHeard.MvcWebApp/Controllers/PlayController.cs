@@ -10,6 +10,7 @@ using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
 {
+    [Authorize(Roles = "Editor")]
     public class PlayController : Controller
     {
         private SceneCRM context = new SceneCRM();
