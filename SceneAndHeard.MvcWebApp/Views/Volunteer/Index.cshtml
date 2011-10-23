@@ -8,6 +8,7 @@
 
 <p>
     @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Eligiable Volunteers", "Eligible")
 </p>
 <p>
 
@@ -56,6 +57,7 @@
     <tr>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.VolunteerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.VolunteerId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.VolunteerId })
         </td>
         <td>
@@ -74,7 +76,7 @@
 			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
         </td>
         <td>
-			@( item.CrbChecks == null || item.CrbChecks.Count == 0 ? "None" : item.CrbChecks.Max(c => c.DateCheckExpires).Value.ToShortDateString())
+			@(item.CrbExpiry)
         </td>
         <td>
 			@(item.PlayVolunteers == null ? "None" : item.PlayVolunteers.Count.ToString())

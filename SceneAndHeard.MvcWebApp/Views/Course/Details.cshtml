@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Course Details</h2>
 
 <fieldset>
     <legend>Course</legend>
@@ -16,16 +16,11 @@
     <div class="display-field">@Model.Year</div>
 
     <div class="display-label">CourseType</div>
-    <div class="display-field">@Html.DisplayTextFor(_ => Model.CourseType).ToString()</div>
+    <div class="display-field">@Model.CourseType.CourseTypeName</div>
 
-    <div class="display-label">CourseTypeReference</div>
-    <div class="display-field">@Html.DisplayTextFor(_ => Model.CourseTypeReference).ToString()</div>
-
+    
     <div class="display-label">Term</div>
-    <div class="display-field">@Html.DisplayTextFor(_ => Model.Term).ToString()</div>
-
-    <div class="display-label">TermReference</div>
-    <div class="display-field">@Html.DisplayTextFor(_ => Model.TermReference).ToString()</div>
+    <div class="display-field">@Model.Term.TermName</div>
 
     <div class="display-label">CourseAttendances</div>
     <div class="display-field">@(Model.CourseAttendances == null ? "None" : Model.CourseAttendances.Count.ToString())</div>
@@ -33,6 +28,37 @@
     <div class="display-label">CourseVolunteers</div>
     <div class="display-field">@(Model.CourseVolunteers == null ? "None" : Model.CourseVolunteers.Count.ToString())</div>
 </fieldset>
+
+
+<fieldset>
+    <legend>Students</legend>
+      @if (Model.CourseAttendances.Count() == 0)
+    {
+        <h3>
+            No students found</h3>
+    }
+    @foreach (var student in Model.CourseAttendances)
+    {
+          @Html.ActionLink(student.Student.Name, "Details", "Student", new { id = student.StudentId}, null) <br />
+    }
+
+    </fieldset>
+
+<fieldset>
+    <legend>Volunteers</legend>
+      @if (Model.CourseVolunteers.Count() == 0)
+    {
+        <h3>
+            No volunteers found</h3>
+    }
+    @foreach (var volunteers in Model.CourseVolunteers)
+    {
+          @Html.ActionLink(volunteers.Volunteer.Name, "Details", "Volunteer", new { id = volunteers.VolunteerId }, null) @:-  @volunteers.Job.Description <br />
+    }
+
+    </fieldset>
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.CourseId }) |
     @Html.ActionLink("Back to List", "Index")

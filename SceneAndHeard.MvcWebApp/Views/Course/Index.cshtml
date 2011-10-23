@@ -1,77 +1,55 @@
 @model IEnumerable<SceneCrm.Entities.Course>
-
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
+<h2>Course Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table>
     <tr>
-        <th></th>
         <th>
-            Course Type Code
         </th>
         <th>
-            Year
-        </th>
-        <th>
-            Course Type
-        </th>
-        <th>
-            Course Type Reference
+            Course Code
         </th>
         <th>
             Term
         </th>
         <th>
-            Term Reference
+            Year
         </th>
         <th>
-            Course Attendances
+            Attendee Count
         </th>
         <th>
-            Course Volunteers
+            Volunteer Count
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
-        </td>
-        <td>
-			@item.CourseTypeCode
-        </td>
-        <td>
-			@item.Year
-        </td>
-        <td>
-			@Html.DisplayTextFor(_ => item.CourseType).ToString()
-        </td>
-        <td>
-			@Html.DisplayTextFor(_ => item.CourseTypeReference).ToString()
-        </td>
-        <td>
-			@Html.DisplayTextFor(_ => item.Term).ToString()
-        </td>
-        <td>
-			@Html.DisplayTextFor(_ => item.TermReference).ToString()
-        </td>
-        <td>
-			@(item.CourseAttendances == null ? "None" : item.CourseAttendances.Count.ToString())
-        </td>
-        <td>
-			@(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CourseId })
+            </td>
+            <td>
+              
+                @item.CourseTypeCode
+            </td>
+            <td>
+                @item.Term.TermName
+            </td>
+            <td>
+                @item.Year
+            </td>
+            <td>
+                @(item.CourseAttendances == null ? "None" : item.CourseAttendances.Count.ToString())
+            </td>
+            <td>
+                @(item.CourseVolunteers == null ? "None" : item.CourseVolunteers.Count.ToString())
+            </td>
+        </tr>
+    }
 </table>
-
-

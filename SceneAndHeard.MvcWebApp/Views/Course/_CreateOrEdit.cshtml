@@ -6,8 +6,12 @@
     @Html.LabelFor(model => model.CourseTypeCode)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.CourseTypeCode)
-    @Html.ValidationMessageFor(model => model.CourseTypeCode)
+ @Html.DropDownListFor(model => model.CourseTypeCode, ((IEnumerable<SceneCrm.Entities.CourseType>)ViewBag.PossibleCourseTypes).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.CourseTypeName).ToString(), 
+        Value = option.CourseTypeCode.ToString(),
+        Selected = (Model != null) && (option.CourseTypeCode == Model.CourseTypeCode)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TermId)
 </div>
 
 <div class="editor-label">
@@ -23,9 +27,11 @@
 </div>
 <div class="editor-field">
     @Html.DropDownListFor(model => model.TermId, ((IEnumerable<SceneCrm.Entities.Term>)ViewBag.PossibleTerms).Select(option => new SelectListItem {
-        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Text = Html.DisplayTextFor(_ => option.TermName).ToString(), 
         Value = option.TermId.ToString(),
         Selected = (Model != null) && (option.TermId == Model.TermId)
     }), "Choose...")
     @Html.ValidationMessageFor(model => model.TermId)
 </div>
+
+@Html.Partial("_AllocateVolunteers", Model)

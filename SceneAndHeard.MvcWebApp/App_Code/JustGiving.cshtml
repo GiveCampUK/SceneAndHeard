@@ -1,0 +1,11 @@
+﻿@helper JustGivingButton(string buttonText)
+{
+    if(string.IsNullOrWhiteSpace(buttonText))
+    { 
+        <text><input type="button" value="Make a Donation!" onclick="document.location='http://www.justgiving.com/donation/direct/charity/128773?exitUrl=http%3a%2f%2fwww.sceneandheard.org'" /></text>
+    }
+    else
+    { 
+    @String.Format("<input type='button' value='{0}' onclick='document.location='http://www.justgiving.com/donation/direct/charity/128773?exitUrl=http%3a%2f%2fwww.sceneandheard.org'' />",buttonText)  
+    }    
+}

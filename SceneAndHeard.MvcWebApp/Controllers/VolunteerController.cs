@@ -117,10 +117,22 @@ namespace SceneAndHeard.Controllers
 
         public ActionResult Eligible()
         {
-            var volunteers = context.Volunteers.Where(v => v.IsEligible && v.AvailableFrom >= DateTime.Today);
+            var volunteers = context.Volunteers
+                                    .Where(v => v.AvailableFrom.HasValue && v.AvailableFrom <= DateTime.Today)
+                                    .ToList()
+                                    .Where(v => !v.IsEligible);
             return View("EligibleVolunteers", volunteers);
         }
 
+        [HttpGet]
+        public JsonResult AllVolunteers(string pleaseWork)
+        {
+            var matches = context.Volunteers.Where(v => v.FirstName.StartsWith(pleaseWork) || v.Surname.StartsWith(pleaseWork))
+                                            .OrderBy(v => v.Surname)
+                                            .Select(v => new { Id = v.VolunteerId, Name = v.FirstName + " " + v.Surname });
+
+            return Json(matches, JsonRequestBehavior.AllowGet);
+        }
 
 
     }

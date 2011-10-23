@@ -40,12 +40,11 @@
       [VolunteerCrbChecks].[FirstName] AS [FirstName], 
       [VolunteerCrbChecks].[Surname] AS [Surname], 
       [VolunteerCrbChecks].[PerformanceAttended] AS [PerformanceAttended], 
-      [VolunteerCrbChecks].[CheckDate] AS [CheckDate], 
       [VolunteerCrbChecks].[CrbNumber] AS [CrbNumber], 
-      [VolunteerCrbChecks].[OnlineFormSent] AS [OnlineFormSent], 
-      [VolunteerCrbChecks].[FormFilledOut] AS [FormFilledOut], 
-      [VolunteerCrbChecks].[DateCheckExpires] AS [DateCheckExpires], 
-      [VolunteerCrbChecks].[IdComplete] AS [IdComplete]
+      [VolunteerCrbChecks].[ApplicationDate] AS [ApplicationDate], 
+      [VolunteerCrbChecks].[ApplicationExpiryDate] AS [ApplicationExpiryDate], 
+      [VolunteerCrbChecks].[Approved] AS [Approved], 
+      [VolunteerCrbChecks].[ApprovalDate] AS [ApprovalDate]
       FROM [dbo].[VolunteerCrbChecks] AS [VolunteerCrbChecks]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="VolunteerHistory" EntityType="Model.Store.VolunteerHistory" store:Type="Views" store:Schema="dbo" store:Name="VolunteerHistory">
@@ -194,7 +193,7 @@
           <Property Name="ApplicationDate" Type="datetime" />
           <Property Name="Approved" Type="bit" />
           <Property Name="ApprovalDate" Type="datetime" />
-          <Property Name="CrbNumber" Type="varchar" MaxLength="32" />
+          <Property Name="CrbNumber" Type="varchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="Job">
           <Key>
@@ -335,12 +334,11 @@
           <Property Name="FirstName" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" MaxLength="64" />
           <Property Name="PerformanceAttended" Type="varchar" MaxLength="1024" />
-          <Property Name="CheckDate" Type="datetime" />
-          <Property Name="CrbNumber" Type="varchar" MaxLength="32" />
-          <Property Name="OnlineFormSent" Type="datetime" />
-          <Property Name="FormFilledOut" Type="datetime" />
-          <Property Name="DateCheckExpires" Type="datetime" />
-          <Property Name="IdComplete" Type="datetime" />
+          <Property Name="CrbNumber" Type="varchar" MaxLength="64" />
+          <Property Name="ApplicationDate" Type="datetime" />
+          <Property Name="ApplicationExpiryDate" Type="datetime" />
+          <Property Name="Approved" Type="bit" />
+          <Property Name="ApprovalDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'SceneCRM.dbo.VolunteerHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1188,12 +1186,11 @@
           <Property Type="String" Name="FirstName" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Surname" MaxLength="64" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PerformanceAttended" MaxLength="1024" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CheckDate" />
           <Property Type="String" Name="CrbNumber" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="OnlineFormSent" />
-          <Property Type="DateTime" Name="FormFilledOut" />
-          <Property Type="DateTime" Name="DateCheckExpires" />
-          <Property Type="DateTime" Name="IdComplete" />
+          <Property Type="DateTime" Name="ApplicationDate" />
+          <Property Type="DateTime" Name="ApplicationExpiryDate" />
+          <Property Type="Boolean" Name="Approved" />
+          <Property Type="DateTime" Name="ApprovalDate" />
         </EntityType>
         <EntityType Name="VolunteerHistory">
           <Key>
@@ -1400,12 +1397,11 @@
           <EntitySetMapping Name="VolunteerCrbChecks">
             <EntityTypeMapping TypeName="Model.VolunteerCrbCheck">
               <MappingFragment StoreEntitySet="VolunteerCrbChecks">
-                <ScalarProperty Name="IdComplete" ColumnName="IdComplete" />
-                <ScalarProperty Name="DateCheckExpires" ColumnName="DateCheckExpires" />
-                <ScalarProperty Name="FormFilledOut" ColumnName="FormFilledOut" />
-                <ScalarProperty Name="OnlineFormSent" ColumnName="OnlineFormSent" />
+                <ScalarProperty Name="ApprovalDate" ColumnName="ApprovalDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="ApplicationExpiryDate" ColumnName="ApplicationExpiryDate" />
+                <ScalarProperty Name="ApplicationDate" ColumnName="ApplicationDate" />
                 <ScalarProperty Name="CrbNumber" ColumnName="CrbNumber" />
-                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
                 <ScalarProperty Name="PerformanceAttended" ColumnName="PerformanceAttended" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -1628,7 +1624,7 @@
           <ConnectorPoint PointX="3.9784615384615383" PointY="22.989726562500003" />
         </AssociationConnector>
         <EntityTypeShape EntityType="Model.StudentHistory" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="Model.VolunteerCrbCheck" Width="1.5" PointX="2.75" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="Model.VolunteerCrbCheck" Width="1.5" PointX="2.75" PointY="0.875" Height="2.7494921875" />
         <EntityTypeShape EntityType="Model.VolunteerHistory" Width="1.5" PointX="4.75" PointY="0.75" Height="2.9417936197916674" />
       </Diagram>
     </Diagrams>

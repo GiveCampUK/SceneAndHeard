@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Course.cs" />
+    <Compile Include="Production.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +62,9 @@
     <None Include="App.Config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="SceneCRM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SceneCRM.Designer.cs</LastGenOutput>
