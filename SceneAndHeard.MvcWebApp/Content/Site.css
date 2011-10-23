@@ -344,3 +344,8 @@ div#title {
    margin-left: 5px;
 }
 
+select.dual-list 
+{
+    width: 200px;
+    height: 400px;
+}

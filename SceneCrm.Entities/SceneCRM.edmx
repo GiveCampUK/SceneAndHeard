@@ -271,6 +271,7 @@
           <Property Name="MembershipNumber" Type="varchar" Nullable="false" MaxLength="16" />
           <Property Name="Forename" Type="varchar" MaxLength="64" />
           <Property Name="Surname" Type="varchar" Nullable="false" MaxLength="64" />
+          <Property Name="QuestionnaireResponse" Type="varchar" MaxLength="512" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
@@ -899,6 +900,7 @@
           <Property Type="String" Name="Surname" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CourseAttendances" Relationship="Model.FK_CourseAttendance_Child" FromRole="Student" ToRole="CourseAttendance" />
           <NavigationProperty Name="Plays" Relationship="Model.FK_Play_Student" FromRole="Student" ToRole="Play" />
+          <Property Type="String" Name="QuestionnaireResponse" MaxLength="512" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Term">
           <Key>
@@ -1354,6 +1356,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="Model.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="QuestionnaireResponse" ColumnName="QuestionnaireResponse" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Forename" ColumnName="Forename" />
                 <ScalarProperty Name="MembershipNumber" ColumnName="MembershipNumber" />

@@ -3226,6 +3226,30 @@ namespace SceneCrm.Entities
         private global::System.String _Surname;
         partial void OnSurnameChanging(global::System.String value);
         partial void OnSurnameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String QuestionnaireResponse
+        {
+            get
+            {
+                return _QuestionnaireResponse;
+            }
+            set
+            {
+                OnQuestionnaireResponseChanging(value);
+                ReportPropertyChanging("QuestionnaireResponse");
+                _QuestionnaireResponse = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("QuestionnaireResponse");
+                OnQuestionnaireResponseChanged();
+            }
+        }
+        private global::System.String _QuestionnaireResponse;
+        partial void OnQuestionnaireResponseChanging(global::System.String value);
+        partial void OnQuestionnaireResponseChanged();
 
         #endregion
     
