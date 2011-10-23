@@ -39,18 +39,21 @@ namespace SceneAndHeard.Controllers
             if (id.HasValue)
             {
                 feedback.eventBriteId = id.Value.ToString();
-                feedback.FeedbackLeft = DateTime.Today;
-                feedback.Approved = false;
             }
 
             return View(feedback);
         }
 
         [HttpPost]
-        public ActionResult LeaveFeedback(Feedback feedback)
+        public ActionResult LeaveFeedback(Feedback feedback, string eventBriteId)
         {
+            feedback.FeedbackLeft = DateTime.Today;
+            feedback.Approved = false;
+            feedback.eventBriteId = eventBriteId;
+
             if (ModelState.IsValid)
             {
+
                 _service.saveFeedback(feedback);
                 return RedirectToAction("Thanks", "Feedback");
             }
