@@ -1,20 +1,67 @@
 ﻿@model SceneCrm.Entities.Production
-
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-
+<h2>
+    Details</h2>
 <fieldset>
     <legend>Production</legend>
-
-    <div class="display-label">Title</div>
+    <div class="display-label">
+        Title</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Title)
     </div>
 </fieldset>
+<fieldset>
+    <legend>Performances</legend>
+    @if (Model.Performances.Count() == 0)
+    {
+        <h3>
+            No Performances</h3>
+    }
+    @foreach (var perf in Model.Performances)
+    {
+        @Html.ActionLink(perf.PerformanceDateTime.ToString(), "Details", "Performance", new { id = perf.PerformanceId }, null)<br />
+    }
+</fieldset>
+<fieldset>
+    <legend>Plays</legend>
+    @if (Model.Plays.Count() == 0)
+    {
+        <h3>
+            No plays</h3>
+    }
+    @foreach (var play in Model.Plays)
+    {
+        @Html.ActionLink(play.Title, "Details", "Play", new { id = play.PlayId }, null) <br />
+    }
+</fieldset>
+<fieldset>
+    <legend>Students</legend>
+    @if (Model.AssociatedStudents.Count() == 0)
+    {
+        <h3>
+            No students</h3>
+    }
+    @foreach (var student in Model.AssociatedStudents)
+    {
+        @Html.ActionLink(student.Name, "Details", "Student", new { id = student.StudentId }, null)<br />
+    }
+</fieldset>
+<fieldset>
+    <legend>Volunteers</legend>
+    @if (Model.AllAssociatedVolunteers.Count() == 0)
+    {
+        <h3>
+            No volunteers</h3>
+    }
+    @foreach (var vol in Model.AllAssociatedVolunteers)
+    {
+        @Html.ActionLink(vol.Key.Name, "Details", "Volunteer", new { id = vol.Key.VolunteerId }, null) <text>
+        - </text> @vol.Value.Description<br />
+    }
+</fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.ProductionId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductionId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

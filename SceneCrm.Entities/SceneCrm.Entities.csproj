@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Production.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Volunteer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,7 +55,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SceneCRM.edmx</DependentUpon>
-    </Compile>    
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">
