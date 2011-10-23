@@ -212,6 +212,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\Shared\createview.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +335,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Volunteer\_CreateOrEdit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Volunteer\EligibleVolunteers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SceneCrm.Entities\SceneCrm.Entities.csproj">
