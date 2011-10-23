@@ -313,12 +313,21 @@ div#title {
 .display-label, 
 .editor-label {
     margin: 1em 0 0 0;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .display-field, 
 .editor-field {
     margin: 0.5em 0 0 0;
+    margin-left: 1em;
 }
+
+
+
+
+
+
 
 .text-box {
     width: 30em;
