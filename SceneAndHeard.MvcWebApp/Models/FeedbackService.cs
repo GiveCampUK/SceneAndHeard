@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using SceneCrm.Entities;
 
 namespace SceneAndHeardFeedback.Models
 {
     public class FeedbackService
     {
-        private FeedbackContext _context;
+        private SceneCRM _context = new SceneCRM();
         public FeedbackService()
         {
-            _context = new FeedbackContext();
+
         }
 
         public void saveFeedback(Feedback feedback)
         {
-            _context.Feedback.Add(feedback);
+            _context.Feedbacks.AddObject(feedback);
             _context.SaveChanges();
             _context.Dispose();
         }

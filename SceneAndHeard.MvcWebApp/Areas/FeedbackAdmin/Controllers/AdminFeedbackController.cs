@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using SceneAndHeardFeedback.Models;
+using SceneCrm.Entities;
 using Util.ConfigManager;
 
 namespace SceneAndHeard.Areas.FeedbackAdmin.Controllers
@@ -34,9 +35,9 @@ namespace SceneAndHeard.Areas.FeedbackAdmin.Controllers
         }
 
         [HttpPost]
-        public ActionResult ReviewFeedback(List<Feedback> feedbacks)
+        public ActionResult ReviewFeedback(List<SceneCrm.Entities.Feedback> feedbacks)
         {
-            foreach (Feedback feedback in feedbacks)
+            foreach (var feedback in feedbacks)
             {
                 // Save each feedback through the Feedback service
                 _service.saveFeedback(feedback);

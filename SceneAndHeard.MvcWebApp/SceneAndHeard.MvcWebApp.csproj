@@ -96,7 +96,6 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EventBriteLayer.cs" />
     <Compile Include="Models\EventModels.cs" />
-    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\FeedbackContext.cs" />
     <Compile Include="Models\FeedbackService.cs" />
     <Compile Include="MVCHelpers.cs" />
@@ -104,6 +103,8 @@
     <Compile Include="ReportController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\gh-buttons.css" />
+    <Content Include="Content\gh-icons.png" />
     <Content Include="Content\images\logo.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -350,9 +351,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Volunteer\EligibleVolunteers.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Course\_AllocateVolunteers.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -373,9 +371,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Volunteer\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Report\_optionsGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Job\Details.cshtml" />
