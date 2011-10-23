@@ -11,6 +11,7 @@ using SceneCrm.Entities;
 
 namespace SceneAndHeard.Controllers
 {   
+    [Authorize]
     public class VolunteerController : Controller
     {
         private SceneCRM context = new SceneCRM();
