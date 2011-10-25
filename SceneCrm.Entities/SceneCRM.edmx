@@ -321,7 +321,7 @@
           <Property Name="JobId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SceneCRM.dbo.StudentHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'db77941e0bf7b44a74819a9f87015f6e63.dbo.StudentHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="StudentHistory">
           <Key>
@@ -340,7 +340,7 @@
           <Property Name="ProductionTitle" Type="varchar" MaxLength="64" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SceneCRM.dbo.VolunteerCrbChecks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'db77941e0bf7b44a74819a9f87015f6e63.dbo.VolunteerCrbChecks' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="VolunteerCrbChecks">
           <Key>
@@ -357,7 +357,7 @@
           <Property Name="ApprovalDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'SceneCRM.dbo.VolunteerHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'db77941e0bf7b44a74819a9f87015f6e63.dbo.VolunteerHistory' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="VolunteerHistory">
           <Key>
