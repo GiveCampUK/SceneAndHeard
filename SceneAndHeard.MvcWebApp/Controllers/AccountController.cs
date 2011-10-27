@@ -65,7 +65,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // GET: /Account/Register
-
+        [Authorize]
         public ActionResult Register()
         {
             return View();
@@ -73,7 +73,7 @@ namespace SceneAndHeard.Controllers
 
         //
         // POST: /Account/Register
-
+        [Authorize]
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
@@ -85,8 +85,9 @@ namespace SceneAndHeard.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    //We're going to be logged in already, so don't log in as the user
+                    //FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
+                    return RedirectToAction("ManageRoles", "Account");
                 }
                 else
                 {
@@ -151,6 +152,104 @@ namespace SceneAndHeard.Controllers
         {
             return View();
         }
+
+
+
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ManageRoles()
+        {
+            ViewBag.Title = "Manage Roles";
+            ViewData["RoleData"] = UserRole.UserRolesData();
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ManageRoles(ManageRolesModel model)
+        {
+            if (!Roles.RoleExists(model.RoleName))
+            {
+                Roles.CreateRole(model.RoleName);
+                ViewData["RoleData"] = UserRole.UserRolesData();
+                model.RoleName = string.Empty;
+            }
+
+            return View();
+        }
+
+
+        
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteRole(string roleName)
+        {
+            ViewBag.RoleName = roleName;
+
+            string delStatus = string.Empty;
+            try
+            {
+                Roles.DeleteRole(roleName, true);
+
+                delStatus = "Role " + roleName + " is successfully deleted.";
+            }
+            catch (Exception Ex)
+            {
+                delStatus = Ex.Message;
+            }
+
+            ViewBag.RoleDeleteResult = delStatus;
+
+            return View();
+        }
+
+
+        
+        [Authorize(Roles = "Admin")]
+        public ActionResult ShowUsersInRole(string roleName)
+        {
+            ViewBag.RoleName = roleName;
+
+            ViewData["RoleMappings"] = UsersRoleMapping.UsersInRole(roleName);
+
+            var users = Membership.GetAllUsers();
+
+            var list = new SelectList(users, "UserName", "UserName");
+            ViewData["ExistingUsers"] = list;
+
+
+
+
+            return View(new UsersRoleMapping() { RoleName = roleName });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ShowUsersInRole(UsersRoleMapping model)
+        {
+            if (!Roles.IsUserInRole(model.UserName, model.RoleName))
+            {
+                Roles.AddUserToRole(model.UserName, model.RoleName);
+            }
+
+            ViewData["RoleMappings"] = UsersRoleMapping.UsersInRole(model.RoleName);
+            var users = Membership.GetAllUsers();
+            var list = new SelectList(users, "UserName", "UserName");
+            ViewData["ExistingUsers"] = list;
+
+            return View(new UsersRoleMapping() { RoleName = model.RoleName });
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteUserFromRole(string roleName, string userName)
+        {
+            if (Roles.IsUserInRole(userName, roleName))
+            {
+                Roles.RemoveUserFromRole(userName, roleName);
+            }
+            return RedirectToAction("ShowUsersInRole", "Account", new { RoleName = roleName });
+
+        }
+
 
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)

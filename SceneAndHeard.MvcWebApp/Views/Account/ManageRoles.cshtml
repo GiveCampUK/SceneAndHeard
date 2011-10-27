@@ -1,0 +1,81 @@
+﻿@using SceneAndHeard.Models
+@model UserRole
+<h2>
+    Manage Users / Roles</h2>
+
+
+    @Html.ActionLink("Create User", "Register")
+    <br /><br />
+
+@{
+    WebGrid grid;
+
+    using (Html.BeginForm())
+    {
+        List<UserRole> RoleData = (List<UserRole>)ViewData["RoleData"];
+        grid = new WebGrid(RoleData);
+
+        @(grid.GetHtml(
+            tableStyle: "grid",
+            headerStyle: "head",
+            alternatingRowStyle: "alt",
+            columns: grid.Columns(
+                grid.Column("RoleName", "Roles"),
+                grid.Column(header: "Actions", format: (item) =>
+                                                       new HtmlString(Html.ActionLink("Delete", "DeleteRole",
+                                                                                      new { RoleName = item.RoleName },
+                                                                                      new
+                                                                                      {
+                                                                                          onclick =
+                                                                                      "return confirm('Are you sure you want to delete " +
+                                                                                      item.RoleName + " role?');"
+                                                                                      }).
+                                                                          ToString() + " " + Html.ActionLink("Show Users", "ShowUsersInRole",
+                                                                                      new { RoleName = item.RoleName }).ToString()
+                                                           )))
+                              )
+
+)
+
+
+
+
+<br />
+    <fieldset>
+        <legend>Create a New Role</legend>
+        <table class="entry-form">
+            <tr>
+                <td class="editor-label">
+                    @Html.LabelFor(m => m.RoleName)
+                </td>
+                <td class="editor-field">
+                    @Html.TextBoxFor(m => m.RoleName)
+                </td>
+            </tr>
+            <tr>
+                <td class="editor-label">
+                    &nbsp;
+                </td>
+                <td class="display-error">
+                    @Html.ValidationMessageFor(m => m.RoleName)
+                </td>
+            </tr>
+            <tr>
+                <td class="editor-label">
+                    &nbsp;
+                </td>
+                <td>
+                   
+                    <p>
+                        <input type="submit" value="Create Role" />
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+
+
+
+    
+    }}

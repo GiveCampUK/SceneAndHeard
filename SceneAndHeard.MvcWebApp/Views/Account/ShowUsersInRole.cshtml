@@ -1,0 +1,74 @@
+﻿@using SceneAndHeard.Models
+@model UsersRoleMapping
+@using (Html.BeginForm())
+{
+    
+   
+    List<UsersRoleMapping> RoleData = (List<UsersRoleMapping>)ViewData["RoleMappings"];
+    var grid = new WebGrid(RoleData);
+
+@(grid.GetHtml(
+            tableStyle: "grid",
+            headerStyle: "head",
+            alternatingRowStyle: "alt",
+            columns: grid.Columns(
+                grid.Column("RoleName", "Role"),
+                    grid.Column("UserName", "User"),
+                grid.Column(header: "Actions", format: (item) =>
+                                                       new HtmlString(Html.ActionLink("Delete", "DeleteUserFromRole",
+                                                                                      new { roleName = item.RoleName, userName = item.UserName },
+                                                                                      new
+                                                                                          {
+                                                                                              onclick =
+                                                                                          "return confirm('Are you sure you want to delete " +
+                                                                                          item.UserName + " from role " + item.RoleName + "?');"
+                                                                                          }).
+                                                                          ToString()
+                                                           )))
+                              )
+
+)
+    
+    
+    <br />
+    
+    
+    <fieldset>
+        <legend>Add User To Role</legend>
+        <table class="entry-form">
+            <tr>
+                <td class="editor-label">
+                    @Html.LabelFor(m => m.RoleName)
+                </td>
+                <td class="editor-field">
+                    @Html.DisplayTextFor(m => m.RoleName)
+                </td>
+                <td class="display-error">
+                    @Html.ValidationMessageFor(m => m.RoleName)
+                </td>
+            </tr>
+            <tr>
+                <td class="editor-label">
+                    @Html.LabelFor(m => m.UserName)
+                </td>
+                <td class="editor-field">
+                    @Html.DropDownList("UserName", (SelectList)ViewData["ExistingUsers"])
+                </td>
+                <td class="display-error">
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </td>
+            </tr>
+            <tr>
+                <td class="editor-label">
+                    &nbsp;
+                </td>
+                <td>
+                        <input type="submit" value="Add To Role" />
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    
+}
+
+@Html.ActionLink("Go back to roles management", "ManageRoles", "Account")

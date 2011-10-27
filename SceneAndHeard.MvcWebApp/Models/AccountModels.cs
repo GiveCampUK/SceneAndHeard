@@ -64,4 +64,62 @@ namespace SceneAndHeard.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    public class UserRole
+    {
+        public int Id { get; set; }
+        public string RoleName { get; set; }
+
+        public static List<UserRole> UserRolesData()
+        {
+            List<UserRole> RoleList = new List<UserRole>();
+            int idCount = 1;
+            foreach (string s in Roles.GetAllRoles())
+            {
+                UserRole UR = new UserRole();
+                UR.Id = idCount++;
+                UR.RoleName = s;
+
+                RoleList.Add(UR);
+            }
+
+            return RoleList;
+        }
+    }
+
+
+    public class UsersRoleMapping
+    {
+        [Required]
+        [Display(Name = "Role name:")]
+        public String RoleName { get; set; }
+        [Required]
+        [Display(Name = "User Name:")]
+        public String UserName { get; set; }
+
+
+        public static List<UsersRoleMapping> UsersInRole(String roleName)
+        {
+
+            List<UsersRoleMapping> map = new List<UsersRoleMapping>();
+            foreach (var userinRole in Roles.GetUsersInRole(roleName))
+            {
+                map.Add(new UsersRoleMapping() { RoleName = roleName, UserName = userinRole });
+            }
+
+            return map;
+
+        }
+
+    }
+
+
+    public class ManageRolesModel
+    {
+        [Required]
+        [Display(Name = "New Role name:")]
+        public string RoleName { get; set; }
+    }
+
+
 }

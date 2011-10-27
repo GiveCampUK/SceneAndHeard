@@ -20,11 +20,11 @@
             </div>
             <div id="logindisplay">
                 @Html.Partial("_LogOnPartial")
+                
             </div>
             <div id="menucontainer">
                 <ul id="menu">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-
                     @if (User.Identity.IsAuthenticated && User.IsInRole("Editor"))
                     {
                         <li>@Html.ActionLink("Students", "Index", "Student")</li>
