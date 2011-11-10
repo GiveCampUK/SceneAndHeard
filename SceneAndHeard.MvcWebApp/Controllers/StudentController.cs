@@ -47,7 +47,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Students.AddObject(student);
+                context.Students.Add(student);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -72,8 +72,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Students.Attach(student);
-                context.ObjectStateManager.ChangeObjectState(student, EntityState.Modified);
+                context.Entry(student).State = EntityState.Modified;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -96,7 +95,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Student student = context.Students.Single(x => x.StudentId == id);
-            context.Students.DeleteObject(student);
+            context.Students.Remove(student);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

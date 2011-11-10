@@ -46,7 +46,7 @@ namespace SceneAndHeard.Controllers {
         [HttpPost]
         public ActionResult Create(Course course) {
             if (ModelState.IsValid) {
-                context.Courses.AddObject(course);
+                context.Courses.Add(course);
                 ApplyCourseVolunteerAllocations(course);
                 context.SaveChanges();
                 return RedirectToAction("Index");
@@ -77,9 +77,8 @@ namespace SceneAndHeard.Controllers {
         [HttpPost]
         public ActionResult Edit(Course course) {
             if (ModelState.IsValid) {
-                context.Courses.Attach(course);
-                context.ObjectStateManager.ChangeObjectState(course, EntityState.Modified);
-
+                context.Entry(course).State = EntityState.Modified;
+                
                 ApplyCourseVolunteerAllocations(course);
 
                 context.SaveChanges();
@@ -120,7 +119,7 @@ namespace SceneAndHeard.Controllers {
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id) {
             Course course = context.Courses.Single(x => x.CourseId == id);
-            context.Courses.DeleteObject(course);
+            context.Courses.Remove(course);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

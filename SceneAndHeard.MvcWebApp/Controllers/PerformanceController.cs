@@ -45,7 +45,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Performances.AddObject(performance);
+                db.Performances.Add(performance);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -72,8 +72,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Performances.Attach(performance);
-                db.ObjectStateManager.ChangeObjectState(performance, EntityState.Modified);
+                db.Entry(performance).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -97,7 +96,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Performance performance = db.Performances.Single(p => p.PerformanceId == id);
-            db.Performances.DeleteObject(performance);
+            db.Performances.Remove(performance);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

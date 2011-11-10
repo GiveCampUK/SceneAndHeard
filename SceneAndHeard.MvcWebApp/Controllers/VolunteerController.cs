@@ -49,7 +49,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Volunteers.AddObject(volunteer);
+                context.Volunteers.Add(volunteer);
                 context.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -74,8 +74,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Volunteers.Attach(volunteer);
-                context.ObjectStateManager.ChangeObjectState(volunteer, EntityState.Modified);
+                context.Entry(volunteer).State = EntityState.Modified;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -110,7 +109,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Volunteer volunteer = context.Volunteers.Single(x => x.VolunteerId == id);
-            context.Volunteers.DeleteObject(volunteer);
+            context.Volunteers.Remove(volunteer);
             context.SaveChanges();
             return RedirectToAction("Index");
         }
