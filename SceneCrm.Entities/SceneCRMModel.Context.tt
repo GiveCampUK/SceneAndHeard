@@ -53,8 +53,8 @@ using System.Data.Objects;
 
 <#=Accessibility.ForType(container)#> partial class <#=Code.Escape(container)#> : DbContext
 {
-    public <#=Code.Escape(container)#>()
-        : base("name=<#=container.Name#>")
+
+	public <#=Code.Escape(container)#>() : base(GetConnectionString())
     {
 <#
         WriteLazyLoadingEnabled(container);

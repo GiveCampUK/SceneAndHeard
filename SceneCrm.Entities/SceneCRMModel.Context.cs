@@ -15,8 +15,8 @@ namespace SceneCrm.Entities
     
     public partial class SceneCRM : DbContext
     {
-        public SceneCRM()
-            : base("name=SceneCRM")
+    
+    	public SceneCRM() : base(GetConnectionString())
         {
         }
     

@@ -36,6 +36,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
@@ -69,6 +70,7 @@
       <DependentUpon>SceneCRMModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Partials\Production.cs" />
+    <Compile Include="Partials\SceneCRM.cs" />
     <Compile Include="Partials\Student.cs" />
     <Compile Include="Partials\Volunteer.cs" />
     <Compile Include="Performance.cs">
