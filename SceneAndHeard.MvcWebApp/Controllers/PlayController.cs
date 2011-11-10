@@ -59,7 +59,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Plays.AddObject(play);
+                context.Plays.Add(play);
 
                 ApplyAllocatedVolunteers(play);
 
@@ -96,11 +96,8 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Plays.Attach(play);
-                context.ObjectStateManager.ChangeObjectState(play, EntityState.Modified);
-
+                context.Entry(play).State = EntityState.Modified;
                 ApplyAllocatedVolunteers(play);
-
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -128,7 +125,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Play play = context.Plays.Single(x => x.PlayId == id);
-            context.Plays.DeleteObject(play);
+            context.Plays.Remove(play);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

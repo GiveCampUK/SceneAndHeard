@@ -47,15 +47,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Course.cs" />
-    <Compile Include="Production.cs" />
-    <Compile Include="Student.cs" />
-    <Compile Include="Volunteer.cs" />
+    <Compile Include="Course.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CourseAttendance.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CourseType.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CourseVolunteer.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CrbCheck.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Job.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Partials\Production.cs" />
+    <Compile Include="Partials\Student.cs" />
+    <Compile Include="Partials\Volunteer.cs" />
+    <Compile Include="Performance.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Play.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PlayVolunteer.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Production.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductionVolunteer.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SceneCRMModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SceneCRMModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SceneCRMModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StudentHistory.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Term.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Volunteer.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneCRM.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SceneCRM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="VolunteerCrbCheck.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VolunteerHistory.cs">
+      <DependentUpon>SceneCRMModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +132,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SceneCRM.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="SceneCRMModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SceneCRMModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="SceneCRMModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SceneCRMModel.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

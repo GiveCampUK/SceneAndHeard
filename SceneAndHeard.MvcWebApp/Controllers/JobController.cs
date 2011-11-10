@@ -65,7 +65,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Jobs.AddObject(job);
+                context.Jobs.Add(job);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -90,8 +90,8 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                context.Jobs.Attach(job);
-                context.ObjectStateManager.ChangeObjectState(job, EntityState.Modified);
+                
+                context.Entry(job).State = EntityState.Modified;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -114,7 +114,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Job job = context.Jobs.Single(x => x.JobId == id);
-            context.Jobs.DeleteObject(job);
+            context.Jobs.Remove(job);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

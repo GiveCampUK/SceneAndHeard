@@ -15,7 +15,7 @@ namespace SceneAndHeardFeedback.Models
 
         public void saveFeedback(Feedback feedback)
         {
-            _context.Feedbacks.AddObject(feedback);
+            _context.Feedbacks.Add(feedback);
             _context.SaveChanges();
             _context.Dispose();
         }

@@ -154,7 +154,7 @@ namespace SceneCrm.Importer {
             if (vol == null) return;
             var job = context.Jobs.FindOrMake(jobTitle);
             if (!vol.PlayVolunteers.Any(cv => cv.Job == job && cv.Play == play)) {
-                context.PlayVolunteers.AddObject(new PlayVolunteer() {
+                context.PlayVolunteers.Add(new PlayVolunteer() {
                     Play = play,
                     Volunteer = vol,
                     Job = job
@@ -167,7 +167,7 @@ namespace SceneCrm.Importer {
             if (vol == null) return;
             var job = context.Jobs.FindOrMake(jobTitle);
             if (!vol.CourseVolunteers.Any(cv => cv.Job == job && cv.Course == course)) {
-                context.CourseVolunteers.AddObject(new CourseVolunteer() {
+                context.CourseVolunteers.Add(new CourseVolunteer() {
                     Course = course,
                     Volunteer = vol,
                     Job = job
@@ -279,7 +279,7 @@ namespace SceneCrm.Importer {
                     Forename = forename,
                     Surname = surname
                 };
-                students.AddObject(student);
+                students.Add(student);
                 students.Context.SaveChanges();
             }
             return (student);
@@ -292,7 +292,7 @@ namespace SceneCrm.Importer {
                     CourseTypeName = name,
                     CourseTypeCode = code
                 };
-                types.AddObject(ct);
+                types.Add(ct);
                 types.Context.SaveChanges();
             }
             return (ct);
@@ -304,7 +304,7 @@ namespace SceneCrm.Importer {
                 course = courses.FirstOrDefault(c => c.CourseTypeCode == type.CourseTypeCode && c.TermId == term.TermId && c.Year == year);
                 if (course == default(Course)) {
                     course = new Course() { Term = term, CourseType = type, Year = year };
-                    courses.AddObject(course);
+                    courses.Add(course);
                     courses.Context.SaveChanges();
                 }
             }
@@ -315,7 +315,7 @@ namespace SceneCrm.Importer {
             var job = jobs.FirstOrDefault(j => j.Description == jobTitle);
             if (job == default(Job)) {
                 job = new Job() { Description = jobTitle };
-                jobs.AddObject(job);
+                jobs.Add(job);
                 jobs.Context.SaveChanges();
             }
             return (job);
@@ -326,7 +326,7 @@ namespace SceneCrm.Importer {
             var production = productions.FirstOrDefault(p => p.Title == productionTitle);
             if (production == null) {
                 production = new Production() { Title = productionTitle };
-                productions.AddObject(production);
+                productions.Add(production);
                 productions.Context.SaveChanges();
             }
             return (production);
@@ -336,7 +336,7 @@ namespace SceneCrm.Importer {
             var term = terms.FirstOrDefault(t => t.TermName == termName);
             if (term == default(Term)) {
                 term = new Term() { TermName = termName };
-                terms.AddObject(term);
+                terms.Add(term);
                 terms.Context.SaveChanges();
             }
             return (term);
@@ -365,7 +365,7 @@ namespace SceneCrm.Importer {
                     FirstName = forename,
                     Surname = surname,
                 };
-                volunteers.AddObject(volunteer);
+                volunteers.Add(volunteer);
                 volunteers.Context.SaveChanges();
             }
             return (volunteer);

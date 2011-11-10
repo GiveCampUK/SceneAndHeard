@@ -53,7 +53,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Productions.AddObject(production);
+                db.Productions.Add(production);
 
                 ApplyProductionVolunteerAllocations(production);
 
@@ -87,9 +87,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Productions.Attach(production);
-                db.ObjectStateManager.ChangeObjectState(production, EntityState.Modified);
-
+                db.Entry(production).State = EntityState.Modified;
                 ApplyProductionVolunteerAllocations(production);
 
                 db.SaveChanges();
@@ -118,7 +116,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Production production = db.Productions.Single(p => p.ProductionId == id);
-            db.Productions.DeleteObject(production);
+            db.Productions.Remove(production);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
