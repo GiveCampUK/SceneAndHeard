@@ -49,7 +49,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CrbChecks.AddObject(crbcheck);
+                db.CrbChecks.Add(crbcheck);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
             }
@@ -76,8 +76,7 @@ namespace SceneAndHeard.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.CrbChecks.Attach(crbcheck);
-                db.ObjectStateManager.ChangeObjectState(crbcheck, EntityState.Modified);
+                db.Entry(crbcheck).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -101,7 +100,7 @@ namespace SceneAndHeard.Controllers
         public ActionResult DeleteConfirmed(int id)
         {            
             CrbCheck crbcheck = db.CrbChecks.Single(c => c.CrbCheckId == id);
-            db.CrbChecks.DeleteObject(crbcheck);
+            db.CrbChecks.Remove(crbcheck);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
